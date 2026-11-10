@@ -1,0 +1,12 @@
+@model HomeViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section id="hero" aria-labelledby="hero-title" class="py-16 sm:py-24">
+    <h1 id="hero-title" class="max-w-3xl text-5xl font-semibold tracking-tight sm:text-7xl">@Model.HeroTitle</h1>
+    @if (!string.IsNullOrWhiteSpace(Model.HeroDescription))
+    {
+        <p class="mt-6 max-w-xl text-lg leading-relaxed">@Model.HeroDescription</p>
+    }
+</section>

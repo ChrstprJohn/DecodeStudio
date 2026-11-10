@@ -1,0 +1,25 @@
+@{
+    var studioName = ViewData["StudioName"] as string ?? "Decode Studio";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @studioName</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="flex min-h-screen flex-col bg-white font-sans text-slate-950 antialiased">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:p-4">Skip to content</a>
+    <header class="px-6 py-6 sm:px-10">
+        <nav aria-label="Main navigation" class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4">
+            <a class="text-lg font-semibold focus-visible:outline-2 focus-visible:outline-offset-4" asp-controller="Home" asp-action="Index">@studioName</a>
+            <a href="/#hero" class="text-sm underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">Home</a>
+        </nav>
+    </header>
+    <main id="main-content" tabindex="-1" class="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:px-10">
+        @RenderBody()
+    </main>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

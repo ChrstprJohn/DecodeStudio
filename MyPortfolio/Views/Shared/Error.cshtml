@@ -1,0 +1,14 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-3xl font-semibold tracking-tight">Something went wrong.</h1>
+<p class="mt-4 leading-relaxed">We couldn't process your request. Please try again.</p>
+
+@if (Model.ShowRequestId)
+{
+    <p class="mt-4 break-words text-sm">Request ID: <code>@Model.RequestId</code></p>
+}
+
+<a class="mt-6 inline-block underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4" asp-controller="Home" asp-action="Index">Return home</a>
