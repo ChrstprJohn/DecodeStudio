@@ -1,4 +1,65 @@
 @import "tailwindcss" source(none);
+@import "./hero.css";
+@import "./landing.css";
 
 @source "../Views";
 @source "../wwwroot/js";
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/InterVariable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Inter", Arial, sans-serif;
+  --color-canvas: #eeeeee;
+  --color-ink: #222222;
+  --color-paper: #ffffff;
+  --color-slate-950: #222222;
+  --color-slate-200: #dddddd;
+  --color-slate-50: #f7f7f7;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+  body { @apply bg-canvas font-sans text-ink antialiased; }
+  h1, h2, h3 { @apply font-semibold tracking-[-0.04em]; }
+  a { text-underline-offset: 4px; }
+  button, summary { cursor: pointer; }
+  :focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]), textarea, select {
+    @apply rounded-lg border border-[#d5d5d5] bg-white px-4 py-3 text-base;
+  }
+  input[type="checkbox"] { @apply size-4 align-middle accent-ink; }
+  input[type="file"] { @apply max-w-full text-sm; }
+  input[type="file"]::file-selector-button { @apply mr-3 rounded-md border-0 bg-ink px-4 py-2 text-white; }
+  label { @apply text-sm font-medium; }
+  th { @apply px-4 py-4 text-sm font-medium text-[#555555]; }
+  td { @apply px-4 py-4 align-top text-sm; }
+  img { max-width: 100%; }
+  ::selection { @apply bg-ink text-white; }
+}
+
+@layer components {
+  .public-width { @apply mx-auto w-full max-w-[1600px] px-6 md:px-10 xl:px-14; }
+  .action-primary { @apply inline-flex min-h-12 items-center justify-center gap-4 rounded-lg border-0 bg-ink px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#444444]; }
+  .action-secondary { @apply inline-flex min-h-11 items-center justify-center gap-3 rounded-lg border border-[#cccccc] bg-transparent px-5 py-2 text-sm font-medium transition-colors hover:bg-white; }
+  .section-title { @apply max-w-[18ch] text-4xl leading-[1.05] font-semibold tracking-[-0.04em] md:text-5xl lg:text-[64px]; }
+  .page-title { @apply text-3xl leading-tight font-semibold tracking-[-0.04em] md:text-4xl; }
+  .account-panel { @apply mx-auto my-10 w-[calc(100%-3rem)] max-w-lg rounded-xl bg-paper px-6 py-8 md:my-16 md:p-10; }
+  .data-table { @apply w-full min-w-[40rem] text-left; }
+  .field-error { @apply mt-1 block text-sm text-red-700; }
+  .admin-link { @apply rounded-lg px-4 py-3 text-sm font-medium transition-colors hover:bg-white; }
+  .admin-link[aria-current="page"] { @apply bg-ink text-white hover:bg-ink; }
+  .notice { @apply mx-auto w-full max-w-[1600px] px-6 py-4 text-sm md:px-10 xl:px-14; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
+
+

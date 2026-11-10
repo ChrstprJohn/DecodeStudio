@@ -1,5 +1,8 @@
 # Architecture and folder structure
 
+Follow the agreed [MVC coding conventions](coding-conventions.md) when adding
+controllers, actions, services, and forms.
+
 ## Approach
 
 One ASP.NET Core MVC project targeting .NET 10. Controllers handle requests,
@@ -19,13 +22,14 @@ MVC_Portfolio/
     ├── Controllers/
     │   └── HomeController.cs
     ├── Models/
-    │   ├── Entities/             SiteContent.cs maps the studio record
+    │   ├── Entities/             All six database entities
     │   └── ViewModels/
     │       └── ErrorViewModel.cs
-    ├── Services/                 HomeService.cs loads home content
+    ├── Services/                 Concrete services for home, accounts, content, and profiles
     ├── Data/                     ApplicationDbContext.cs
     ├── Views/
     │   ├── Home/Index.cshtml
+    │   ├── Home/Sections/        One partial per landing section
     │   ├── Shared/
     │   │   ├── _Layout.cshtml
     │   │   └── Error.cshtml
@@ -95,23 +99,19 @@ section. The shared error view displays a request ID when available.
 
 ## Current implementation and next steps
 
-The home page reads studio name, hero title, and hero description from
-SiteContent row 1 using an async, read-only EF query. An empty table displays
-Decode Studio with no description. Connection/query errors remain errors rather
-than silently showing a successful-looking fallback page.
+ApplicationDbContext maps all six existing tables. DatabaseConfiguration reads
+local User Secrets and registers SQL Server without creating or migrating tables.
 
-DatabaseConfiguration.cs in Data reads the connection setting and registers the
-SQL Server context. Program.cs calls DatabaseConfiguration.AddDatabase once.
+HomeService loads studio content and published collections for the designed landing
+page, including the decorative hero gallery. Each content feature has its own concrete service and controller. Admin
+controllers enforce the Admin role and share _AdminLayout. ProfileController uses
+the signed-in ID and a separate ProfileService for personal account changes.
 
-ApplicationDbContext currently maps SiteContent only. HomeService performs the
-query and maps to HomeViewModel. Program.cs registers both through dependency
-injection. Credentials come from ConnectionStrings:Portfolio in User Secrets
-for development, or environment configuration for deployment.
+Cookie authentication, activation/role/password-version validation, account forms,
+content CRUD, account activation, and profile/photo/password updates are implemented.
+See [features.md](features.md) for the current endpoint inventory and tests.
 
-The page has a studio-name link, Home navigation, and a hero. Other sections,
-images, footer, account screens, and admin features are intentionally not built.
-Full Identity EF stores have been removed. Custom accounts with cookie
-authentication and Microsoft's password hasher remain planned.
-
-No startup migrations, table creation, or content seeding run. Map the remaining
-entities when implementing their features.
+The shared design language is documented in [DESIGN.md](../DESIGN.md). Analytics
+is deliberately blank. Deployment upload storage, password
+recovery, email verification, and login throttling remain future work. No automatic
+migrations, table creation, or content seeding run.

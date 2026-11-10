@@ -1,0 +1,26 @@
+@model AccountViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Account details";
+}
+<h1 class="page-title">Account details</h1>
+<dl class="mt-8 grid gap-6 rounded-xl bg-white p-6 sm:grid-cols-2 md:p-8">
+    <div><dt class="font-semibold">First name</dt><dd>@Model.FirstName</dd></div>
+    <div><dt class="font-semibold">Middle name</dt><dd>@Model.MiddleName</dd></div>
+    <div><dt class="font-semibold">Last name</dt><dd>@Model.LastName</dd></div>
+    <div><dt class="font-semibold">Email</dt><dd>@Model.Email</dd></div>
+    <div><dt class="font-semibold">Role</dt><dd>@Model.Role</dd></div>
+    <div><dt class="font-semibold">Status</dt><dd>@(Model.IsActive ? "Active" : "Inactive")</dd></div>
+    <div><dt class="font-semibold">Registered (UTC)</dt><dd>@Model.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm")</dd></div>
+</dl>
+@if (!string.IsNullOrEmpty(Model.ProfileImagePath))
+{
+    <img src="@Model.ProfileImagePath" alt="Profile photo" class="mt-6 h-24 w-24 rounded-lg object-cover" />
+}
+<form asp-action="SetActive" method="post" class="my-6">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <input type="hidden" name="isActive" value="@((!Model.IsActive).ToString().ToLowerInvariant())" />
+    <button type="submit" class="action-secondary">@(Model.IsActive ? "Deactivate account" : "Activate account")</button>
+</form>
+<p>Account details are read-only. Accounts cannot be deleted here.</p>
+<a asp-action="Index" class="mt-6 inline-block underline">Back to accounts</a>

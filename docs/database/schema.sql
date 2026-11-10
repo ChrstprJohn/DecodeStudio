@@ -56,6 +56,7 @@ CREATE TABLE dbo.Services (
     Id int IDENTITY(1,1) NOT NULL CONSTRAINT PK_Services PRIMARY KEY,
     Title nvarchar(200) NOT NULL,
     Description nvarchar(2000) NOT NULL,
+    ImagePath nvarchar(2048) NULL,
     SortOrder int NOT NULL,
     IsPublished bit NOT NULL
 );
@@ -79,3 +80,4 @@ CREATE TABLE dbo.SocialLinks (
     Url nvarchar(2048) NOT NULL,
     SortOrder int NOT NULL
 );
+

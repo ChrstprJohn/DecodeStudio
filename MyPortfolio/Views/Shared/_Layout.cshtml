@@ -1,25 +1,92 @@
 @{
+    var heroHeader = ViewData["HeroHeader"] is true;
     var studioName = ViewData["StudioName"] as string ?? "Decode Studio";
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    @if (heroHeader)
+    {
+        <script>
+            document.documentElement.classList.add('hero-pending');
+            // Show content if the animation library fails to load.
+            setTimeout(() => document.documentElement.classList.remove('hero-pending'), 4000);
+        </script>
+    }
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @studioName</title>
+    <link rel="preload" href="~/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body class="flex min-h-screen flex-col bg-white font-sans text-slate-950 antialiased">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:p-4">Skip to content</a>
-    <header class="px-6 py-6 sm:px-10">
-        <nav aria-label="Main navigation" class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4">
-            <a class="text-lg font-semibold focus-visible:outline-2 focus-visible:outline-offset-4" asp-controller="Home" asp-action="Index">@studioName</a>
-            <a href="/#hero" class="text-sm underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">Home</a>
-        </nav>
+<body>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:p-4">Skip to content</a>
+    <header class="z-50 @(heroHeader ? "home-header" : "sticky top-0 bg-canvas")">
+        <div class="public-width flex min-h-24 items-center justify-between gap-8">
+            <a asp-controller="Home" asp-action="Index" aria-label="@studioName home" class="shrink-0 text-2xl font-semibold tracking-[-0.07em]"><partial name="_StudioWordmark" /></a>
+            <nav aria-label="Main navigation" class="hidden items-center gap-6 text-sm font-medium lg:flex">
+                <a asp-controller="Home" asp-action="Index" asp-fragment="about" class="hover:underline">About</a>
+                <a asp-controller="Home" asp-action="Index" asp-fragment="services" class="hover:underline">Services</a>
+                <a asp-controller="Home" asp-action="Index" asp-fragment="projects" class="hover:underline">Work</a>
+                <a asp-controller="Home" asp-action="Index" asp-fragment="team" class="hover:underline">Team</a>
+                <a asp-controller="Home" asp-action="Index" asp-fragment="contact" class="hover:underline">Contact</a>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a asp-controller="Profile" asp-action="Index" class="hover:underline">My portal</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Admin" asp-action="Index" class="hover:underline">Admin</a>
+                    }
+                    <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit" class="action-primary">Log out</button></form>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="action-primary" aria-label="Login / Sign up">Login <svg class="auth-slash" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21 21 3" fill="none" stroke="currentColor" stroke-width="1.2" /></svg> Sign up</a>
+                }
+            </nav>
+            <details class="group lg:hidden">
+                <summary class="list-none rounded-lg bg-ink px-4 py-3 text-sm font-medium text-white">Menu</summary>
+                <nav aria-label="Mobile navigation" class="absolute inset-x-0 top-full flex flex-col gap-5 border-t border-[#dddddd] bg-canvas px-6 py-7 text-base">
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="hero">Home</a>
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="about">About</a>
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="services">Services</a>
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="projects">Work</a>
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="contact">Contact</a>
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="team">Team</a>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Profile" asp-action="Index">My portal</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a asp-controller="Admin" asp-action="Index">Admin</a>
+                        }
+                        <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit" class="action-primary">Log out</button></form>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login">Log in</a>
+                        <a asp-controller="Account" asp-action="Register">Sign up</a>
+                    }
+                </nav>
+            </details>
+        </div>
     </header>
-    <main id="main-content" tabindex="-1" class="mx-auto w-full max-w-5xl flex-1 px-6 py-16 sm:px-10">
+    <main id="main-content" tabindex="-1">
+        @if (TempData["SuccessMessage"] is string success)
+        {
+            <p role="status" class="notice">@success</p>
+        }
+        @if (TempData["ErrorMessage"] is string error)
+        {
+            <p role="alert" class="notice text-red-700">@error</p>
+        }
         @RenderBody()
     </main>
+    <partial name="_Footer" />
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+

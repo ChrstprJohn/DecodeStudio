@@ -1,0 +1,370 @@
+{
+  "SiteContent": {
+    "Id": 1,
+    "StudioName": "Decode Studio",
+    "Tagline": "Design. Develop. Deploy.",
+    "HeroTitle": "Your next site. Starts here.",
+    "HeroDescription": "We design and build websites for growing businesses. From the first idea to launch.",
+    "HeroImagePath": "/uploads/images/demo-studio-hero.svg",
+    "HeroLinkText": "Explore our work",
+    "HeroLinkUrl": "#projects",
+    "AboutTitle": "A small studio with a practical approach.",
+    "AboutDescription": "Decode Studio brings together design, development, and deployment in one place. We start by understanding the business, organize the content, and build a website that is easy to use and maintain.\n\nThis is sample studio content for a school portfolio project. The projects and team below are fictional examples for design and layout testing.",
+    "ContactEmail": "hello@decodestudio.example",
+    "ContactPhone": "Sample contact number",
+    "FooterText": "Decode Studio â€” sample portfolio content for design and testing."
+  },
+  "Projects": [
+    {
+      "Title": "Northline Architecture (Demo)",
+      "Description": "A portfolio for an architecture practice, with large project imagery and a clear inquiry flow.",
+      "ImagePath": "/uploads/images/demo-project-architecture.svg",
+      "WebsiteUrl": "https://example.com/?project=architecture",
+      "SortOrder": 1,
+      "IsPublished": true,
+      "Background": "#e7e2d8",
+      "Foreground": "#25382e"
+    },
+    {
+      "Title": "Bloom & Stem (Demo)",
+      "Description": "An online flower shop concept with seasonal collections and an easy-to-browse product catalog.",
+      "ImagePath": "/uploads/images/demo-project-ecommerce.svg",
+      "WebsiteUrl": "https://example.com/?project=ecommerce",
+      "SortOrder": 2,
+      "IsPublished": true,
+      "Background": "#f1e4e7",
+      "Foreground": "#773f52"
+    },
+    {
+      "Title": "Coastline Retreat (Demo)",
+      "Description": "A boutique accommodation concept with room photography, local guides, and booking information.",
+      "ImagePath": "/uploads/images/demo-project-hospitality.svg",
+      "WebsiteUrl": "https://example.com/?project=hospitality",
+      "SortOrder": 3,
+      "IsPublished": true,
+      "Background": "#dce9ed",
+      "Foreground": "#244c5c"
+    },
+    {
+      "Title": "Forma Fitness (Demo)",
+      "Description": "A fitness studio website with class schedules, trainer introductions, and membership information.",
+      "ImagePath": "/uploads/images/demo-project-fitness.svg",
+      "WebsiteUrl": "https://example.com/?project=fitness",
+      "SortOrder": 4,
+      "IsPublished": true,
+      "Background": "#e9edc9",
+      "Foreground": "#303f23"
+    },
+    {
+      "Title": "Cedar Coffee (Demo)",
+      "Description": "A neighborhood coffee brand concept showcasing its menu, beans, and cafe locations.",
+      "ImagePath": "/uploads/images/demo-project-food.svg",
+      "WebsiteUrl": "https://example.com/?project=food",
+      "SortOrder": 5,
+      "IsPublished": true,
+      "Background": "#ede0d1",
+      "Foreground": "#63452d"
+    },
+    {
+      "Title": "Atlas Learning (Demo)",
+      "Description": "An education platform concept with course information, instructor profiles, and student resources.",
+      "ImagePath": "/uploads/images/demo-project-education.svg",
+      "WebsiteUrl": "https://example.com/?project=education",
+      "SortOrder": 6,
+      "IsPublished": true,
+      "Background": "#e3e4f2",
+      "Foreground": "#3f4776"
+    },
+    {
+      "Title": "Luma Skincare (Demo)",
+      "Description": "A skincare brand concept with product education, ingredient stories, and a simple shopping flow.",
+      "ImagePath": "/uploads/images/demo-project-beauty.svg",
+      "WebsiteUrl": "https://example.com/?project=beauty",
+      "SortOrder": 7,
+      "IsPublished": true,
+      "Background": "#f2eadc",
+      "Foreground": "#745a3a"
+    },
+    {
+      "Title": "Signal Creative (Demo)",
+      "Description": "A creative-agency portfolio concept presenting selected work, capabilities, and a contact flow.",
+      "ImagePath": "/uploads/images/demo-project-creative.svg",
+      "WebsiteUrl": "https://example.com/?project=creative",
+      "SortOrder": 8,
+      "IsPublished": true,
+      "Background": "#e5e5e5",
+      "Foreground": "#252525"
+    }
+  ],
+  "Services": [
+    {
+      "Title": "Web Design",
+      "Description": "Clear layouts, thoughtful typography, and responsive page designs tailored to your business.",
+      "SortOrder": 1,
+      "IsPublished": true,
+      "ImagePath": "/images/services/web-design.webp"
+    },
+    {
+      "Title": "Web Development",
+      "Description": "Maintainable websites built around your content, workflows, and customer needs.",
+      "SortOrder": 2,
+      "IsPublished": true,
+      "ImagePath": "/images/services/web-development.webp"
+    },
+    {
+      "Title": "Landing Pages",
+      "Description": "Focused campaign pages that explain an offer and guide visitors toward one clear action.",
+      "SortOrder": 3,
+      "IsPublished": true,
+      "ImagePath": "/images/services/landing-pages.webp"
+    },
+    {
+      "Title": "Ecommerce Websites",
+      "Description": "Product catalogs and storefront experiences designed to make browsing and purchasing straightforward.",
+      "SortOrder": 4,
+      "IsPublished": true,
+      "ImagePath": "/images/services/ecommerce.webp"
+    },
+    {
+      "Title": "Website Redesign",
+      "Description": "A fresh structure and visual direction for websites that have outgrown their original design.",
+      "SortOrder": 5,
+      "IsPublished": true,
+      "ImagePath": "/images/services/website-redesign.webp"
+    },
+    {
+      "Title": "Deployment and Hosting Setup",
+      "Description": "Help preparing and publishing your website, including domain and hosting configuration.",
+      "SortOrder": 6,
+      "IsPublished": true,
+      "ImagePath": "/images/services/deployment.webp"
+    },
+    {
+      "Title": "Performance Optimization",
+      "Description": "Practical improvements to loading speed, image delivery, and mobile usability.",
+      "SortOrder": 7,
+      "IsPublished": true,
+      "ImagePath": "/images/services/performance.webp"
+    },
+    {
+      "Title": "Website Maintenance",
+      "Description": "Ongoing content updates, small improvements, and support to keep your website useful.",
+      "SortOrder": 8,
+      "IsPublished": true,
+      "ImagePath": "/images/services/maintenance.webp"
+    },
+    {
+      "Title": "SEO Setup",
+      "Description": "Page titles, search descriptions, and sitemap setup to help search engines understand your website.",
+      "SortOrder": 9,
+      "IsPublished": true,
+      "ImagePath": "/images/services/seo-setup.webp"
+    }
+  ],
+  "TeamMembers": [
+    {
+      "FirstName": "Alex",
+      "MiddleName": null,
+      "LastName": "Rivera",
+      "RoleTitle": "Founder and Creative Director",
+      "Bio": "Connects brand strategy with the studio's creative direction. Fictional team member for layout testing.",
+      "PhotoPath": "/uploads/images/demo-team-1.svg",
+      "IsOwner": true,
+      "SortOrder": 1,
+      "IsPublished": true
+    },
+    {
+      "FirstName": "Maya",
+      "MiddleName": null,
+      "LastName": "Santos",
+      "RoleTitle": "UI/UX Designer",
+      "Bio": "Shapes user journeys and clear, approachable interfaces. Fictional team member for layout testing.",
+      "PhotoPath": "/uploads/images/demo-team-2.svg",
+      "IsOwner": false,
+      "SortOrder": 2,
+      "IsPublished": true
+    },
+    {
+      "FirstName": "Luis",
+      "MiddleName": null,
+      "LastName": "Navarro",
+      "RoleTitle": "Frontend Developer",
+      "Bio": "Builds responsive layouts and accessible browser interactions. Fictional team member for layout testing.",
+      "PhotoPath": "/uploads/images/demo-team-3.svg",
+      "IsOwner": false,
+      "SortOrder": 3,
+      "IsPublished": true
+    },
+    {
+      "FirstName": "Sofia",
+      "MiddleName": null,
+      "LastName": "Cruz",
+      "RoleTitle": "Backend Developer",
+      "Bio": "Works on data, application logic, and reliable integrations. Fictional team member for layout testing.",
+      "PhotoPath": "/uploads/images/demo-team-4.svg",
+      "IsOwner": false,
+      "SortOrder": 4,
+      "IsPublished": true
+    },
+    {
+      "FirstName": "Ethan",
+      "MiddleName": null,
+      "LastName": "Reyes",
+      "RoleTitle": "Full-stack Developer",
+      "Bio": "Connects the visual interface with the systems behind it. Fictional team member for layout testing.",
+      "PhotoPath": "/uploads/images/demo-team-5.svg",
+      "IsOwner": false,
+      "SortOrder": 5,
+      "IsPublished": true
+    },
+    {
+      "FirstName": "Nina",
+      "MiddleName": null,
+      "LastName": "Flores",
+      "RoleTitle": "Brand Designer",
+      "Bio": "Develops identities and visual assets that fit each project. Fictional team member for layout testing.",
+      "PhotoPath": "/uploads/images/demo-team-6.svg",
+      "IsOwner": false,
+      "SortOrder": 6,
+      "IsPublished": true
+    },
+    {
+      "FirstName": "Marco",
+      "MiddleName": null,
+      "LastName": "Lim",
+      "RoleTitle": "Quality Assurance Engineer",
+      "Bio": "Checks forms, workflows, devices, and the details that are easy to miss. Fictional team member for layout testing.",
+      "PhotoPath": "/uploads/images/demo-team-7.svg",
+      "IsOwner": false,
+      "SortOrder": 7,
+      "IsPublished": true
+    },
+    {
+      "FirstName": "Ava",
+      "MiddleName": null,
+      "LastName": "Garcia",
+      "RoleTitle": "Project Coordinator",
+      "Bio": "Keeps project communication, content, and delivery organized. Fictional team member for layout testing.",
+      "PhotoPath": "/uploads/images/demo-team-8.svg",
+      "IsOwner": false,
+      "SortOrder": 8,
+      "IsPublished": true
+    }
+  ],
+  "SocialLinks": [
+    {
+      "Label": "GitHub (Demo)",
+      "Url": "https://example.com/#github",
+      "SortOrder": 1
+    },
+    {
+      "Label": "LinkedIn (Demo)",
+      "Url": "https://example.com/#linkedin",
+      "SortOrder": 2
+    },
+    {
+      "Label": "Instagram (Demo)",
+      "Url": "https://example.com/#instagram",
+      "SortOrder": 3
+    },
+    {
+      "Label": "Facebook (Demo)",
+      "Url": "https://example.com/#facebook",
+      "SortOrder": 4
+    },
+    {
+      "Label": "Behance (Demo)",
+      "Url": "https://example.com/#behance",
+      "SortOrder": 5
+    },
+    {
+      "Label": "Dribbble (Demo)",
+      "Url": "https://example.com/#dribbble",
+      "SortOrder": 6
+    },
+    {
+      "Label": "YouTube (Demo)",
+      "Url": "https://example.com/#youtube",
+      "SortOrder": 7
+    },
+    {
+      "Label": "Contact (Demo)",
+      "Url": "https://example.com/#contact",
+      "SortOrder": 8
+    }
+  ],
+  "Users": [
+    {
+      "FirstName": "Alex",
+      "MiddleName": null,
+      "LastName": "Rivera",
+      "Email": "demo01@decodestudio.example",
+      "ProfileImagePath": "/uploads/images/demo-team-1.svg",
+      "Role": "User",
+      "IsActive": true
+    },
+    {
+      "FirstName": "Maya",
+      "MiddleName": null,
+      "LastName": "Santos",
+      "Email": "demo02@decodestudio.example",
+      "ProfileImagePath": "/uploads/images/demo-team-2.svg",
+      "Role": "User",
+      "IsActive": true
+    },
+    {
+      "FirstName": "Luis",
+      "MiddleName": null,
+      "LastName": "Navarro",
+      "Email": "demo03@decodestudio.example",
+      "ProfileImagePath": "/uploads/images/demo-team-3.svg",
+      "Role": "User",
+      "IsActive": true
+    },
+    {
+      "FirstName": "Sofia",
+      "MiddleName": null,
+      "LastName": "Cruz",
+      "Email": "demo04@decodestudio.example",
+      "ProfileImagePath": "/uploads/images/demo-team-4.svg",
+      "Role": "User",
+      "IsActive": true
+    },
+    {
+      "FirstName": "Ethan",
+      "MiddleName": null,
+      "LastName": "Reyes",
+      "Email": "demo05@decodestudio.example",
+      "ProfileImagePath": "/uploads/images/demo-team-5.svg",
+      "Role": "User",
+      "IsActive": true
+    },
+    {
+      "FirstName": "Nina",
+      "MiddleName": null,
+      "LastName": "Flores",
+      "Email": "demo06@decodestudio.example",
+      "ProfileImagePath": "/uploads/images/demo-team-6.svg",
+      "Role": "User",
+      "IsActive": true
+    },
+    {
+      "FirstName": "Marco",
+      "MiddleName": null,
+      "LastName": "Lim",
+      "Email": "demo07@decodestudio.example",
+      "ProfileImagePath": "/uploads/images/demo-team-7.svg",
+      "Role": "User",
+      "IsActive": false
+    },
+    {
+      "FirstName": "Ava",
+      "MiddleName": null,
+      "LastName": "Garcia",
+      "Email": "demo08@decodestudio.example",
+      "ProfileImagePath": "/uploads/images/demo-team-8.svg",
+      "Role": "User",
+      "IsActive": false
+    }
+  ]
+}

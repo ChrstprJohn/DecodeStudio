@@ -1,0 +1,13 @@
+@model MyPortfolio.Models.Entities.ServiceOffering
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Delete service";
+}
+<h1 class="page-title">Delete service</h1>
+<p class="mt-6">Delete @Model.Title? This cannot be undone.</p>
+<form asp-action="Delete" method="post" class="mt-6">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <input type="hidden" name="confirmed" value="true" />
+    <button type="submit" class="action-secondary">Delete</button>
+    <a asp-action="Index" class="ml-4 underline">Cancel</a>
+</form>

@@ -45,11 +45,15 @@ Use complete Tailwind class names so the compiler can detect them.
 ## Prepared dependencies
 
 - EF Core SQL Server provider and design tools.
-- Full Identity EF stores were removed; custom account authentication is planned.
+- Full Identity EF stores were removed; custom account authentication uses cookies and the standalone Microsoft password hasher.
 - Project-local `dotnet-ef` tool for future migrations.
 - Tailwind CSS and CLI as build-only npm dependencies.
 
-The home page reads SiteContent row 1 from portfolio through EF Core. The local connection is configured in .NET User Secrets. See docs/development.md for setup on another machine. No content is inserted automatically. Accounts, admin editing, and migrations are not implemented.
+The home page reads SiteContent row 1 from portfolio through EF Core. The local connection is configured in .NET User Secrets. See docs/development.md for setup on another machine. No content is inserted automatically. Login/signup/logout are implemented; content CRUD and profile/account portals are implemented; analytics is blank and migrations are not used. In Development, anonymous home requests redirect to /Account/Login. See [account documentation](docs/authentication.md).
 
 Bootstrap, jQuery, and the demo Privacy page have been removed. Forms should use
 server-side validation; jQuery client validation is no longer included.
+
+See [implemented portal features](docs/features.md) for routes, permissions, and CRUD tests.
+
+See [DESIGN.md](DESIGN.md) for the shared public/account/admin visual language.

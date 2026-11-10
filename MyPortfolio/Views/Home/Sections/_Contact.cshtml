@@ -1,0 +1,22 @@
+@model HomeViewModel
+<section id="contact" aria-labelledby="contact-heading" class="bg-ink text-white">
+    <div class="public-width grid gap-12 py-20 md:grid-cols-2 md:py-28">
+        <div>
+            <h2 id="contact-heading" class="section-title">Contact</h2>
+            @if (!string.IsNullOrEmpty(Model.Content?.ContactEmail))
+            {
+                <a href="mailto:@Model.Content.ContactEmail" class="mt-10 inline-block max-w-full break-words text-2xl tracking-[-0.04em] underline md:text-3xl">@Model.Content.ContactEmail</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.Content?.ContactPhone))
+            {
+                <p class="mt-4 text-base">@Model.Content.ContactPhone</p>
+            }
+        </div>
+        <ul class="grid grid-cols-2 gap-x-6 gap-y-5 self-end text-base">
+            @foreach (var link in Model.SocialLinks)
+            {
+                <li><a href="@link.Url" class="underline decoration-white/40 hover:decoration-white">@link.Label</a></li>
+            }
+        </ul>
+    </div>
+</section>

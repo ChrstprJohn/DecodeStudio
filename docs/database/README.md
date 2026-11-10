@@ -71,3 +71,7 @@ tracking is not included.
 Map entities to these existing tables after manual execution. Do not apply an
 initial create-tables migration over them. A migration baseline can be added
 later if migrations are adopted; this script creates no EF migration history.
+
+## Optional service images
+
+For an existing database, run `./scripts/Add-ServiceImages.ps1` once. It safely adds nullable `dbo.Services.ImagePath` and preserves all existing rows. This upgrade has been applied to the current local database. The fresh schema includes this column. The admin Services form accepts the same PNG/JPEG/WebP uploads as other content; without an upload, the landing page shows a decorative local illustration.

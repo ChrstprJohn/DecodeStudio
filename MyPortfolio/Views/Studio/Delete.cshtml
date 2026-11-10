@@ -1,0 +1,11 @@
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Clear studio content";
+}
+<h1 class="page-title">Clear studio content</h1>
+<p class="mt-6">Remove the saved hero, About, contact, and footer record? Projects, services, team, and links will stay.</p>
+<form asp-action="Delete" method="post" class="mt-6">
+    <input type="hidden" name="confirmed" value="true" />
+    <button type="submit" class="action-secondary">Clear content</button>
+    <a asp-action="Index" class="ml-4 underline">Cancel</a>
+</form>

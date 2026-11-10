@@ -1,0 +1,28 @@
+@{
+    Layout = "_Layout";
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var navigation = new[]
+    {
+        new { Controller = "Admin", Label = "Analytics" },
+        new { Controller = "Studio", Label = "Studio content" },
+        new { Controller = "Projects", Label = "Website showcase" },
+        new { Controller = "Offerings", Label = "Services" },
+        new { Controller = "Team", Label = "Owner and team" },
+        new { Controller = "Links", Label = "Social links" },
+        new { Controller = "Accounts", Label = "Account management" }
+    };
+}
+<div class="mx-auto min-h-[calc(100svh-6rem)] max-w-[1600px] lg:grid lg:grid-cols-[16rem_1fr]">
+    <aside class="px-6 py-6 lg:px-8 lg:py-10">
+        <p class="px-4 text-lg font-semibold tracking-[-0.04em]">Administration</p>
+        <nav aria-label="Admin navigation" class="mt-6 flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible">
+            @foreach (var item in navigation)
+            {
+                <a asp-controller="@item.Controller" asp-action="Index" aria-current="@(currentController == item.Controller ? "page" : null)" class="admin-link shrink-0">@item.Label</a>
+            }
+        </nav>
+    </aside>
+    <div class="min-w-0 px-6 pb-14 pt-4 lg:px-10 lg:pt-10">
+        @RenderBody()
+    </div>
+</div>

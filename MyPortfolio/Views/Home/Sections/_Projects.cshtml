@@ -1,0 +1,27 @@
+@model HomeViewModel
+@{
+    var groups = Model.Projects.Chunk(6).ToArray();
+}
+<section id="projects" aria-labelledby="projects-heading" class="studio-showcase">
+    <h2 id="projects-heading" class="sr-only">Website showcase</h2>
+    @for (var groupIndex = 0; groupIndex < groups.Length; groupIndex++)
+    {
+        <div class="showcase-wall">
+            @foreach (var project in groups[groupIndex])
+            {
+                <a href="@project.WebsiteUrl" class="showcase-project" aria-label="Visit @project.Title">
+                    <img src="@DemoImagePaths.Project(project.ImagePath, wall: true)" alt="@project.Title preview" loading="lazy" />
+                    <span>@project.Title.Replace(" (Demo)", "") <span aria-hidden="true">↗</span></span>
+                </a>
+            }
+            @for (var slot = groups[groupIndex].Length; slot < 6; slot++)
+            {
+                <div class="showcase-empty" aria-hidden="true"></div>
+            }
+        </div>
+        @if (groupIndex < groups.Length - 1)
+        {
+            <p class="showcase-signature">Created by <span><partial name="_StudioWordmark" /></span></p>
+        }
+    }
+</section>

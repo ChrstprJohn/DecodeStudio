@@ -105,7 +105,7 @@ The certificate-trust option is for the local SQL container. For deployment,
 configure ConnectionStrings__Portfolio through the host environment and use the
 host's SQL/certificate settings. User Secrets are loaded in Development.
 
-An empty SiteContent table is supported: the page shows Decode Studio with no
+An empty SiteContent table is supported: the view model defaults to Decode Studio with no
 hero description. To display saved content, create row Id = 1 using all required
 columns in the documented schema. The app only reads this row; it does not seed it.
 
@@ -114,9 +114,26 @@ columns in the documented schema. The app only reads this row; it does not seed 
 While the app is running, from the repository root:
 
 ```powershell
-./scripts/Test-Home.ps1 -ExpectedHeroTitle "Decode Studio"
+./scripts/Test-Home.ps1
 ```
 
-Use your saved hero title instead if row 1 exists, or omit ExpectedHeroTitle to
-check markup and CSS only. A successful home request exercises the live EF query.
+The check verifies the landing section containers in public mode, or the login form after the school-mode redirect, plus CSS. Use [Test-Accounts](authentication.md) for authenticated database checks.
 Stop the server/watchers with Ctrl+C after testing.
+
+## Image files
+
+All hero/project/team/profile image forms use file pickers. Selected files are
+copied into MyPortfolio/wwwroot/uploads/images. The database stores their relative
+paths. The folder is created in the project and recreated by the upload service
+if needed. Git tracks its empty placeholder, not uploaded images. Back up this
+folder with the database and provide persistent storage for deployment.
+
+## Visual design and motion
+
+DESIGN.md records the current reference and shared tokens. Styles/input.css owns
+the Tailwind theme, base form styles, component utilities, self-hosted Inter font,
+and gallery keyframes. Views remain Razor templates with Tailwind classes.
+
+wwwroot/js/site.js handles the mobile menu and gallery pause/play. It honors
+reduced-motion preferences and pauses the gallery offscreen/in background tabs.
+Run `node scripts/Test-Design.mjs` to check these behaviors without a server.

@@ -7,3 +7,7 @@
 .env
 .env.*
 .taste-skill/
+MyPortfolio/wwwroot/uploads/*
+!MyPortfolio/wwwroot/uploads/images/
+MyPortfolio/wwwroot/uploads/images/*
+!MyPortfolio/wwwroot/uploads/images/.gitkeep

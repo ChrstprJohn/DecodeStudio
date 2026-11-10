@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <Target Name="BuildTailwind" BeforeTargets="PrepareForBuild" Condition="'$(DesignTimeBuild)' != 'true'">
+    <Copy SourceFiles="node_modules/gsap/dist/gsap.min.js" DestinationFolder="wwwroot/lib/gsap" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="node_modules/gsap/dist/CustomEase.min.js" DestinationFolder="wwwroot/lib/gsap" SkipUnchangedFiles="true" />
     <Exec Command="npm run css:build" WorkingDirectory="$(MSBuildProjectDirectory)" />
   </Target>
 
@@ -28,3 +30,5 @@
   </ItemGroup>
 
 </Project>
+
+

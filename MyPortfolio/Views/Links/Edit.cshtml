@@ -1,0 +1,28 @@
+@model SocialLinkViewModel
+@{
+    Layout = "_AdminLayout";
+    var action = Model.Id == 0 ? "Create" : "Edit";
+    ViewData["Title"] = action + " social link";
+}
+<h1 class="page-title">@ViewData["Title"]</h1>
+<form asp-action="@action" method="post" class="mt-8 max-w-3xl space-y-6 rounded-xl bg-white p-6 md:p-8">
+    <div asp-validation-summary="ModelOnly" role="alert" class="text-red-700"></div>
+    <input asp-for="Id" type="hidden" />
+    <div>
+        <label asp-for="Label" class="block"></label>
+        <input asp-for="Label" class="mt-2 w-full" />
+        <span asp-validation-for="Label" class="field-error"></span>
+    </div>
+    <div>
+        <label asp-for="Url" class="block"></label>
+        <input asp-for="Url" class="mt-2 w-full" />
+        <span asp-validation-for="Url" class="field-error"></span>
+    </div>
+    <div>
+        <label asp-for="SortOrder" class="block"></label>
+        <input asp-for="SortOrder" class="mt-2 w-full" />
+        <span asp-validation-for="SortOrder" class="field-error"></span>
+    </div>
+    <button type="submit" class="action-primary">Save</button>
+    <a asp-action="Index" class="ml-4 underline">Cancel</a>
+</form>

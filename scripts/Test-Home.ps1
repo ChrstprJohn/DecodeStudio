@@ -1,6 +1,5 @@
 param(
-    [string]$BaseUrl = 'http://localhost:5038',
-    [string]$ExpectedHeroTitle
+    [string]$BaseUrl = 'http://localhost:5038'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -10,16 +9,28 @@ if ($response.StatusCode -ne 200) {
     throw 'The home page did not respond successfully.'
 }
 
-foreach ($marker in @('aria-label="Main navigation"', 'id="hero"', 'id="hero-title"')) {
-    if (-not $response.Content.Contains($marker)) {
-        throw "Missing home page markup: $marker"
+$markers = @('aria-label="Main navigation"', 'id="footer"')
+if ($response.Content.Contains('id="hero"')) {
+    $sectionIds = @('hero', 'about', 'services', 'projects', 'team', 'contact')
+    $previousPosition = -1
+    foreach ($sectionId in $sectionIds) {
+        $position = $response.Content.IndexOf('id="' + $sectionId + '"')
+        if ($position -le $previousPosition) {
+            throw "Missing or out-of-order landing section: $sectionId"
+        }
+        $previousPosition = $position
+        if ($response.Content -notmatch ('href="/?#' + $sectionId + '"')) {
+            throw "Missing landing navigation anchor: $sectionId"
+        }
     }
 }
+else {
+    $markers += @('action="/Account/Login"', 'name="Email"', 'name="Password"')
+}
 
-if ($ExpectedHeroTitle) {
-    $encodedTitle = [System.Net.WebUtility]::HtmlEncode($ExpectedHeroTitle)
-    if ($response.Content -notmatch ('id="hero-title"[^>]*>' + [regex]::Escape($encodedTitle) + '</h1>')) {
-        throw 'The displayed hero title does not match the expected content.'
+foreach ($marker in $markers) {
+    if (-not $response.Content.Contains($marker)) {
+        throw "Missing home page markup: $marker"
     }
 }
 
@@ -28,4 +39,5 @@ if ($stylesheet.Content -notmatch 'tailwindcss') {
     throw 'The generated Tailwind stylesheet was not served.'
 }
 
-'PASS: database-backed home page, navigation, hero, and Tailwind stylesheet.'
+'PASS: landing or school-mode login page, shared layout, and Tailwind stylesheet.'
+

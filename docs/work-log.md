@@ -1,5 +1,153 @@
 # Work log
 
+## 2026-11-10 — Studio.Design direction across all pages
+
+- Inspected the live reference in a browser, including desktop/mobile hero motion,
+  scroll transitions, portfolio presentation, and navigation.
+- Replaced the orange hero with a gray editorial canvas and looping diagonal
+  gallery of the site's own published project images, plus pause/reduced-motion
+  controls and a responsive copy/CTA layout.
+- Applied the new theme to every landing section, login/signup/status forms,
+  profile/password forms, admin sidebar, content forms, and account tables.
+- Preserved conventional routes, authentication, anti-forgery, data binding, CRUD,
+  and account permissions. Analytics remains blank.
+- Self-hosted Inter and its license from the official font repository. Added
+  DESIGN.md/PRODUCT.md and updated the current visual documentation.
+- Build and authentication/CRUD/portal regression checks passed; test records
+  were cleaned up. Added assert-based checks for motion and menu behavior.
+- Reviewed the live landing/mobile menu/profile and captured admin form/table
+  screens. Verified no horizontal overflow in the desktop/mobile landing views
+  and no browser console errors. Saved previews under ignored .taste-skill.
+- Stopped both temporary preview servers and confirmed no matching Node workers.
+
+## 2026-11-10 — Orange/black decode hero reference
+
+- Applied the supplied screenshot's composition to the hero only: orange ground,
+  black navigation, dotted studio mark, deliberate open space, and giant decode.
+- Confirmed decode as the requested word. Kept the database headline and placed
+  supporting description/CTA below the first-screen canvas.
+- Moved the hero outside the capped landing wrapper and avoided duplicate headers.
+  Preserved account actions and all section anchors; other sections are unchanged.
+- Retained the stored hero-image field; this typography-led composition omits it.
+- Verified zero-warning/error build, landing smoke check, and browser captures at
+  desktop, tablet, and mobile widths. No database content/schema changes.
+
+## 2026-11-10 — Landing section skeleton and rendering order
+
+- Organized Home/Index into six readable partials under Home/Sections, ordered
+  Hero, About, Services, Products/Showcase, Contact, and Team.
+- Kept database rendering, optional image/link handling, publication filtering,
+  and the shared footer. Added semantic section headings and landing anchor links.
+- Kept styling minimal for future design work; no admin/account features changed.
+- Updated page/architecture/feature docs and smoke-check assertions for section
+  order and navigation. No database content or schema changes.
+- Build passed without warnings/errors. Verified section order, anchor links,
+  stylesheet, and all eight seeded entries per landing collection over HTTP.
+
+## 2026-11-10 — Sample content for landing-page design
+
+- Added Seed-SampleData.ps1 and seed/sample-data.json with eight projects,
+  services, team members, social links, and demo users; SiteContent stays one row.
+- Generated one hero, eight project-preview SVGs, and eight initials avatars
+  locally under wwwroot/uploads/images. Demo graphics are clearly identified.
+- Executed the script against portfolio. Existing admin data was preserved.
+- Reran it and verified zero new rows, confirming idempotence for sample keys.
+- Checked all sample content and 17 image URLs through the app; verified active
+  demo login and rejection of an inactive demo account.
+- Known demo credentials are documented for local testing, not public deployment.
+
+## 2026-11-10 — File pickers for every image
+
+- Replaced hero, project, and team image URL/path fields with real file pickers.
+- Generalized the profile uploader into ImageUploadService. All new image files
+  go to wwwroot/uploads/images; SQL keeps only generated relative paths.
+- Kept existing images on ordinary edits, added removal for optional images, and
+  cleaned generated files after replacement/deletion or a failed database save.
+- Preserved compatibility with earlier /uploads/profiles images.
+- Created a tracked folder placeholder while ignoring uploaded binary files.
+- Verified zero-warning/error build and full CRUD/portal integration tests,
+  including hero/team/project uploads, preservation/replacement/deletion, profile
+  upload/removal, and rejection of a fake image. Test data/files were removed.
+- Reran the owner promotion script and verified the requested account is Admin.
+
+## 2026-11-10 — Plain admin and user portals with CRUD
+
+- Added concrete entities/services/controllers/forms for Projects, Offerings
+  (Services table), Team, Links, and singleton Studio content.
+- Added an admin sidebar and blank Analytics default page. Admin login redirects
+  there; regular users still land on Home.
+- Added read-only account list/details with active/inactive filters and activation
+  forms. No account delete endpoint. Self-deactivation is prevented.
+- Added own-profile editing, unique-email checks, validated photo upload/removal,
+  and current-password-verified password changes. Account IDs/roles cannot be
+  changed through profile forms.
+- Added password-version cookie checks so password changes invalidate existing
+  sessions. Name changes refresh the cookie name on the next request.
+- Added plain database-backed landing output for published content and account
+  navigation. Kept analytics calculations and visual design deferred.
+- Mapped all existing tables; no schema changes or migrations were applied.
+- Build and existing account tests passed. Test-Portals.ps1 exercised all content
+  CRUD, permissions, activation, profile/photo/password operations and cleanup.
+  No real owner account or existing content was edited by tests.
+
+## 2026-11-10 — Owner account promoted
+
+- Added scripts/Promote-Admin.ps1 and a scripts README for local maintenance.
+- The script uses User Secrets and a parameterized query, updates only the
+  matching email's role, and checks the saved role returned by SQL Server.
+- Ran it for the account explicitly named by the user and verified Admin.
+- Names, passwords, and activation status were not modified. The owner must log
+  in again to refresh the role in the cookie. Signup still creates User accounts.
+
+## 2026-11-10 — Database-backed account forms
+
+- Added User entity, registration/login view models, AccountService, and
+  AccountController with conventional Login/Register/Logout actions.
+- Added plain Razor sign-up, login, and access-denied views. Landing sections
+  remain blank. Account creation always assigns User; admin promotion is deferred.
+- Used Microsoft's standalone password hasher and ASP.NET Core cookies, without
+  full Identity stores. No database schema changes or seed accounts.
+- Added server validation, anti-forgery checks, email normalization/uniqueness,
+  password rehash support, and per-request activation/role revalidation.
+- Development requires login for the portfolio; public-mode default permits
+  browsing. Static assets/account entry pages remain anonymously accessible.
+- Build passed with no warnings/errors. Test-Accounts.ps1 passed against SQL,
+  covering registration, invalid/duplicate data, role overposting, password
+  verification, logout, deactivation, and stale-role cookies. Temporary account
+  cleanup completed; no real user was promoted.
+- Updated docs and the home smoke check for the school-mode login redirect.
+- Verified public-mode anonymous home access and the updated home smoke check.
+- Reviewed login/signup renders at desktop and mobile sizes; tablet renders were
+  also captured. Marketing-style inspector warnings about large headlines/media
+  are outside the requested plain-form scope.
+- Confirmed no temporary test accounts remained and stopped the test server and
+  project Node workers. No admin account was promoted.
+
+## 2026-11-10 — Blank landing-page scaffold
+
+- Removed visible landing content and layout styling for later frontend work.
+- Left empty hero, about, projects, services, contact, and team sections in
+  Views/Home/Index.cshtml, with navigation/footer placeholders in the layout.
+- Preserved database loading, model, Tailwind setup, and keyboard skip link.
+- Updated the smoke check to expect section containers rather than hero copy.
+- Scope is landing page only; no admin/account pages or database changes.
+
+## 2026-11-10 — Agreed MVC implementation conventions
+
+- Documented conventional /Controller/Action routing, method names as action
+  names, GET links and POST forms, CRUD naming, and view discovery.
+- Recorded explicit constructor injection, scoped concrete services, controller/
+  service/data responsibilities, and server-rendered Razor as project conventions.
+- Linked the guide from the documentation index and architecture guide.
+- Documentation-only update; verified local links without repeating app tests.
+
+## 2026-11-10 — Explicit constructors for learning
+
+- Replaced primary constructors in HomeController and HomeService with explicit
+  constructors and private readonly fields, making received dependencies visible.
+- Dependency injection and request/database behavior remain unchanged.
+- Verified compilation using the separate verification output folder.
+
 ## 2026-11-10 — Local Git repository
 
 - Initialized Git at the project root with main as the initial branch.
@@ -150,3 +298,21 @@ No existing database was modified. The current starter does not enforce login.
 - Documented current behavior separately from planned database/account features.
 - Checked local documentation links. No application code changed in this step;
   runtime/build checks were not repeated for Markdown-only additions.
+
+- Refined the home hero against Studio.Design: viewport-based diagonal gallery, square image-color panels, fixed frosted-glass navigation, and dedicated GSAP motion code. Kept existing database content and other pages. Added resize-continuity coverage to the motion check.
+
+- Extended the reference-led landing layout to Services (including optional image upload), the two-row website showcase, tall grayscale people cards, and the dark grouped footer. Updated section ordering and regression coverage; applied the non-destructive Services.ImagePath column upgrade.
+
+- Created eight distinct navigation-and-hero-only HTML samples, captured optimized WebP images, and used them in the main hero without updating project records. Replaced generated people with empty spaces/still-life assets. Added a short GSAP entrance sequence with reduced-motion support. Sources and prompts: docs/hero-assets.md.
+
+- Matched reference sizes for the hero, nav, and Services; removed the visible gallery pause button; aligned image/square rows and centered their diagonal stripe. Added a proper SVG slash wordmark. Replaced the staggered showcase with three equal columns using taller captures, centered the team heading and portrait grid, and generated eight service WebP images. Saved ImagePath values in seed JSON and the eight local sample service records; verified upload/replacement CRUD and removed unused SVG service artwork.
+
+- Shortened the database/seed hero copy to a two-line headline and compact description. Matched the reference reveal curve and heading → navigation/copy → gallery sequence; increased the loop speed and removed hover/focus pauses. Changed service CTAs to Learn more with matching dimensions and cropped the featured artwork flush into the card edge.
+
+- Hero reload: hide content before the first paint, then wait 0.5 seconds before the existing entrance sequence. Reduced motion shows immediately; a four-second fallback reveals content if GSAP fails.
+
+- Added SEO Setup as the ninth sample service with /images/services/seo-setup.webp, seed JSON and database row. Added separate section-animation.js for 1.6-second viewport reveals (32px rise, wall tiles at 110% scale with stagger), respecting reduced motion. Tightened the shared logo slash.
+
+- Showcase projects now render in groups of six, each a three-column/two-row desktop wall, with the studio badge between groups. Empty slots keep the last group aligned and fill automatically as projects are published; mobile hides empty slots.
+
+- Mobile showcase keeps three columns in a centered 144%-wide wall, clipping the outer cards at the viewport edges. Empty slots remain aligned and the badge stays centered between groups.

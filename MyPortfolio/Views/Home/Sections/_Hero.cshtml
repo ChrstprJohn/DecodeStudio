@@ -1,0 +1,40 @@
+@model HomeViewModel
+@{
+    var projects = Model.Projects.Take(8).ToList();
+    var rowCount = projects.Count == 0 ? 0 : Math.Max(8, projects.Count);
+}
+<section id="hero" class="studio-hero" aria-labelledby="hero-heading" data-gallery>
+    <div class="gallery-window" aria-hidden="true">
+        <div class="gallery-track" data-gallery-track>
+            @for (var copy = 0; copy < 2; copy++)
+            {
+                @for (var index = 0; index < rowCount; index++)
+                {
+                    var project = projects[index % projects.Count];
+                    var originalImage = project.ImagePath ?? "";
+                    var imagePath = DemoImagePaths.Project(originalImage);
+                    <div class="gallery-step" style="--step: @(copy * rowCount + index)" data-gallery-project>
+                        <img src="@imagePath" alt="" class="gallery-image" loading="eager" />
+                        <div class="gallery-palette"><span>@project.Title.Replace(" (Demo)", "")</span></div>
+                    </div>
+                }
+            }
+        </div>
+        @if (projects.Count == 0 && !string.IsNullOrEmpty(Model.Content?.HeroImagePath))
+        {
+            <img src="@Model.Content.HeroImagePath" alt="" class="hero-fallback" />
+        }
+    </div>
+    <h1 id="hero-heading" class="hero-heading">@Model.HeroTitle</h1>
+    <div class="hero-introduction">
+        <p>@Model.HeroDescription</p>
+        @if (!string.IsNullOrEmpty(Model.Content?.HeroLinkUrl))
+        {
+            <a href="@Model.Content.HeroLinkUrl" class="action-primary hero-action">
+                @(Model.Content.HeroLinkText ?? "Explore our work")
+                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4 fill-none stroke-current"><path d="M4 16 16 4M4 4h12v12" stroke-width="1.5" /></svg>
+            </a>
+        }
+    </div>
+</section>
+

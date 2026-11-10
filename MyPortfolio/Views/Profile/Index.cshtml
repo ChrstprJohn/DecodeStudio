@@ -1,0 +1,23 @@
+@model ProfileViewModel
+@{
+    ViewData["Title"] = "My portal";
+}
+<div class="account-panel lg:max-w-2xl">
+    <h1 class="page-title">My portal</h1>
+    <p class="mt-4">Update your own profile.</p>
+    @if (!string.IsNullOrEmpty(Model.ProfileImagePath))
+    {
+        <img src="@Model.ProfileImagePath" alt="Your profile photo" class="mt-6 h-24 w-24 rounded-lg object-cover" />
+    }
+    <form asp-action="Edit" method="post" enctype="multipart/form-data" class="mt-6 space-y-5">
+        <div asp-validation-summary="ModelOnly" role="alert" class="text-red-700"></div>
+        <div><label asp-for="FirstName" class="block"></label><input asp-for="FirstName" class="mt-2 w-full" /><span asp-validation-for="FirstName" class="field-error"></span></div>
+        <div><label asp-for="MiddleName" class="block"></label><input asp-for="MiddleName" class="mt-2 w-full" /><span asp-validation-for="MiddleName" class="field-error"></span></div>
+        <div><label asp-for="LastName" class="block"></label><input asp-for="LastName" class="mt-2 w-full" /><span asp-validation-for="LastName" class="field-error"></span></div>
+        <div><label asp-for="Email" class="block"></label><input asp-for="Email" class="mt-2 w-full" /><span asp-validation-for="Email" class="field-error"></span></div>
+        <div><label asp-for="Photo" class="block"></label><input asp-for="Photo" type="file" accept="image/png,image/jpeg,image/webp" class="mt-2 block" /><span asp-validation-for="Photo" class="field-error"></span></div>
+        <label class="block"><input asp-for="RemovePhoto" /> Remove current photo</label>
+        <button type="submit" class="action-primary">Save profile</button>
+    </form>
+    <a asp-action="ChangePassword" class="mt-8 inline-block underline">Change password</a>
+</div>

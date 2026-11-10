@@ -1,0 +1,18 @@
+@model HomeViewModel
+<section id="team" aria-labelledby="team-heading" class="studio-team studio-section-width">
+    <h2 id="team-heading" class="studio-section-heading">Behind the pixels.</h2>
+    <div class="team-grid">
+        @foreach (var member in Model.TeamMembers)
+        {
+            <article class="team-person">
+                @if (!string.IsNullOrEmpty(member.PhotoPath))
+                {
+                    <img src="@member.PhotoPath" alt="@member.FirstName @member.LastName" loading="lazy" />
+                }
+                <p class="team-role">@member.RoleTitle @(member.IsOwner ? "· Founder" : "")</p>
+                <h3>@member.FirstName @member.MiddleName @member.LastName</h3>
+                <p class="team-bio">@member.Bio</p>
+            </article>
+        }
+    </div>
+</section>

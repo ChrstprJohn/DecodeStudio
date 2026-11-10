@@ -1,0 +1,11 @@
+@model HomeViewModel
+<section id="about" aria-labelledby="about-heading" class="public-width grid gap-10 py-20 md:grid-cols-2 md:gap-16 md:py-32">
+    <h2 id="about-heading" class="section-title">@(Model.Content?.AboutTitle ?? "About Decode Studio")</h2>
+    <div class="max-w-xl self-end">
+        <p class="whitespace-pre-line text-lg leading-relaxed tracking-[-0.02em]">@Model.Content?.AboutDescription</p>
+        @if (!string.IsNullOrEmpty(Model.Content?.Tagline))
+        {
+            <p class="mt-8 text-2xl font-medium tracking-[-0.04em]">@Model.Content.Tagline</p>
+        }
+    </div>
+</section>

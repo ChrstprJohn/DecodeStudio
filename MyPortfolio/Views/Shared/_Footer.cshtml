@@ -1,0 +1,50 @@
+<footer id="footer" class="studio-footer">
+    <div class="footer-columns">
+        <div>
+            <a asp-controller="Home" asp-action="Index" class="footer-brand"><partial name="_StudioWordmark" /></a>
+            <p class="footer-tagline">@(ViewData["Tagline"] ?? "Design. Develop. Deploy.")</p>
+        </div>
+        <div>
+            <h2>Explore</h2>
+            <ul>
+                <li><a asp-controller="Home" asp-action="Index" asp-fragment="about">About the studio</a></li>
+                <li><a asp-controller="Home" asp-action="Index" asp-fragment="services">Services</a></li>
+                <li><a asp-controller="Home" asp-action="Index" asp-fragment="projects">Selected work</a></li>
+                <li><a asp-controller="Home" asp-action="Index" asp-fragment="team">Our people</a></li>
+            </ul>
+        </div>
+        <div>
+            <h2>Your account</h2>
+            <ul>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <li><a asp-controller="Profile" asp-action="Index">My portal</a></li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li><a asp-controller="Admin" asp-action="Index">Admin dashboard</a></li>
+                    }
+                }
+                else
+                {
+                    <li><a asp-controller="Account" asp-action="Login">Log in</a></li>
+                    <li><a asp-controller="Account" asp-action="Register">Sign up</a></li>
+                }
+            </ul>
+        </div>
+        <div>
+            <h2>Let's make something.</h2>
+            <ul>
+                <li><a asp-controller="Home" asp-action="Index" asp-fragment="contact">Get in touch ↗</a></li>
+                @if (ViewData["ContactEmail"] is string contactEmail && !string.IsNullOrEmpty(contactEmail))
+                {
+                    <li class="break-words"><a href="mailto:@contactEmail">@contactEmail</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; @DateTime.Now.Year @(ViewData["StudioName"] ?? "Decode Studio")<span class="block mt-2">@ViewData["FooterText"]</span></p>
+        <a asp-controller="Home" asp-action="Index" asp-fragment="hero">Back to top ↑</a>
+    </div>
+</footer>
+

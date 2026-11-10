@@ -19,8 +19,8 @@ can be added if the amount of content eventually justifies them.
 | --- | --- | --- |
 | Hero | Heading, introduction, optional image, and primary link | Business/company introduction |
 | About | Studio description and business information | About the Business/Company |
-| Website showcase | Website/project title, description, preview image, and live website link | Products |
 | Services | Web design, web development, deployment, and other actual services | Services |
+| Website showcase | Website/project title, description, preview image, and live website link | Products |
 | Contact | Display email, phone if provided, and contact/social links | Contact Information |
 | Owner and team | Owner/team names, roles, biographies, and photos | Owners Information |
 | Footer | Studio identity, contact/social links, and section navigation | Supporting website content |
