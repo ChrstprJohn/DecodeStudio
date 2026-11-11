@@ -11,7 +11,7 @@
             gsap.timeline({ delay: 0.5, defaults: { duration: 0.8, ease: revealEase, clearProps: 'opacity,visibility,transform' } })
                 .from('.hero-heading', { autoAlpha: 0, x: -16, y: 16 }, 0.2)
                 .from('.home-header', { autoAlpha: 0 }, 0.4)
-                .from('.hero-introduction', { autoAlpha: 0 }, 0.4)
+                .from('.hero-introduction', { autoAlpha: 0, x: -16, y: 16 }, 0.4)
                 .from('.gallery-window', { autoAlpha: 0, duration: 1.6, ease: 'none' }, 0.6);
         });
     }

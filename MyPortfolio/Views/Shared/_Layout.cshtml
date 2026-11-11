@@ -45,7 +45,7 @@
                 }
             </nav>
             <details class="group lg:hidden">
-                <summary class="list-none rounded-lg bg-ink px-4 py-3 text-sm font-medium text-white">Menu</summary>
+                <summary class="mobile-menu-toggle" aria-label="Menu"><span aria-hidden="true"></span><span aria-hidden="true"></span></summary>
                 <nav aria-label="Mobile navigation" class="absolute inset-x-0 top-full flex flex-col gap-5 border-t border-[#dddddd] bg-canvas px-6 py-7 text-base">
                     <a asp-controller="Home" asp-action="Index" asp-fragment="hero">Home</a>
                     <a asp-controller="Home" asp-action="Index" asp-fragment="about">About</a>
@@ -87,6 +87,3 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-
-

@@ -52,9 +52,6 @@ function Write-DemoImage([string]$imagePath, [string]$title, [string]$subtitle, 
 }
 
 Write-DemoImage $data.SiteContent.HeroImagePath 'Decode Studio' 'Design. Develop. Deploy.' '#e8ece8' '#263c32'
-foreach ($item in $data.Projects) {
-    Write-DemoImage $item.ImagePath ($item.Title.Replace(' (Demo)', '')) 'A sample website concept' $item.Background $item.Foreground
-}
 for ($index = 0; $index -lt $data.TeamMembers.Count; $index++) {
     $member = $data.TeamMembers[$index]
     $initials = $member.FirstName.Substring(0, 1) + $member.LastName.Substring(0, 1)
@@ -165,4 +162,3 @@ finally {
     if ($transaction) { $transaction.Dispose() }
     $connection.Dispose()
 }
-

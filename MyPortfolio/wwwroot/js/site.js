@@ -15,7 +15,7 @@ if (mobileMenu) {
 // Keep the glass navigation readable over the dark landing sections.
 const floatingHeader = document.querySelector('.home-header');
 if (floatingHeader?.classList) {
-    const sections = ['services', 'contact', 'footer'].map(id => document.getElementById(id)).filter(Boolean);
+    const sections = ['services', 'footer'].map(id => document.getElementById(id)).filter(Boolean);
     let scheduled = false;
     function updateHeaderContrast() {
         scheduled = false;

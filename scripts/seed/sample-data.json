@@ -16,84 +16,216 @@
   },
   "Projects": [
     {
-      "Title": "Northline Architecture (Demo)",
-      "Description": "A portfolio for an architecture practice, with large project imagery and a clear inquiry flow.",
-      "ImagePath": "/uploads/images/demo-project-architecture.svg",
-      "WebsiteUrl": "https://example.com/?project=architecture",
+      "Title": "Tanaka Architecture",
+      "Description": "Website hero concept for Tanaka Architecture.",
+      "ImagePath": "/images/projects/preview-01-tanaka-architecture.jpg",
+      "WebsiteUrl": "https://example.com/?project=tanaka-architecture",
       "SortOrder": 1,
       "IsPublished": true,
-      "Background": "#e7e2d8",
-      "Foreground": "#25382e"
+      "Background": "#eee",
+      "Foreground": "#333"
     },
     {
-      "Title": "Bloom & Stem (Demo)",
-      "Description": "An online flower shop concept with seasonal collections and an easy-to-browse product catalog.",
-      "ImagePath": "/uploads/images/demo-project-ecommerce.svg",
-      "WebsiteUrl": "https://example.com/?project=ecommerce",
+      "Title": "Petal & Stem",
+      "Description": "Website hero concept for Petal & Stem.",
+      "ImagePath": "/images/projects/preview-02-petal-stem.jpg",
+      "WebsiteUrl": "https://example.com/?project=petal-stem",
       "SortOrder": 2,
       "IsPublished": true,
-      "Background": "#f1e4e7",
-      "Foreground": "#773f52"
+      "Background": "#eee",
+      "Foreground": "#333"
     },
     {
-      "Title": "Coastline Retreat (Demo)",
-      "Description": "A boutique accommodation concept with room photography, local guides, and booking information.",
-      "ImagePath": "/uploads/images/demo-project-hospitality.svg",
-      "WebsiteUrl": "https://example.com/?project=hospitality",
+      "Title": "Toneworks",
+      "Description": "Website hero concept for Toneworks.",
+      "ImagePath": "/images/projects/preview-03-toneworks.jpg",
+      "WebsiteUrl": "https://example.com/?project=toneworks",
       "SortOrder": 3,
       "IsPublished": true,
-      "Background": "#dce9ed",
-      "Foreground": "#244c5c"
+      "Background": "#eee",
+      "Foreground": "#333"
     },
     {
-      "Title": "Forma Fitness (Demo)",
-      "Description": "A fitness studio website with class schedules, trainer introductions, and membership information.",
-      "ImagePath": "/uploads/images/demo-project-fitness.svg",
-      "WebsiteUrl": "https://example.com/?project=fitness",
+      "Title": "Common Form",
+      "Description": "Website hero concept for Common Form.",
+      "ImagePath": "/images/projects/preview-04-common-form.jpg",
+      "WebsiteUrl": "https://example.com/?project=common-form",
       "SortOrder": 4,
       "IsPublished": true,
-      "Background": "#e9edc9",
-      "Foreground": "#303f23"
+      "Background": "#eee",
+      "Foreground": "#333"
     },
     {
-      "Title": "Cedar Coffee (Demo)",
-      "Description": "A neighborhood coffee brand concept showcasing its menu, beans, and cafe locations.",
-      "ImagePath": "/uploads/images/demo-project-food.svg",
-      "WebsiteUrl": "https://example.com/?project=food",
+      "Title": "Line & Grain",
+      "Description": "Website hero concept for Line & Grain.",
+      "ImagePath": "/images/projects/preview-10-line-grain.jpg",
+      "WebsiteUrl": "https://example.com/?project=line-grain",
       "SortOrder": 5,
       "IsPublished": true,
-      "Background": "#ede0d1",
-      "Foreground": "#63452d"
+      "Background": "#eee",
+      "Foreground": "#333"
     },
     {
-      "Title": "Atlas Learning (Demo)",
-      "Description": "An education platform concept with course information, instructor profiles, and student resources.",
-      "ImagePath": "/uploads/images/demo-project-education.svg",
-      "WebsiteUrl": "https://example.com/?project=education",
+      "Title": "Margin",
+      "Description": "Website hero concept for Margin.",
+      "ImagePath": "/images/projects/preview-13-margin.jpg",
+      "WebsiteUrl": "https://example.com/?project=margin",
       "SortOrder": 6,
       "IsPublished": true,
-      "Background": "#e3e4f2",
-      "Foreground": "#3f4776"
+      "Background": "#eee",
+      "Foreground": "#333"
     },
     {
-      "Title": "Luma Skincare (Demo)",
-      "Description": "A skincare brand concept with product education, ingredient stories, and a simple shopping flow.",
-      "ImagePath": "/uploads/images/demo-project-beauty.svg",
-      "WebsiteUrl": "https://example.com/?project=beauty",
+      "Title": "Relay",
+      "Description": "Website hero concept for Relay.",
+      "ImagePath": "/images/projects/preview-15-relay.jpg",
+      "WebsiteUrl": "https://example.com/?project=relay",
       "SortOrder": 7,
       "IsPublished": true,
-      "Background": "#f2eadc",
-      "Foreground": "#745a3a"
+      "Background": "#eee",
+      "Foreground": "#333"
     },
     {
-      "Title": "Signal Creative (Demo)",
-      "Description": "A creative-agency portfolio concept presenting selected work, capabilities, and a contact flow.",
-      "ImagePath": "/uploads/images/demo-project-creative.svg",
-      "WebsiteUrl": "https://example.com/?project=creative",
+      "Title": "Quartz",
+      "Description": "Website hero concept for Quartz.",
+      "ImagePath": "/images/projects/preview-16-quartz.jpg",
+      "WebsiteUrl": "https://example.com/?project=quartz",
       "SortOrder": 8,
       "IsPublished": true,
-      "Background": "#e5e5e5",
-      "Foreground": "#252525"
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "Ledger",
+      "Description": "Website hero concept for Ledger.",
+      "ImagePath": "/images/projects/preview-14-ledger.jpg",
+      "WebsiteUrl": "https://example.com/?project=ledger",
+      "SortOrder": 9,
+      "IsPublished": true,
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "Morrow",
+      "Description": "Website hero concept for Morrow.",
+      "ImagePath": "/images/projects/preview-17-morrow.jpg",
+      "WebsiteUrl": "https://example.com/?project=morrow",
+      "SortOrder": 10,
+      "IsPublished": true,
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "Atlas Press",
+      "Description": "Website hero concept for Atlas Press.",
+      "ImagePath": "/images/projects/preview-18-atlas-press.jpg",
+      "WebsiteUrl": "https://example.com/?project=atlas-press",
+      "SortOrder": 11,
+      "IsPublished": true,
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "RouteField / mint",
+      "Description": "Website hero concept for RouteField / mint.",
+      "ImagePath": "/images/projects/preview-21-routefield-mint.jpg",
+      "WebsiteUrl": "https://example.com/?project=routefield-mint",
+      "SortOrder": 12,
+      "IsPublished": true,
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "Field Museum / straight strip",
+      "Description": "Website hero concept for Field Museum / straight strip.",
+      "ImagePath": "/images/projects/preview-25-field-museum-straight-strip.jpg",
+      "WebsiteUrl": "https://example.com/?project=field-museum-straight-strip",
+      "SortOrder": 13,
+      "IsPublished": true,
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "Index / blue",
+      "Description": "Website hero concept for Index / blue.",
+      "ImagePath": "/images/projects/preview-27-index-blue.jpg",
+      "WebsiteUrl": "https://example.com/?project=index-blue",
+      "SortOrder": 14,
+      "IsPublished": true,
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "Field Museum / curved strip",
+      "Description": "Website hero concept for Field Museum / curved strip.",
+      "ImagePath": "/images/projects/preview-29-field-museum-curved-strip.jpg",
+      "WebsiteUrl": "https://example.com/?project=field-museum-curved-strip",
+      "SortOrder": 15,
+      "IsPublished": true,
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "Arbor Gallery",
+      "Description": "Website hero concept for Arbor Gallery.",
+      "ImagePath": "/images/projects/preview-32-arbor-gallery.jpg",
+      "WebsiteUrl": "https://example.com/?project=arbor-gallery",
+      "SortOrder": 16,
+      "IsPublished": true,
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "Coral Bloom",
+      "Description": "Website hero concept for Coral Bloom.",
+      "ImagePath": "/images/projects/preview-34-coral-bloom.jpg",
+      "WebsiteUrl": "https://example.com/?project=coral-bloom",
+      "SortOrder": 17,
+      "IsPublished": true,
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "Aurelia / cinematic",
+      "Description": "Website hero concept for Aurelia / cinematic.",
+      "ImagePath": "/images/projects/preview-35-aurelia-cinematic.jpg",
+      "WebsiteUrl": "https://example.com/?project=aurelia-cinematic",
+      "SortOrder": 18,
+      "IsPublished": true,
+      "Background": "#eee",
+      "Foreground": "#333"
+    },
+    {
+      "Title": "SchedSnap",
+      "Description": "A scheduling website built by Decode Studio.",
+      "ImagePath": "/images/projects/schedsnap.jpg",
+      "WebsiteUrl": "https://schedsnap.chrbuilds.dev/",
+      "SortOrder": 19,
+      "IsPublished": true
+    },
+    {
+      "Title": "Samson Dental Center",
+      "Description": "Dental clinic website.",
+      "ImagePath": "/images/projects/samson-dental.jpg",
+      "WebsiteUrl": "https://samsondentalcenter-website.chrbuilds.dev/",
+      "SortOrder": 20,
+      "IsPublished": true
+    },
+    {
+      "Title": "CosmicGaze",
+      "Description": "Interactive astronomy website.",
+      "ImagePath": "/images/projects/cosmicgaze.jpg",
+      "WebsiteUrl": "https://cosmicgaze.chrbuilds.dev/",
+      "SortOrder": 21,
+      "IsPublished": true
+    },
+    {
+      "Title": "SignWise",
+      "Description": "Document review website.",
+      "ImagePath": "/images/projects/signwisely.jpg",
+      "WebsiteUrl": "https://signwisely.vercel.app/",
+      "SortOrder": 22,
+      "IsPublished": true
     }
   ],
   "Services": [

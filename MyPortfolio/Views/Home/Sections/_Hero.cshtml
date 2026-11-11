@@ -1,6 +1,6 @@
 @model HomeViewModel
 @{
-    var projects = Model.Projects.Take(8).ToList();
+    var projects = Model.Projects.Take(10).ToList();
     var rowCount = projects.Count == 0 ? 0 : Math.Max(8, projects.Count);
 }
 <section id="hero" class="studio-hero" aria-labelledby="hero-heading" data-gallery>
@@ -11,10 +11,8 @@
                 @for (var index = 0; index < rowCount; index++)
                 {
                     var project = projects[index % projects.Count];
-                    var originalImage = project.ImagePath ?? "";
-                    var imagePath = DemoImagePaths.Project(originalImage);
                     <div class="gallery-step" style="--step: @(copy * rowCount + index)" data-gallery-project>
-                        <img src="@imagePath" alt="" class="gallery-image" loading="eager" />
+                        <img src="@project.ImagePath" alt="" class="gallery-image" loading="eager" />
                         <div class="gallery-palette"><span>@project.Title.Replace(" (Demo)", "")</span></div>
                     </div>
                 }
@@ -37,4 +35,3 @@
         }
     </div>
 </section>
-

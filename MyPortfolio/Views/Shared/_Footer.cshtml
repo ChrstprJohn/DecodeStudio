@@ -43,8 +43,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; @DateTime.Now.Year @(ViewData["StudioName"] ?? "Decode Studio")<span class="block mt-2">@ViewData["FooterText"]</span></p>
-        <a asp-controller="Home" asp-action="Index" asp-fragment="hero">Back to top ↑</a>
+        <p>&copy; @DateTime.Now.Year @(ViewData["StudioName"] ?? "Decode Studio")</p>
+        <p>@(ViewData["StudioName"] ?? "Decode Studio")</p>
     </div>
 </footer>
-

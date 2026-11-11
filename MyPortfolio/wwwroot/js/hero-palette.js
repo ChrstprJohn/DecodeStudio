@@ -1,13 +1,15 @@
-// Colors from the eight saved HTML themes; uploaded images are sampled below.
+// Curated pairs for the selected previews. Other project images are sampled below.
 const demoPalettes = {
-    '/images/projects/architecture.webp': ['#243b2d', '#f1efe7'],
-    '/images/projects/ecommerce.webp': ['#86152c', '#f8dfdc'],
-    '/images/projects/hospitality.webp': ['#087c83', '#e9e4d8'],
-    '/images/projects/fitness.webp': ['#d4f42c', '#161817'],
-    '/images/projects/food.webp': ['#c95b32', '#f4e8d8'],
-    '/images/projects/education.webp': ['#152e87', '#ffce42'],
-    '/images/projects/beauty.webp': ['#3f4723', '#eeedc5'],
-    '/images/projects/creative.webp': ['#41dded', '#171e20']
+    '/images/projects/preview-01-tanaka-architecture.jpg': ['#24382b', '#d6c9a7'],
+    '/images/projects/preview-02-petal-stem.jpg': ['#bb3326', '#ffd4b6'],
+    '/images/projects/preview-03-toneworks.jpg': ['#cc8a23', '#222222'],
+    '/images/projects/preview-04-common-form.jpg': ['#e5ddd2', '#584435'],
+    '/images/projects/preview-10-line-grain.jpg': ['#302f2b', '#e4d8c9'],
+    '/images/projects/preview-13-margin.jpg': ['#e95320', '#f8e7bf'],
+    '/images/projects/preview-15-relay.jpg': ['#d4c5fa', '#282043'],
+    '/images/projects/preview-16-quartz.jpg': ['#bbdfcc', '#1d4939'],
+    '/images/projects/preview-14-ledger.jpg': ['#154d39', '#e9e3ce'],
+    '/images/projects/preview-17-morrow.jpg': ['#344e79', '#e1e9fa']
 };
 // Read two prominent image colors without adding database fields just for the hero.
 document.querySelectorAll('[data-gallery-project]').forEach(project => {
@@ -48,7 +50,3 @@ document.querySelectorAll('[data-gallery-project]').forEach(project => {
     if (image.complete && image.naturalWidth) applyPalette();
     else image.addEventListener('load', applyPalette, { once: true });
 });
-
-
-
-

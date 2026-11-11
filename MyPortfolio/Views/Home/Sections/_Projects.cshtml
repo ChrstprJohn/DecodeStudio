@@ -9,8 +9,12 @@
         <div class="showcase-wall">
             @foreach (var project in groups[groupIndex])
             {
-                <a href="@project.WebsiteUrl" class="showcase-project" aria-label="Visit @project.Title">
-                    <img src="@DemoImagePaths.Project(project.ImagePath, wall: true)" alt="@project.Title preview" loading="lazy" />
+                var isSample = project.ImagePath.StartsWith("/images/projects/preview-") &&
+                    project.WebsiteUrl.StartsWith("https://example.com/?project=");
+                var destination = isSample ? project.ImagePath : project.WebsiteUrl;
+                var action = isSample ? "View preview of" : "Visit";
+                <a href="@destination" class="showcase-project" aria-label="@action @project.Title">
+                    <img src="@project.ImagePath" alt="@project.Title preview" loading="lazy" />
                     <span>@project.Title.Replace(" (Demo)", "") <span aria-hidden="true">↗</span></span>
                 </a>
             }
