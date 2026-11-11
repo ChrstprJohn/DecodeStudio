@@ -25,7 +25,7 @@ const nav = { children: [], querySelector() { return null; }, querySelectorAll(s
 const pageSection = { inert: false };
 const menu = {
     open: false,
-    closest() { return { prepend() {}, classList: { contains() { return true; }, add() {}, remove() {} } }; },
+    closest() { return { prepend() {}, querySelector() { return null; }, classList: { contains() { return true; }, add() {}, remove() {} } }; },
     querySelector(selector) { return selector === 'summary' ? summary : nav; }
 };
 const document = {
