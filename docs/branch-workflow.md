@@ -2,8 +2,8 @@
 
 | Branch | Visitor access | Admin access |
 | --- | --- | --- |
-| `codex/school-login` | Login required by default. Visitors can register, sign in, and manage their own profile. | Existing admin sign-in, portfolio editing, and account management. |
-| `codex/public-portfolio` | Anyone can open the portfolio. No visitor sign-in or registration. | Open `/admin` directly to sign in. Admins can edit the portfolio and their own profile. |
+| `feature/school-login` | Login required by default. Visitors can register, sign in, and manage their own profile. | Existing admin sign-in, portfolio editing, and account management. |
+| `feature/public-portfolio` | Anyone can open the portfolio. No visitor sign-in or registration. | Open `/admin` directly to sign in. Admins can edit the portfolio and their own profile. |
 
 Both versions use the existing `ConnectionStrings:Portfolio` setting and the same
 SQL schema. Point both deployments at the same database to share content and the
@@ -21,7 +21,7 @@ after committing a shared admin editor fix on the school branch, carry just
 that commit over:
 
 ```powershell
-git switch codex/public-portfolio
+git switch feature/public-portfolio
 git cherry-pick <shared-commit-sha>
 ```
 
