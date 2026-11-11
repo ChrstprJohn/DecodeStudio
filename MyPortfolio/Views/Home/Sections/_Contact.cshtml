@@ -1,22 +1,42 @@
 @model HomeViewModel
-<section id="contact" aria-labelledby="contact-heading" class="bg-white text-ink">
-    <div class="public-width grid gap-9 py-16 md:grid-cols-2 md:items-center md:gap-12 md:py-24">
-        <div>
-            <h2 id="contact-heading" class="section-title">Contact</h2>
-            @if (!string.IsNullOrEmpty(Model.Content?.ContactEmail))
+@{
+    var previews = Model.HeroPreviews;
+    var phone = Model.Content?.ContactPhone?.Trim() ?? "";
+    var phoneDigits = string.Concat(phone.Where(char.IsAsciiDigit));
+    var dialNumber = phone.StartsWith('+') ? "+" + phoneDigits : phoneDigits;
+}
+<section id="contact" aria-labelledby="contact-heading" class="studio-contact studio-section-width">
+    @if (!string.IsNullOrEmpty(Model.Content?.ContactBackgroundImagePath))
+    {
+        <img class="contact-background" src="@Model.Content.ContactBackgroundImagePath" alt="" loading="lazy" decoding="async" asp-append-version="true" />
+    }
+    else if (previews.Count > 0)
+    {
+        <div class="contact-collage" aria-hidden="true">
+            @for (var column = 0; column < 7; column++)
             {
-                <a href="mailto:@Model.Content.ContactEmail" class="mt-7 inline-flex max-w-full items-start gap-2 text-[clamp(15px,4.5vw,20px)] tracking-[-0.03em] underline underline-offset-4 md:mt-9 md:text-2xl"><svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 6 9 7 9-7" /></svg><span class="min-w-0 [overflow-wrap:anywhere]">@Model.Content.ContactEmail</span></a>
-            }
-            @if (!string.IsNullOrEmpty(Model.Content?.ContactPhone))
-            {
-                <p class="mt-4 flex items-center gap-3 text-base"><svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-4l-5-2-2 3a14 14 0 0 1-7-7l3-2-2-5Z" /></svg>@Model.Content.ContactPhone</p>
+                <div class="contact-collage-column">
+                    @for (var row = 0; row < 7; row++)
+                    {
+                        var tile = (row * 7 + column) % previews.Count;
+                        <img src="@previews[tile].ImagePath" alt="" loading="lazy" decoding="async" asp-append-version="true" />
+                    }
+                </div>
             }
         </div>
-        <ul class="grid grid-cols-2 gap-x-4 gap-y-4 text-sm md:gap-x-6 md:text-base">
-            @foreach (var link in Model.SocialLinks)
+    }
+    <div class="contact-copy">
+            <h2 id="contact-heading" class="section-title">Contact</h2>
+            <p class="contact-description">Planning a new website or a redesign? Tell us about your project and when you’d like to launch.</p>
+            <div class="contact-actions">
+            @if (!string.IsNullOrEmpty(Model.Content?.ContactEmail))
             {
-                <li><a href="@link.Url" class="inline underline decoration-black/30 underline-offset-4 hover:decoration-black">@link.Label&#8288;<svg class="ml-1 inline-block h-3.5 w-3.5 align-text-bottom" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12" /></svg></a></li>
+                <a href="mailto:@Model.Content.ContactEmail" class="contact-action"><svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 6 9 7 9-7" /></svg><span class="min-w-0 [overflow-wrap:anywhere]">@Model.Content.ContactEmail</span></a>
             }
-        </ul>
+            @if (phoneDigits.Length > 0)
+            {
+                <a href="tel:@dialNumber" class="contact-action"><svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-4l-5-2-2 3a14 14 0 0 1-7-7l3-2-2-5Z" /></svg><span class="min-w-0 [overflow-wrap:anywhere]">@phone</span></a>
+            }
+            </div>
     </div>
 </section>

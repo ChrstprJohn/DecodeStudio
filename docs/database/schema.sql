@@ -33,6 +33,7 @@ CREATE TABLE dbo.SiteContent (
     HeroTitle nvarchar(200) NOT NULL,
     HeroDescription nvarchar(2000) NOT NULL,
     HeroImagePath nvarchar(500) NULL,
+    ContactBackgroundImagePath nvarchar(500) NULL,
     HeroLinkText nvarchar(100) NULL,
     HeroLinkUrl nvarchar(2048) NULL,
     AboutTitle nvarchar(200) NOT NULL,

@@ -12,7 +12,7 @@
                 .from('.hero-heading', { autoAlpha: 0, x: -16, y: 16 }, 0.2)
                 .addLabel('intro', 0.4)
                 .from('.hero-introduction', { autoAlpha: 0, x: -16, y: 16 }, 'intro')
-                .from('.home-header', { autoAlpha: 0, clearProps: 'opacity,visibility' }, 'intro')
+                .from('.home-header', { autoAlpha: 0, y: -32 }, 'intro')
                 .from('.gallery-window', { autoAlpha: 0, duration: 1.6, ease: 'none' }, 0.6);
         });
     }

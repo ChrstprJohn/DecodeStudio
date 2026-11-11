@@ -9,4 +9,12 @@ public class ContactViewModel
 
     [StringLength(30), DataType(DataType.PhoneNumber)]
     public string? Phone { get; set; }
+
+    public string? BackgroundImagePath { get; set; }
+
+    [Display(Name = "Background image")]
+    public IFormFile? BackgroundImageFile { get; set; }
+
+    [Display(Name = "Use the default collage")]
+    public bool RemoveBackgroundImage { get; set; }
 }

@@ -1,3 +1,34 @@
+const studioFooter = document.querySelector('.studio-footer');
+if (studioFooter && window.gsap) {
+    gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', context => {
+        const columns = studioFooter.querySelectorAll('.footer-columns > div');
+        const word = studioFooter.querySelector('.footer-display-word');
+        const letters = word.children;
+        const copyright = studioFooter.querySelector('.footer-bottom p');
+
+        gsap.set([...columns, ...letters, copyright], { opacity: 0, y: 12 });
+        const observer = new IntersectionObserver(entries => {
+            context.add(() => {
+                for (const { target, isIntersecting } of entries) {
+                    if (!isIntersecting) continue;
+                    observer.unobserve(target);
+                    gsap.to(target === word ? letters : target, {
+                        opacity: 1,
+                        y: 0,
+                        duration: .55,
+                        ease: 'power3.out',
+                        stagger: target === word ? .1 : 0,
+                        clearProps: 'opacity,transform'
+                    });
+                }
+            });
+        }, { threshold: .15 });
+
+        [...columns, word, copyright].forEach(element => observer.observe(element));
+        return () => observer.disconnect();
+    });
+}
+
 const mobileMenu = document.querySelector('header details');
 if (mobileMenu) {
     const header = mobileMenu.closest('header');
@@ -18,6 +49,14 @@ if (mobileMenu) {
         }
     });
     const labels = nav.querySelectorAll('.mobile-link-label, form button');
+    const linkLabels = nav.querySelectorAll('.mobile-link-label');
+    const wipes = home ? Array.from(linkLabels, label => {
+        const wipe = document.createElement('span');
+        wipe.className = 'mobile-link-wipe';
+        wipe.setAttribute('aria-hidden', 'true');
+        label.after(wipe);
+        return wipe;
+    }) : [];
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let animation;
     let closing = false;
@@ -30,7 +69,7 @@ if (mobileMenu) {
         header.classList.remove('menu-active');
         document.querySelector('main').inert = false;
         document.querySelector('footer').inert = false;
-        if (window.gsap) gsap.set([backdrop, nav, ...labels], { clearProps: 'all' });
+        if (window.gsap) gsap.set([backdrop, nav, ...labels, ...wipes], { clearProps: 'all' });
     }
     function closeMenu() {
         if (!mobileMenu.open || closing) return;
@@ -39,8 +78,9 @@ if (mobileMenu) {
         animation?.kill();
         if (!home || !window.gsap || reducedMotion.matches) { finishClose(); return; }
         animation = gsap.timeline({ onComplete: finishClose })
-            .to(labels, { x: -24, opacity: 0, duration: .18, stagger: .018, ease: 'power2.in' }, 0)
-            .to([backdrop, nav], { xPercent: -100, duration: .4, ease: 'power3.inOut' }, .08);
+            .set(wipes, { opacity: 0 }, 0)
+            .to(labels, { x: -16, opacity: 0, duration: .24, stagger: .022, ease: 'power2.in' }, 0)
+            .to([backdrop, nav], { xPercent: -100, duration: .55, ease: 'power3.inOut' }, .12);
     }
     toggle.addEventListener('click', event => {
         event.preventDefault();
@@ -53,10 +93,20 @@ if (mobileMenu) {
         document.querySelector('main').inert = true;
         document.querySelector('footer').inert = true;
         if (!home || !window.gsap || reducedMotion.matches) return;
-        const ease = window.CustomEase ? CustomEase.create('menu-reveal', '.4,.4,0,1') : 'power3.out';
+        const stagger = .09;
+        const wipeStart = .27;
+        const wipeIn = .21;
+        const revealStart = wipeStart + wipeIn;
         animation = gsap.timeline()
-            .fromTo([backdrop, nav], { xPercent: -100 }, { xPercent: 0, duration: .5, ease }, 0)
-            .fromTo(labels, { x: -44, opacity: 0 }, { x: 0, opacity: 1, duration: .55, stagger: .075, ease }, .2);
+            .fromTo([backdrop, nav], { xPercent: -100 }, { xPercent: 0, duration: .68, ease: 'power3.inOut' }, 0)
+            .set(linkLabels, { opacity: 0 }, 0)
+            .fromTo(wipes, { clipPath: 'inset(0 100% 0 0)', opacity: 1 }, { clipPath: 'inset(0 0% 0 0)', duration: wipeIn, stagger, ease: 'power2.out' }, wipeStart)
+            .set(linkLabels, { opacity: 1, stagger }, revealStart)
+            .to(wipes, { clipPath: 'inset(0 0 0 100%)', duration: .32, stagger, ease: 'power2.inOut' }, revealStart);
+        const logoutButton = nav.querySelector('form button');
+        if (logoutButton) {
+            animation.fromTo(logoutButton, { x: -12, opacity: 0 }, { x: 0, opacity: 1, duration: .4, ease: 'power3.out' }, revealStart + wipes.length * stagger);
+        }
     });
     nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
         animation?.kill();

@@ -6,6 +6,7 @@ using MyPortfolio.Services;
 namespace MyPortfolio.Controllers;
 
 [Authorize(Roles = "Admin")]
+[RequestSizeLimit(3 * 1024 * 1024)]
 public class ContactController(SiteContentService service) : Controller
 {
     [HttpGet]
@@ -14,9 +15,22 @@ public class ContactController(SiteContentService service) : Controller
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(ContactViewModel model)
     {
-        if (!ModelState.IsValid) return View(model);
-
-        await service.SaveContactAsync(model);
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                await service.SaveContactAsync(model);
+            }
+            catch (ArgumentException exception)
+            {
+                ModelState.AddModelError(nameof(model.BackgroundImageFile), exception.Message);
+            }
+        }
+        if (!ModelState.IsValid)
+        {
+            model.BackgroundImagePath = (await service.GetContactAsync()).BackgroundImagePath;
+            return View(model);
+        }
         TempData["SuccessMessage"] = "Contact details saved.";
         return RedirectToAction(nameof(Index));
     }

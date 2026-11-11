@@ -42,5 +42,8 @@ public class SiteContent
     public string? ContactPhone { get; set; }
 
     [MaxLength(500)]
+    public string? ContactBackgroundImagePath { get; set; }
+
+    [MaxLength(500)]
     public string? FooterText { get; set; }
 }

@@ -13,7 +13,7 @@
                     project.WebsiteUrl.StartsWith("https://example.com/?project=");
                 var destination = isSample ? project.ImagePath : project.WebsiteUrl;
                 var action = isSample ? "View preview of" : "Visit";
-                <a href="@destination" class="showcase-project" aria-label="@action @project.Title">
+                <a href="@destination" target="_blank" rel="noopener" class="showcase-project" aria-label="@action @project.Title (opens in a new tab)">
                     <img src="@project.ImagePath" alt="@project.Title preview" loading="lazy" asp-append-version="true" />
                     <span>@project.Title.Replace(" (Demo)", "") <span aria-hidden="true">↗</span></span>
                 </a>

@@ -75,7 +75,12 @@ public class SiteContentService
     public async Task<ContactViewModel> GetContactAsync()
     {
         return await _database.SiteContent.AsNoTracking().Where(item => item.Id == 1)
-            .Select(item => new ContactViewModel { Email = item.ContactEmail, Phone = item.ContactPhone })
+            .Select(item => new ContactViewModel
+            {
+                Email = item.ContactEmail,
+                Phone = item.ContactPhone,
+                BackgroundImagePath = item.ContactBackgroundImagePath
+            })
             .SingleOrDefaultAsync() ?? new ContactViewModel();
     }
 
@@ -84,14 +89,28 @@ public class SiteContentService
         var item = await _database.SiteContent.FindAsync(1);
         if (item is null)
         {
-            if (string.IsNullOrWhiteSpace(model.Email) && string.IsNullOrWhiteSpace(model.Phone)) return;
+            if (string.IsNullOrWhiteSpace(model.Email) && string.IsNullOrWhiteSpace(model.Phone) &&
+                model.BackgroundImageFile is null) return;
             var defaults = new HomeViewModel();
             item = new SiteContent { Id = 1, StudioName = defaults.StudioName, HeroTitle = defaults.HeroTitle };
             _database.SiteContent.Add(item);
         }
         item.ContactEmail = model.Email?.Trim() ?? "";
         item.ContactPhone = string.IsNullOrWhiteSpace(model.Phone) ? null : model.Phone.Trim();
-        await _database.SaveChangesAsync();
+        var previousImage = item.ContactBackgroundImagePath;
+        var uploaded = model.BackgroundImageFile is null ? null : await _images.SaveAsync(model.BackgroundImageFile);
+        item.ContactBackgroundImagePath = uploaded ?? (model.RemoveBackgroundImage ? null : previousImage);
+        try
+        {
+            await _database.SaveChangesAsync();
+        }
+        catch
+        {
+            if (uploaded is not null) _images.DeleteGenerated(uploaded);
+            throw;
+        }
+        if (previousImage is not null && previousImage != item.ContactBackgroundImagePath)
+            _images.DeleteGenerated(previousImage);
     }
 
     public async Task DeleteAsync()
@@ -102,6 +121,7 @@ public class SiteContentService
             _database.SiteContent.Remove(item);
             await _database.SaveChangesAsync();
             if (item.HeroImagePath is not null) _images.DeleteGenerated(item.HeroImagePath);
+            if (item.ContactBackgroundImagePath is not null) _images.DeleteGenerated(item.ContactBackgroundImagePath);
         }
     }
 }

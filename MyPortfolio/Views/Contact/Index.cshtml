@@ -4,8 +4,8 @@
     ViewData["Title"] = "Contact";
 }
 <h1 class="page-title">Contact</h1>
-<p class="mt-4">Manage the email address and phone number shown on the website. Leave a field blank to remove it.</p>
-<form asp-action="Index" method="post" class="mt-8 max-w-3xl space-y-6 rounded-xl bg-white p-6 md:p-8">
+<p class="mt-4">Manage the email, phone number, and background shown in Contact.</p>
+<form asp-action="Index" method="post" enctype="multipart/form-data" class="mt-8 max-w-3xl space-y-6 rounded-xl bg-white p-6 md:p-8">
     <div asp-validation-summary="ModelOnly" role="alert" class="text-red-700"></div>
     <div>
         <label asp-for="Email" class="block"></label>
@@ -16,6 +16,17 @@
         <label asp-for="Phone" class="block"></label>
         <input asp-for="Phone" class="mt-2 w-full" />
         <span asp-validation-for="Phone" class="field-error"></span>
+    </div>
+    <div>
+        <label asp-for="BackgroundImageFile" class="block"></label>
+        <input asp-for="BackgroundImageFile" accept="image/png,image/jpeg,image/webp" class="mt-2 w-full" />
+        <p class="mt-2 text-sm">PNG, JPEG, or WebP, up to 2 MB. The website collage is used by default.</p>
+        <span asp-validation-for="BackgroundImageFile" class="field-error"></span>
+        @if (!string.IsNullOrEmpty(Model.BackgroundImagePath))
+        {
+            <img src="@Model.BackgroundImagePath" alt="Current Contact background" class="mt-4 h-32 max-w-full rounded-lg object-contain" />
+            <label class="mt-4 block"><input asp-for="RemoveBackgroundImage" /> @Html.DisplayNameFor(model => model.RemoveBackgroundImage)</label>
+        }
     </div>
     <button class="action-primary" type="submit">Save contact details</button>
 </form>
