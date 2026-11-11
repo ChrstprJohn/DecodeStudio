@@ -25,6 +25,7 @@
 
 @layer base {
   html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+  * { scrollbar-width: thin; }
   body { @apply bg-canvas font-sans text-ink antialiased; }
   h1, h2, h3 { @apply font-semibold tracking-[-0.04em]; }
   a { text-underline-offset: 4px; }
