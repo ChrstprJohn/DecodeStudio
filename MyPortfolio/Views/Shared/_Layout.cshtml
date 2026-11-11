@@ -59,8 +59,8 @@
                     <a asp-controller="Home" asp-action="Index" asp-fragment="about">About</a>
                     <a asp-controller="Home" asp-action="Index" asp-fragment="services">Services</a>
                     <a asp-controller="Home" asp-action="Index" asp-fragment="projects">Work</a>
-                    <a asp-controller="Home" asp-action="Index" asp-fragment="contact">Contact</a>
                     <a asp-controller="Home" asp-action="Index" asp-fragment="team">Team</a>
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="contact">Contact</a>
                     @if (User.Identity?.IsAuthenticated == true)
                     {
                         <partial name="_ProfileMenu" />
