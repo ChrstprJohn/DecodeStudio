@@ -6,7 +6,7 @@ namespace MyPortfolio.Controllers;
 
 public class FaviconController(SiteContentService siteContent) : Controller
 {
-    [HttpGet("/favicon.ico"), AllowAnonymous, ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+    [HttpGet("/favicon"), HttpGet("/favicon.ico"), AllowAnonymous, ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
     public async Task<IActionResult> Index()
     {
         var path = await siteContent.GetFaviconPathAsync();
