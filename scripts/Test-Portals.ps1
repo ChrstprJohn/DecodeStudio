@@ -106,7 +106,7 @@ try {
     $cases = @(
         @{ Controller='Projects'; Table='Projects'; Key='Title'; ImageColumn='ImagePath'; Fields=@{Title=$marker+'-project';Description='Project description';ImageFile=$pngBytes;WebsiteUrl='https://example.com';SortOrder=1;IsPublished='true'} },
         @{ Controller='Offerings'; Table='Services'; Key='Title'; ImageColumn='ImagePath'; Fields=@{ImageFile=$pngBytes;Title=$marker+'-service';Description='Service description';SortOrder=1;IsPublished='true'} },
-        @{ Controller='Team'; Table='TeamMembers'; Key='FirstName'; ImageColumn='PhotoPath'; Fields=@{ImageFile=$pngBytes;FirstName=$marker+'-team';LastName='Member';RoleTitle='Developer';Bio='Team biography';SortOrder=1;IsOwner='true';IsPublished='true'} },
+        @{ Controller='Team'; Table='TeamMembers'; Key='FirstName'; ImageColumn='PhotoPath'; Fields=@{ImageFile=$pngBytes;FirstName=$marker+'-team';LastName='Member';RoleTitle='Developer';Bio='Team biography';SortOrder=1;IsPublished='true'} },
         @{ Controller='Links'; Table='SocialLinks'; Key='Label'; Fields=@{Label=$marker+'-link';Url='https://example.com';SortOrder=1} }
     )
     foreach ($case in $cases) {
@@ -160,13 +160,9 @@ try {
     Assert ((Sql 'SELECT Id FROM dbo.Projects WHERE Title=@Title' @{Title=$marker}).Rows.Count -eq 0) 'Unsafe URL was saved'
 
     if ((Sql 'SELECT Id FROM dbo.SiteContent WHERE Id=1').Rows.Count -eq 0) {
-        $studio=@{ImageFile=$pngBytes;StudioName=$marker;HeroTitle=$marker+' hero';HeroDescription='Hero description';AboutTitle='About';AboutDescription='About description'}
+        $studio=@{StudioName=$marker;HeroTitle=$marker+' hero';HeroDescription='Hero description';AboutTitle='About';AboutDescription='About description'}
         Assert ((Post $admin '/Studio/Edit' $studio '/Studio').Status -eq 302) 'Studio create failed'
         $studioCreated=$true
-        $heroImage=(Sql 'SELECT HeroImagePath FROM dbo.SiteContent WHERE Id=1').Rows[0].HeroImagePath
-        $testImages.Add($heroImage)
-        Assert ($heroImage.StartsWith('/uploads/images/')) 'Hero upload not saved in shared images folder'
-        [void]$studio.Remove('ImageFile')
         Assert ((Page $user '/').Html.Contains($studio.HeroTitle)) 'Studio content missing from home'
         $studio.HeroTitle += ' edited'
         Assert ((Post $admin '/Studio/Edit' $studio '/Studio').Status -eq 302) 'Studio update failed'
@@ -177,7 +173,6 @@ try {
         Assert (-not (Page $user '/').Html.Contains('mailto:studio@example.test')) 'Cleared contact email still visible'
         Assert ((Post $admin '/Studio/Delete' @{confirmed='true'} '/Studio/Delete').Status -eq 302) 'Studio delete failed'
         Assert ((Sql 'SELECT Id FROM dbo.SiteContent WHERE Id=1').Rows.Count -eq 0) 'Studio record not deleted'
-        Assert (-not (Test-Path -LiteralPath (Join-Path (Get-Location) ('MyPortfolio/wwwroot' + $heroImage)))) 'Hero image not cleaned up after deletion' 
     }
 
     Assert ((Page $admin "/Accounts/Details/$userId").Status -eq 200) 'Admin account details failed'

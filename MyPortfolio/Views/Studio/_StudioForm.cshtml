@@ -1,0 +1,17 @@
+@model SiteContentViewModel
+<form asp-controller="Studio" asp-action="Edit" method="post" class="edit-form">
+    <div asp-validation-summary="ModelOnly" role="alert" class="text-red-700"></div>
+    <div><label asp-for="StudioName" class="block"></label><input asp-for="StudioName" placeholder="e.g. Decode Studio" class="mt-2 w-full" /><span asp-validation-for="StudioName" class="field-error"></span></div>
+    <div><label asp-for="Tagline" class="block"></label><input asp-for="Tagline" placeholder="e.g. Design. Code. Deploy." class="mt-2 w-full" /><span asp-validation-for="Tagline" class="field-error"></span></div>
+    <div><label asp-for="HeroTitle" class="block"></label><input asp-for="HeroTitle" placeholder="e.g. Your next site starts here." class="mt-2 w-full" /><span asp-validation-for="HeroTitle" class="field-error"></span></div>
+    <div><label asp-for="HeroDescription" class="block"></label><textarea asp-for="HeroDescription" placeholder="Explain what you build and who you help." rows="4" class="mt-2 w-full"></textarea><span asp-validation-for="HeroDescription" class="field-error"></span></div>
+    <div><label asp-for="AboutTitle" class="block"></label><input asp-for="AboutTitle" placeholder="e.g. A small studio with a practical approach." class="mt-2 w-full" /><span asp-validation-for="AboutTitle" class="field-error"></span></div>
+    <div><label asp-for="AboutDescription" class="block"></label><textarea asp-for="AboutDescription" placeholder="Tell visitors about the studio and how you work." rows="4" class="mt-2 w-full"></textarea><span asp-validation-for="AboutDescription" class="field-error"></span></div>
+    <div class="edit-form-actions">
+        <button class="admin-primary" type="submit">Save brand and copy</button>
+        <a class="admin-secondary" asp-controller="Studio" asp-action="Index">Cancel</a>
+    </div>
+</form>
+<a asp-controller="Studio" asp-action="Delete" class="mt-8 inline-block underline"
+   data-confirm-delete="Clear studio and contact details" data-delete-message="Clear the saved studio and contact details? This cannot be undone."
+   data-delete-label="Clear settings">Clear studio and contact details</a>

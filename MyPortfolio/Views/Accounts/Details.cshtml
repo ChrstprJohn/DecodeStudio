@@ -2,25 +2,45 @@
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Account details";
+    var fullName = string.Join(" ", new[] { Model.FirstName, Model.MiddleName, Model.LastName }.Where(name => !string.IsNullOrWhiteSpace(name)));
+    var initials = string.Concat(Model.FirstName.Take(1).Concat(Model.LastName.Take(1))).ToUpperInvariant();
 }
-<h1 class="page-title">Account details</h1>
-<dl class="mt-8 grid gap-6 rounded-xl bg-white p-6 sm:grid-cols-2 md:p-8">
-    <div><dt class="font-semibold">First name</dt><dd>@Model.FirstName</dd></div>
-    <div><dt class="font-semibold">Middle name</dt><dd>@Model.MiddleName</dd></div>
-    <div><dt class="font-semibold">Last name</dt><dd>@Model.LastName</dd></div>
-    <div><dt class="font-semibold">Email</dt><dd>@Model.Email</dd></div>
-    <div><dt class="font-semibold">Role</dt><dd>@Model.Role</dd></div>
-    <div><dt class="font-semibold">Status</dt><dd>@(Model.IsActive ? "Active" : "Inactive")</dd></div>
-    <div><dt class="font-semibold">Registered (UTC)</dt><dd>@Model.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm")</dd></div>
-</dl>
-@if (!string.IsNullOrEmpty(Model.ProfileImagePath))
-{
-    <img src="@Model.ProfileImagePath" alt="Profile photo" class="mt-6 h-24 w-24 rounded-lg object-cover" />
-}
-<form asp-action="SetActive" method="post" class="my-6">
-    <input type="hidden" name="id" value="@Model.Id" />
-    <input type="hidden" name="isActive" value="@((!Model.IsActive).ToString().ToLowerInvariant())" />
-    <button type="submit" class="action-secondary">@(Model.IsActive ? "Deactivate account" : "Activate account")</button>
-</form>
-<p>Account details are read-only. Accounts cannot be deleted here.</p>
-<a asp-action="Index" class="mt-6 inline-block underline">Back to accounts</a>
+<a asp-action="Index" class="mb-5 inline-flex items-center gap-2 text-sm font-medium hover:underline">
+    <svg aria-hidden="true" viewBox="0 0 20 20" class="size-4 fill-none stroke-current" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 5-5 5 5 5" /></svg>
+    Back to accounts
+</a>
+<section aria-labelledby="account-heading" class="max-w-6xl rounded-xl border border-neutral-200 bg-white p-6 md:p-8">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <h1 id="account-heading" class="text-xl font-semibold">Personal information</h1>
+        <form asp-action="SetActive" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="isActive" value="@((!Model.IsActive).ToString().ToLowerInvariant())" />
+            <button type="submit" class="admin-secondary">@(Model.IsActive ? "Deactivate account" : "Activate account")</button>
+        </form>
+    </div>
+    <div class="mt-7 flex items-center gap-5">
+        @if (!string.IsNullOrEmpty(Model.ProfileImagePath))
+        {
+            <img src="@Model.ProfileImagePath" alt="" class="size-20 shrink-0 rounded-full object-cover" />
+        }
+        else
+        {
+            <span aria-hidden="true" class="grid size-20 shrink-0 place-items-center rounded-full bg-neutral-100 text-xl font-semibold">@initials</span>
+        }
+        <div class="min-w-0">
+            <p class="break-words text-xl font-semibold">@fullName</p>
+            <p class="mt-1 text-sm text-neutral-600">@Model.Role</p>
+        </div>
+    </div>
+    <dl class="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div><dt class="text-sm text-neutral-600">First name</dt><dd class="mt-1 break-words font-medium">@Model.FirstName</dd></div>
+        @if (!string.IsNullOrWhiteSpace(Model.MiddleName))
+        {
+            <div><dt class="text-sm text-neutral-600">Middle name</dt><dd class="mt-1 break-words font-medium">@Model.MiddleName</dd></div>
+        }
+        <div><dt class="text-sm text-neutral-600">Last name</dt><dd class="mt-1 break-words font-medium">@Model.LastName</dd></div>
+        <div><dt class="text-sm text-neutral-600">Email address</dt><dd class="mt-1 break-all font-medium">@Model.Email</dd></div>
+        <div><dt class="text-sm text-neutral-600">Status</dt><dd class="mt-1"><span class="admin-status @(Model.IsActive ? "admin-status-positive" : "")">@(Model.IsActive ? "Active" : "Inactive")</span></dd></div>
+        <div><dt class="text-sm text-neutral-600">Registered (UTC)</dt><dd class="mt-1 font-medium">@Model.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm")</dd></div>
+    </dl>
+</section>

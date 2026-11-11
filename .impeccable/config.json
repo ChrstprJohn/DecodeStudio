@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-11-11T04:26:13.797Z",
+        "reason": "Codex verified that Inter is the existing self-hosted site font in HEAD. The admin polish preserves the shared typography."
+      }
+    ]
+  }
+}

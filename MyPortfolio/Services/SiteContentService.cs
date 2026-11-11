@@ -29,12 +29,8 @@ public class SiteContentService
             Tagline = item.Tagline,
             HeroTitle = item.HeroTitle,
             HeroDescription = item.HeroDescription,
-            HeroImagePath = item.HeroImagePath,
-            HeroLinkText = item.HeroLinkText,
-            HeroLinkUrl = item.HeroLinkUrl,
             AboutTitle = item.AboutTitle,
-            AboutDescription = item.AboutDescription,
-            FooterText = item.FooterText
+            AboutDescription = item.AboutDescription
         };
     }
 
@@ -46,30 +42,13 @@ public class SiteContentService
             item = new SiteContent { Id = 1 };
             _database.SiteContent.Add(item);
         }
-        var previousImage = item.HeroImagePath;
-        var uploaded = model.ImageFile is null ? null : await _images.SaveAsync(model.ImageFile);
-        item.HeroImagePath = uploaded ?? (model.RemoveImage ? null : item.HeroImagePath);
-
         item.StudioName = model.StudioName.Trim();
         item.Tagline = model.Tagline?.Trim();
         item.HeroTitle = model.HeroTitle.Trim();
         item.HeroDescription = model.HeroDescription.Trim();
-        item.HeroLinkText = model.HeroLinkText?.Trim();
-        item.HeroLinkUrl = model.HeroLinkUrl?.Trim();
         item.AboutTitle = model.AboutTitle.Trim();
         item.AboutDescription = model.AboutDescription.Trim();
-        item.FooterText = model.FooterText?.Trim();
-        try
-        {
-            await _database.SaveChangesAsync();
-        }
-        catch
-        {
-            if (uploaded is not null) _images.DeleteGenerated(uploaded);
-            throw;
-        }
-        if (previousImage is not null && previousImage != item.HeroImagePath)
-            _images.DeleteGenerated(previousImage);
+        await _database.SaveChangesAsync();
     }
 
     public async Task<ContactViewModel> GetContactAsync()
@@ -120,7 +99,6 @@ public class SiteContentService
         {
             _database.SiteContent.Remove(item);
             await _database.SaveChangesAsync();
-            if (item.HeroImagePath is not null) _images.DeleteGenerated(item.HeroImagePath);
             if (item.ContactBackgroundImagePath is not null) _images.DeleteGenerated(item.ContactBackgroundImagePath);
         }
     }

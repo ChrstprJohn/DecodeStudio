@@ -10,22 +10,22 @@
         <div asp-validation-summary="ModelOnly" role="alert"></div>
         <div>
             <label asp-for="FirstName" class="block"></label>
-            <input asp-for="FirstName" autocomplete="given-name" required maxlength="100" class="mt-2 w-full" />
+            <input asp-for="FirstName" placeholder="e.g. Alex" autocomplete="given-name" required maxlength="100" class="mt-2 w-full" />
             <span asp-validation-for="FirstName" class="block text-sm"></span>
         </div>
         <div>
             <label asp-for="MiddleName" class="block"></label>
-            <input asp-for="MiddleName" autocomplete="additional-name" maxlength="100" class="mt-2 w-full" />
+            <input asp-for="MiddleName" placeholder="Optional" autocomplete="additional-name" maxlength="100" class="mt-2 w-full" />
             <span asp-validation-for="MiddleName" class="block text-sm"></span>
         </div>
         <div>
             <label asp-for="LastName" class="block"></label>
-            <input asp-for="LastName" autocomplete="family-name" required maxlength="100" class="mt-2 w-full" />
+            <input asp-for="LastName" placeholder="e.g. Rivera" autocomplete="family-name" required maxlength="100" class="mt-2 w-full" />
             <span asp-validation-for="LastName" class="block text-sm"></span>
         </div>
         <div>
             <label asp-for="Email" class="block"></label>
-            <input asp-for="Email" type="email" autocomplete="username" required maxlength="256" class="mt-2 w-full" />
+            <input asp-for="Email" placeholder="you@example.com" type="email" autocomplete="username" required maxlength="256" class="mt-2 w-full" />
             <span asp-validation-for="Email" class="block text-sm"></span>
         </div>
         <div>

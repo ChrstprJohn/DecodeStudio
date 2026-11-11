@@ -66,7 +66,6 @@ public class TeamController : Controller
             RoleTitle = item.RoleTitle,
             Bio = item.Bio,
             PhotoPath = item.PhotoPath,
-            IsOwner = item.IsOwner,
             SortOrder = item.SortOrder,
             IsPublished = item.IsPublished
         });

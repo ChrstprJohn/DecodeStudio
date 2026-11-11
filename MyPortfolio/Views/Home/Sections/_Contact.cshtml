@@ -1,6 +1,5 @@
 @model HomeViewModel
 @{
-    var previews = Model.HeroPreviews;
     var phone = Model.Content?.ContactPhone?.Trim() ?? "";
     var phoneDigits = string.Concat(phone.Where(char.IsAsciiDigit));
     var dialNumber = phone.StartsWith('+') ? "+" + phoneDigits : phoneDigits;
@@ -10,20 +9,9 @@
     {
         <img class="contact-background" src="@Model.Content.ContactBackgroundImagePath" alt="" loading="lazy" decoding="async" asp-append-version="true" />
     }
-    else if (previews.Count > 0)
+    else
     {
-        <div class="contact-collage" aria-hidden="true">
-            @for (var column = 0; column < 7; column++)
-            {
-                <div class="contact-collage-column">
-                    @for (var row = 0; row < 7; row++)
-                    {
-                        var tile = (row * 7 + column) % previews.Count;
-                        <img src="@previews[tile].ImagePath" alt="" loading="lazy" decoding="async" asp-append-version="true" />
-                    }
-                </div>
-            }
-        </div>
+        <partial name="_ContactCollage" model="Model.HeroPreviews" />
     }
     <div class="contact-copy">
             <h2 id="contact-heading" class="section-title">Contact</h2>

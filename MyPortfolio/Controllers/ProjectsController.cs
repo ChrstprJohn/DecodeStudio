@@ -46,7 +46,7 @@ public class ProjectsController : Controller
             ModelState.AddModelError(nameof(model.ImageFile), exception.Message);
             return View("Edit", model);
         }
-        TempData["SuccessMessage"] = "Project created.";
+        TempData["SuccessMessage"] = "Product created.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -93,7 +93,7 @@ public class ProjectsController : Controller
             ModelState.AddModelError(nameof(model.ImageFile), exception.Message);
             return View(model);
         }
-        TempData["SuccessMessage"] = "Project updated.";
+        TempData["SuccessMessage"] = "Product updated.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -119,7 +119,7 @@ public class ProjectsController : Controller
         {
             return NotFound();
         }
-        TempData["SuccessMessage"] = "Project deleted.";
+        TempData["SuccessMessage"] = "Product deleted.";
         return RedirectToAction(nameof(Index));
     }
 }

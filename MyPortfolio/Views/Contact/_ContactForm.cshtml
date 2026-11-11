@@ -1,0 +1,42 @@
+@model ContactViewModel
+@inject MyPortfolio.Services.HomeService HomeService
+@{
+    var hasCustomBackground = !string.IsNullOrWhiteSpace(Model.BackgroundImagePath);
+    var gallery = hasCustomBackground ? null : (await HomeService.GetProjectGalleryAsync()).Previews;
+}
+<form asp-controller="Contact" asp-action="Index" method="post" enctype="multipart/form-data" class="edit-form">
+    <div asp-validation-summary="ModelOnly" role="alert" class="text-red-700"></div>
+    <div>
+        <label asp-for="Email" class="block"></label>
+        <input asp-for="Email" placeholder="hello@example.com" class="mt-2 w-full" />
+        <span asp-validation-for="Email" class="field-error"></span>
+    </div>
+    <div>
+        <label asp-for="Phone" class="block"></label>
+        <input asp-for="Phone" placeholder="e.g. +63 969 360 7854" class="mt-2 w-full" />
+        <span asp-validation-for="Phone" class="field-error"></span>
+    </div>
+    <div>
+        <label asp-for="BackgroundImageFile" class="block"></label>
+        <input asp-for="BackgroundImageFile" accept="image/png,image/jpeg,image/webp" class="sr-only" data-upload-preview />
+        <label asp-for="BackgroundImageFile" class="upload-preview contact-upload-preview">
+            <img src="@Model.BackgroundImagePath" alt="" hidden="@(!hasCustomBackground)" />
+            @if (gallery is { Count: > 0 })
+            {
+                <partial name="_ContactCollage" model="gallery" />
+            }
+            <partial name="_UploadPencil" />
+        </label>
+        <span class="sr-only" role="status" data-upload-status></span>
+        <p class="mt-2 text-sm">@(gallery is { Count: > 0 } ? "Default collage. Click to upload a custom background." : "Click to choose a background.") PNG, JPEG, or WebP, up to 2 MB.</p>
+        <span asp-validation-for="BackgroundImageFile" class="field-error"></span>
+        @if (!string.IsNullOrEmpty(Model.BackgroundImagePath))
+        {
+            <label class="mt-4 block"><input asp-for="RemoveBackgroundImage" /> @Html.DisplayNameFor(model => model.RemoveBackgroundImage)</label>
+        }
+    </div>
+    <div class="edit-form-actions">
+        <button class="admin-primary" type="submit">Save contact details</button>
+        <a class="admin-secondary" asp-controller="Contact" asp-action="Index">Cancel</a>
+    </div>
+</form>

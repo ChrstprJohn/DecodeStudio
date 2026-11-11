@@ -19,7 +19,6 @@ namespace MyPortfolio.Controllers
         {
             var model = await _homeService.GetHomeAsync();
             ViewData["StudioName"] = model.StudioName;
-            ViewData["FooterText"] = model.Content?.FooterText;
             return View(model);
         }
 

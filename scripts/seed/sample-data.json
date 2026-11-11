@@ -5,14 +5,10 @@
     "Tagline": "Design. Develop. Deploy.",
     "HeroTitle": "Your next site. Starts here.",
     "HeroDescription": "We design and build websites for growing businesses. From the first idea to launch.",
-    "HeroImagePath": "/uploads/images/demo-studio-hero.svg",
-    "HeroLinkText": "Explore our work",
-    "HeroLinkUrl": "#projects",
     "AboutTitle": "A small studio with a practical approach.",
     "AboutDescription": "Decode Studio brings together design, development, and deployment in one place. We start by understanding the business, organize the content, and build a website that is easy to use and maintain.\n\nThis is sample studio content for a school portfolio project. The projects and team below are fictional examples for design and layout testing.",
     "ContactEmail": "hello@decodestudio.example",
-    "ContactPhone": "Sample contact number",
-    "FooterText": "Decode Studio â€” sample portfolio content for design and testing."
+    "ContactPhone": "Sample contact number"
   },
   "Projects": [
     {
@@ -21,9 +17,7 @@
       "ImagePath": "/images/projects/preview-01-tanaka-architecture.jpg",
       "WebsiteUrl": "https://example.com/?project=tanaka-architecture",
       "SortOrder": 1,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Petal & Stem",
@@ -31,9 +25,7 @@
       "ImagePath": "/images/projects/preview-02-petal-stem.jpg",
       "WebsiteUrl": "https://example.com/?project=petal-stem",
       "SortOrder": 2,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Toneworks",
@@ -41,9 +33,7 @@
       "ImagePath": "/images/projects/preview-03-toneworks.jpg",
       "WebsiteUrl": "https://example.com/?project=toneworks",
       "SortOrder": 3,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Common Form",
@@ -51,9 +41,7 @@
       "ImagePath": "/images/projects/preview-04-common-form.jpg",
       "WebsiteUrl": "https://example.com/?project=common-form",
       "SortOrder": 4,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Line & Grain",
@@ -61,9 +49,7 @@
       "ImagePath": "/images/projects/preview-10-line-grain.jpg",
       "WebsiteUrl": "https://example.com/?project=line-grain",
       "SortOrder": 5,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Margin",
@@ -71,9 +57,7 @@
       "ImagePath": "/images/projects/preview-13-margin.jpg",
       "WebsiteUrl": "https://example.com/?project=margin",
       "SortOrder": 6,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Relay",
@@ -81,9 +65,7 @@
       "ImagePath": "/images/projects/preview-15-relay.jpg",
       "WebsiteUrl": "https://example.com/?project=relay",
       "SortOrder": 7,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Quartz",
@@ -91,9 +73,7 @@
       "ImagePath": "/images/projects/preview-16-quartz.jpg",
       "WebsiteUrl": "https://example.com/?project=quartz",
       "SortOrder": 8,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Ledger",
@@ -101,9 +81,7 @@
       "ImagePath": "/images/projects/preview-14-ledger.jpg",
       "WebsiteUrl": "https://example.com/?project=ledger",
       "SortOrder": 9,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Morrow",
@@ -111,9 +89,7 @@
       "ImagePath": "/images/projects/preview-17-morrow.jpg",
       "WebsiteUrl": "https://example.com/?project=morrow",
       "SortOrder": 10,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Atlas Press",
@@ -121,9 +97,7 @@
       "ImagePath": "/images/projects/preview-18-atlas-press.jpg",
       "WebsiteUrl": "https://example.com/?project=atlas-press",
       "SortOrder": 11,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "RouteField / mint",
@@ -131,9 +105,7 @@
       "ImagePath": "/images/projects/preview-21-routefield-mint.jpg",
       "WebsiteUrl": "https://example.com/?project=routefield-mint",
       "SortOrder": 12,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Field Museum / straight strip",
@@ -141,9 +113,7 @@
       "ImagePath": "/images/projects/preview-25-field-museum-straight-strip.jpg",
       "WebsiteUrl": "https://example.com/?project=field-museum-straight-strip",
       "SortOrder": 13,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Index / blue",
@@ -151,9 +121,7 @@
       "ImagePath": "/images/projects/preview-27-index-blue.jpg",
       "WebsiteUrl": "https://example.com/?project=index-blue",
       "SortOrder": 14,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Field Museum / curved strip",
@@ -161,9 +129,7 @@
       "ImagePath": "/images/projects/preview-29-field-museum-curved-strip.jpg",
       "WebsiteUrl": "https://example.com/?project=field-museum-curved-strip",
       "SortOrder": 15,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Arbor Gallery",
@@ -171,9 +137,7 @@
       "ImagePath": "/images/projects/preview-32-arbor-gallery.jpg",
       "WebsiteUrl": "https://example.com/?project=arbor-gallery",
       "SortOrder": 16,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Coral Bloom",
@@ -181,9 +145,7 @@
       "ImagePath": "/images/projects/preview-34-coral-bloom.jpg",
       "WebsiteUrl": "https://example.com/?project=coral-bloom",
       "SortOrder": 17,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "Aurelia / cinematic",
@@ -191,9 +153,7 @@
       "ImagePath": "/images/projects/preview-35-aurelia-cinematic.jpg",
       "WebsiteUrl": "https://example.com/?project=aurelia-cinematic",
       "SortOrder": 18,
-      "IsPublished": true,
-      "Background": "#eee",
-      "Foreground": "#333"
+      "IsPublished": true
     },
     {
       "Title": "SchedSnap",
@@ -308,8 +268,6 @@
       "LastName": "Rivera",
       "RoleTitle": "Founder and Creative Director",
       "Bio": "Connects brand strategy with the studio's creative direction. Fictional team member for layout testing.",
-      "PhotoPath": "/uploads/images/demo-team-1.svg",
-      "IsOwner": true,
       "SortOrder": 1,
       "IsPublished": true
     },
@@ -319,8 +277,6 @@
       "LastName": "Santos",
       "RoleTitle": "UI/UX Designer",
       "Bio": "Shapes user journeys and clear, approachable interfaces. Fictional team member for layout testing.",
-      "PhotoPath": "/uploads/images/demo-team-2.svg",
-      "IsOwner": false,
       "SortOrder": 2,
       "IsPublished": true
     },
@@ -330,8 +286,6 @@
       "LastName": "Navarro",
       "RoleTitle": "Frontend Developer",
       "Bio": "Builds responsive layouts and accessible browser interactions. Fictional team member for layout testing.",
-      "PhotoPath": "/uploads/images/demo-team-3.svg",
-      "IsOwner": false,
       "SortOrder": 3,
       "IsPublished": true
     },
@@ -341,8 +295,6 @@
       "LastName": "Cruz",
       "RoleTitle": "Backend Developer",
       "Bio": "Works on data, application logic, and reliable integrations. Fictional team member for layout testing.",
-      "PhotoPath": "/uploads/images/demo-team-4.svg",
-      "IsOwner": false,
       "SortOrder": 4,
       "IsPublished": true
     },
@@ -352,8 +304,6 @@
       "LastName": "Reyes",
       "RoleTitle": "Full-stack Developer",
       "Bio": "Connects the visual interface with the systems behind it. Fictional team member for layout testing.",
-      "PhotoPath": "/uploads/images/demo-team-5.svg",
-      "IsOwner": false,
       "SortOrder": 5,
       "IsPublished": true
     },
@@ -363,8 +313,6 @@
       "LastName": "Flores",
       "RoleTitle": "Brand Designer",
       "Bio": "Develops identities and visual assets that fit each project. Fictional team member for layout testing.",
-      "PhotoPath": "/uploads/images/demo-team-6.svg",
-      "IsOwner": false,
       "SortOrder": 6,
       "IsPublished": true
     },
@@ -374,8 +322,6 @@
       "LastName": "Lim",
       "RoleTitle": "Quality Assurance Engineer",
       "Bio": "Checks forms, workflows, devices, and the details that are easy to miss. Fictional team member for layout testing.",
-      "PhotoPath": "/uploads/images/demo-team-7.svg",
-      "IsOwner": false,
       "SortOrder": 7,
       "IsPublished": true
     },
@@ -385,8 +331,6 @@
       "LastName": "Garcia",
       "RoleTitle": "Project Coordinator",
       "Bio": "Keeps project communication, content, and delivery organized. Fictional team member for layout testing.",
-      "PhotoPath": "/uploads/images/demo-team-8.svg",
-      "IsOwner": false,
       "SortOrder": 8,
       "IsPublished": true
     }
@@ -431,80 +375,6 @@
       "Label": "Contact (Demo)",
       "Url": "https://example.com/#contact",
       "SortOrder": 8
-    }
-  ],
-  "Users": [
-    {
-      "FirstName": "Alex",
-      "MiddleName": null,
-      "LastName": "Rivera",
-      "Email": "demo01@decodestudio.example",
-      "ProfileImagePath": "/uploads/images/demo-team-1.svg",
-      "Role": "User",
-      "IsActive": true
-    },
-    {
-      "FirstName": "Maya",
-      "MiddleName": null,
-      "LastName": "Santos",
-      "Email": "demo02@decodestudio.example",
-      "ProfileImagePath": "/uploads/images/demo-team-2.svg",
-      "Role": "User",
-      "IsActive": true
-    },
-    {
-      "FirstName": "Luis",
-      "MiddleName": null,
-      "LastName": "Navarro",
-      "Email": "demo03@decodestudio.example",
-      "ProfileImagePath": "/uploads/images/demo-team-3.svg",
-      "Role": "User",
-      "IsActive": true
-    },
-    {
-      "FirstName": "Sofia",
-      "MiddleName": null,
-      "LastName": "Cruz",
-      "Email": "demo04@decodestudio.example",
-      "ProfileImagePath": "/uploads/images/demo-team-4.svg",
-      "Role": "User",
-      "IsActive": true
-    },
-    {
-      "FirstName": "Ethan",
-      "MiddleName": null,
-      "LastName": "Reyes",
-      "Email": "demo05@decodestudio.example",
-      "ProfileImagePath": "/uploads/images/demo-team-5.svg",
-      "Role": "User",
-      "IsActive": true
-    },
-    {
-      "FirstName": "Nina",
-      "MiddleName": null,
-      "LastName": "Flores",
-      "Email": "demo06@decodestudio.example",
-      "ProfileImagePath": "/uploads/images/demo-team-6.svg",
-      "Role": "User",
-      "IsActive": true
-    },
-    {
-      "FirstName": "Marco",
-      "MiddleName": null,
-      "LastName": "Lim",
-      "Email": "demo07@decodestudio.example",
-      "ProfileImagePath": "/uploads/images/demo-team-7.svg",
-      "Role": "User",
-      "IsActive": false
-    },
-    {
-      "FirstName": "Ava",
-      "MiddleName": null,
-      "LastName": "Garcia",
-      "Email": "demo08@decodestudio.example",
-      "ProfileImagePath": "/uploads/images/demo-team-8.svg",
-      "Role": "User",
-      "IsActive": false
     }
   ]
 }

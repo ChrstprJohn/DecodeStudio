@@ -2,12 +2,19 @@
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Accounts";
+    var selectedStatus = ViewData["AccountStatusFilter"] as string;
+    var filters = new (string Label, string? Status)[] { ("All", null), ("Active", "active"), ("Inactive", "inactive") };
 }
 <h1 class="page-title">Account management</h1>
-<nav aria-label="Account filters" class="my-6 flex gap-6">
-    <a asp-action="Index" class="underline">All</a>
-    <a asp-action="Index" asp-route-status="active" class="underline">Active</a>
-    <a asp-action="Index" asp-route-status="inactive" class="underline">Inactive</a>
+<nav aria-label="Account filters" class="my-6 flex flex-wrap gap-2">
+    @foreach (var filter in filters)
+    {
+        var selected = filter.Status == selectedStatus;
+        <a asp-action="Index" asp-route-status="@filter.Status" aria-current="@(selected ? "page" : null)"
+           class="inline-flex min-h-9 items-center rounded-full border px-4 text-sm font-medium @(selected ? "border-ink bg-ink text-white" : "border-neutral-300 bg-white text-ink hover:bg-neutral-100")">
+            @filter.Label
+        </a>
+    }
 </nav>
 @if (Model.Count == 0)
 {
@@ -15,15 +22,31 @@
 }
 else
 {
-    <div class="overflow-x-auto rounded-lg bg-white"><table class="data-table">
-        <thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Role</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+    <div class="admin-table-panel"><table class="data-table">
+        <thead><tr><th scope="col" class="w-20">Photo</th><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Role</th><th scope="col">Status</th><th scope="col" class="admin-actions-heading">Actions</th></tr></thead>
         <tbody>
         @foreach (var account in Model)
         {
             <tr class="border-t border-slate-200">
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(account.ProfileImagePath))
+                    {
+                        <img src="@account.ProfileImagePath" alt="" class="size-9 rounded-full object-cover" loading="lazy" />
+                    }
+                    else
+                    {
+                        var initials = string.Concat(account.FirstName.Take(1).Concat(account.LastName.Take(1))).ToUpperInvariant();
+                        <span aria-hidden="true" class="grid size-9 place-items-center rounded-full bg-neutral-100 text-xs font-semibold text-neutral-700">@initials</span>
+                    }
+                </td>
                 <td class="py-3">@account.FirstName @account.LastName</td>
-                <td>@account.Email</td><td>@account.Role</td><td>@(account.IsActive ? "Active" : "Inactive")</td>
-                <td><a asp-action="Details" asp-route-id="@account.Id" class="underline">View account</a></td>
+                <td>@account.Email</td><td>@account.Role</td>
+                <td>
+                    <span class="admin-status @(account.IsActive ? "admin-status-positive" : "")">
+                        @(account.IsActive ? "Active" : "Inactive")
+                    </span>
+                </td>
+                <td><div class="admin-row-actions"><a asp-action="Details" asp-route-id="@account.Id">View account</a></div></td>
             </tr>
         }
         </tbody>

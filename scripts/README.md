@@ -20,9 +20,7 @@ role changes invalidate the previous login cookie.
 ./scripts/Seed-SampleData.ps1
 ```
 
-Adds eight entries per collection and demo-user set, plus one studio record and
-local sample images. Preserves existing matching data and your admin account.
-See [sample-data documentation](../docs/sample-data.md) for demo login details.
+Populates empty website content tables without changing existing content or accounts. See [sample-data documentation](../docs/sample-data.md).
 
 ## Checks
 

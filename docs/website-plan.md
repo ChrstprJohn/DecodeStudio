@@ -129,7 +129,6 @@ in Razor markup; this scope does not require a full page-builder system.
 | Id | Primary key |
 | FirstName, MiddleName, LastName, RoleTitle, Bio | Owner/team introduction; middle name optional |
 | PhotoPath | Optional member photo |
-| IsOwner | Identifies the owner entry or entries |
 | SortOrder | Display order |
 | IsPublished | Whether visitors can see the entry |
 

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyPortfolio.Data;
+using MyPortfolio.Models;
 using MyPortfolio.Models.Entities;
 using MyPortfolio.Models.ViewModels;
 
@@ -35,6 +36,8 @@ public class SocialLinkService
         item.Label = model.Label.Trim();
         item.Url = model.Url.Trim();
         item.SortOrder = model.SortOrder;
+        item.CustomIconSvg = model.CustomIconFile is { } file ? SocialIcon.Read(file)
+            : model.RemoveCustomIcon ? null : item.CustomIconSvg;
 
         if (model.Id == 0)
         {

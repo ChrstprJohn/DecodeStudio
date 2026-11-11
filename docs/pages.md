@@ -19,7 +19,7 @@ as sections rather than separate pages for the initial version.
 | Services | Web design, web development, deployment, and other studio services | Published Services in SortOrder |
 | Website showcase | Preview image, project title/description, link to visit each website | Published Projects in SortOrder |
 | Contact | Email, optional phone, social/contact links | SiteContent and SocialLinks |
-| Owner / our team | Separate first/last names displayed together, role, bio, optional photo | Published TeamMembers in SortOrder; IsOwner identifies owner |
+| Team | Separate first/last names displayed together, role, bio, optional photo | Published TeamMembers in SortOrder |
 | Footer | Studio identity, footer text, reused contact/social links and navigation | SiteContent and SocialLinks |
 
 This covers the assignment's About the Business/Company, Products and Services,

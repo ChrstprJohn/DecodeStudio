@@ -7,6 +7,13 @@
 .home-header .mobile-menu-backdrop { display: none; }
 .home-header nav[aria-label="Main navigation"] { gap: 28px; padding: 8px 0 8px 60px; font-size: 16px; font-weight: 500; }
 .home-header .action-primary { border-radius: 3px; min-height: 46px; padding-inline: 24px; font-size: 16px; gap: 16px; }
+.profile-menu { position: relative; }
+.profile-menu summary { cursor: pointer; }
+nav[aria-label="Main navigation"] .profile-menu summary { padding: 12px 18px; border-radius: 3px; background: #222; color: white; }
+nav[aria-label="Main navigation"] .profile-menu-links { position: absolute; top: calc(100% + 8px); right: 0; min-width: 150px; padding: 6px; border: 1px solid #ddd; border-radius: 5px; background: white; color: #222; box-shadow: 0 8px 24px #0002; }
+.profile-menu-links :is(a, button) { display: block; width: 100%; padding: 10px 12px; border-radius: 3px; text-align: left; }
+.profile-menu-links :is(a, button):hover { background: rgb(128 128 128 / 15%); }
+nav[aria-label="Mobile navigation"] .profile-menu-links { margin-top: 8px; }
 .home-header.is-over-dark { background: #eeeeeeaa; }
 .studio-hero { position: relative; isolation: isolate; overflow: hidden; height: 100svh; min-height: 680px; background: #eee; }
 .gallery-window { --tile: calc(100svh / 4.1); --preview-ratio: 2; position: absolute; inset: 0; overflow: hidden; }
@@ -20,7 +27,6 @@
 .hero-introduction { position: absolute; right: 30px; bottom: 30px; width: 365px; }
 .hero-introduction p { font-size: 20px; font-weight: 500; line-height: 1.4; letter-spacing: -.025em; white-space: pre-line; }
 .hero-action { margin-top: 30px; min-height: 44px; border-radius: 3px; font-size: 16px; }
-.hero-fallback { position: absolute; right: 0; height: 100%; width: 55%; object-fit: cover; }
 @media (min-width: 1200px) and (max-width: 1399px) {
   .hero-heading { width: 530px; font-size: 72px; }
   .hero-introduction { width: 330px; }
@@ -37,7 +43,7 @@
 @media (max-width: 1023px) {
   .home-header { inset: 20px 20px auto; }
   .home-header .studio-slash { width: 14px; height: 14px; margin-inline-end: -1px; }
-  .home-header details summary { border-radius: 50%; width: 48px; height: 48px; padding: 0; display: grid; place-items: center; font-size: 11px; background: white; color: #222; }
+  .home-header .mobile-menu-toggle { border-radius: 50%; width: 48px; height: 48px; padding: 0; display: grid; place-items: center; font-size: 11px; background: white; color: #222; }
   .studio-hero { height: auto; min-height: 100svh; padding: 450px 20px 50px; }
   .gallery-window { --tile: 120px; --preview-ratio: 1.5; height: 415px; }
   .gallery-image { object-position: center; }

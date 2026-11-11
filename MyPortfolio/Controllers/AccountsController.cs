@@ -18,6 +18,7 @@ public class AccountsController : Controller
     [HttpGet]
     public async Task<IActionResult> Index(string? status)
     {
+        ViewData["AccountStatusFilter"] = status is "active" or "inactive" ? status : null;
         return View(await _service.GetAllAsync(status));
     }
 

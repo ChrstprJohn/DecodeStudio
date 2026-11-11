@@ -1,29 +1,100 @@
+@using System.Security.Claims
+@inject MyPortfolio.Services.ProfileService ProfileService
 @{
     Layout = "_Layout";
+    ViewData["AdminShell"] = true;
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var profile = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId)
+        ? await ProfileService.GetAsync(userId)
+        : null;
+    var profileName = profile is null ? "Profile" : $"{profile.FirstName} {profile.LastName}".Trim();
+    var initials = profile is null ? "?" : string.Concat(profile.FirstName.Take(1).Concat(profile.LastName.Take(1))).ToUpperInvariant();
     var navigation = new[]
     {
-        new { Controller = "Admin", Label = "Analytics" },
-        new { Controller = "Studio", Label = "Studio content" },
-        new { Controller = "Projects", Label = "Website showcase" },
-        new { Controller = "Offerings", Label = "Services" },
-        new { Controller = "Team", Label = "Owner and team" },
-        new { Controller = "Contact", Label = "Contact" },
-        new { Controller = "Links", Label = "Social links" },
-        new { Controller = "Accounts", Label = "Account management" }
+        new { Controller = "Admin", Label = "Analytics", Icon = "M3 3v18h18M8 16v-4m5 4V8m5 8V5" },
+        new { Controller = "Studio", Label = "Website Details", Icon = "M6 3h9l4 4v14H6zM14 3v5h5M9 12h7m-7 4h7" },
+        new { Controller = "Projects", Label = "Product Showcase", Icon = "M3 4h18v16H3zM3 8h18M7 12h4v4H7zm7 0h3m-3 4h3" },
+        new { Controller = "Offerings", Label = "Services", Icon = "M9 6V4h6v2M3 7h18v13H3zM3 12h18m-11 0v2h4v-2" },
+        new { Controller = "Team", Label = "Team", Icon = "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m20 0v-2a4 4 0 0 0-3-4M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm8-8a4 4 0 0 1 0 8" },
+        new { Controller = "Links", Label = "Social links", Icon = "M10 13a4 4 0 0 0 6 0l4-4a4 4 0 0 0-6-6l-2 2m2 6a4 4 0 0 0-6 0l-4 4a4 4 0 0 0 6 6l2-2" },
+        new { Controller = "Contact", Label = "Contact", Icon = "M3 5h18v14H3zM3 6l9 7 9-7" },
+        new { Controller = "Accounts", Label = "Account management", Icon = "M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11zm-3-10 2 2 4-4" }
     };
+    var navigationGroups = new[] { navigation[..1], navigation[1..^1], navigation[^1..] };
 }
-<div class="mx-auto min-h-[calc(100svh-6rem)] max-w-[1600px] lg:grid lg:grid-cols-[16rem_1fr]">
-    <aside class="px-6 py-6 lg:px-8 lg:py-10">
-        <p class="px-4 text-lg font-semibold tracking-[-0.04em]">Administration</p>
-        <nav aria-label="Admin navigation" class="mt-6 flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible">
-            @foreach (var item in navigation)
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <div class="flex items-center justify-between gap-4">
+            <a asp-controller="Home" asp-action="Index" aria-label="Decode Studio website" class="admin-brand"><partial name="_StudioWordmark" /></a>
+            <button type="button" aria-label="Admin menu" aria-controls="admin-navigation" aria-expanded="false"
+                    class="admin-secondary size-11 shrink-0 px-0 lg:hidden" data-admin-menu>
+                <svg aria-hidden="true" viewBox="0 0 24 24" class="size-5 fill-none stroke-current" stroke-width="1.6" stroke-linecap="round">
+                    <path class="admin-menu-open-icon" d="M4 6h16M4 12h16M4 18h16" />
+                    <path class="admin-menu-close-icon" d="m6 6 12 12M18 6 6 18" />
+                </svg>
+            </button>
+        </div>
+        <nav id="admin-navigation" aria-label="Admin navigation" class="admin-navigation">
+            @foreach (var group in navigationGroups)
             {
-                <a asp-controller="@item.Controller" asp-action="Index" aria-current="@(currentController == item.Controller ? "page" : null)" class="admin-link shrink-0">@item.Label</a>
+                var isContentGroup = group.Length > 1;
+                <div role="@(isContentGroup ? "group" : null)" aria-labelledby="@(isContentGroup ? "admin-content-nav-heading" : null)">
+                    @if (isContentGroup)
+                    {
+                        <p id="admin-content-nav-heading" class="mt-3 px-3 pb-2 text-sm font-semibold">Website Content</p>
+                    }
+                    <div class="flex flex-col gap-1 @(isContentGroup ? "mb-3 ml-3 border-l border-neutral-200 pl-2" : "")">
+                    @foreach (var item in group)
+                    {
+                        <a asp-controller="@item.Controller" asp-action="Index" aria-current="@(currentController == item.Controller ? "page" : null)" class="admin-link flex items-center gap-3">
+                            <svg aria-hidden="true" viewBox="0 0 24 24" class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="@item.Icon" />
+                            </svg>
+                            @item.Label
+                        </a>
+                    }
+                    </div>
+                </div>
             }
+            <details class="relative mt-auto pt-5">
+                <summary class="admin-link flex cursor-pointer list-none items-center gap-3 border border-neutral-200 [&::-webkit-details-marker]:hidden">
+                    @if (!string.IsNullOrWhiteSpace(profile?.ProfileImagePath))
+                    {
+                        <img src="@profile.ProfileImagePath" alt="" class="size-9 shrink-0 rounded-full object-cover" />
+                    }
+                    else
+                    {
+                        <span aria-hidden="true" class="grid size-9 shrink-0 place-items-center rounded-full bg-neutral-100 text-xs font-semibold">@initials</span>
+                    }
+                    <span class="min-w-0">
+                        <span class="block truncate">@profileName</span>
+                        <span class="block text-xs text-neutral-600">Profile</span>
+                    </span>
+                    <svg aria-hidden="true" viewBox="0 0 24 24" class="ml-auto size-4 fill-none stroke-current" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m6 15 6-6 6 6" />
+                    </svg>
+                </summary>
+                <div class="mt-1 rounded-lg border border-neutral-200 bg-white p-1 lg:absolute lg:inset-x-0 lg:bottom-full lg:z-10 lg:shadow-sm">
+                    <a asp-controller="Profile" asp-action="Index" aria-current="@(currentController == "Profile" ? "page" : null)" class="admin-link block">Profile</a>
+                    <form asp-controller="Account" asp-action="Logout" method="post">
+                        <button type="submit" class="admin-link block w-full text-left">Log out</button>
+                    </form>
+                </div>
+            </details>
         </nav>
     </aside>
-    <div class="min-w-0 px-6 pb-14 pt-4 lg:px-10 lg:pt-10">
+    <div class="admin-content">
         @RenderBody()
     </div>
 </div>
+<dialog id="delete-confirmation" aria-labelledby="delete-confirmation-title" aria-describedby="delete-confirmation-message"
+        class="fixed inset-0 m-auto w-[calc(100%-2rem)] max-w-md rounded-xl border border-neutral-200 bg-white p-6 shadow-xl backdrop:bg-black/35">
+    <h2 id="delete-confirmation-title" class="text-lg font-semibold"></h2>
+    <p id="delete-confirmation-message" class="mt-2 break-words text-sm text-neutral-700"></p>
+    <form method="post" asp-antiforgery="false" class="mt-6 flex flex-wrap justify-end gap-2">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="confirmed" value="true" />
+        <button type="submit" formmethod="dialog" class="admin-secondary" autofocus>Cancel</button>
+        <button type="submit" class="inline-flex min-h-9 items-center rounded-md bg-red-700 px-4 text-sm font-semibold text-white hover:bg-red-800" data-delete-submit>Delete</button>
+    </form>
+</dialog>

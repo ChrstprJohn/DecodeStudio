@@ -30,10 +30,22 @@ public class HomeService
             model.Content = content;
         }
 
+        (model.Projects, model.HeroPreviews) = await GetProjectGalleryAsync();
+        model.Services = await _database.Services.AsNoTracking().Where(item => item.IsPublished)
+            .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
+        model.TeamMembers = await _database.TeamMembers.AsNoTracking().Where(item => item.IsPublished)
+            .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
+        model.SocialLinks = await _database.SocialLinks.AsNoTracking()
+            .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
+        return model;
+    }
+
+    public async Task<(List<Models.Entities.Project> Projects, List<(string ImagePath, string Title)> Previews)> GetProjectGalleryAsync()
+    {
         var projects = await _database.Projects.AsNoTracking()
             .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
-        model.Projects = projects.Where(project => project.IsPublished).ToList();
-        model.HeroPreviews = model.Projects
+        var publishedProjects = projects.Where(project => project.IsPublished).ToList();
+        var previews = publishedProjects
             .Where(project => !string.IsNullOrWhiteSpace(project.ImagePath))
             .DistinctBy(project => project.ImagePath, StringComparer.OrdinalIgnoreCase)
             .Select(project => (project.ImagePath, project.Title))
@@ -51,14 +63,8 @@ public class HomeService
             if (registeredPaths.Contains(path) || registeredPaths.Contains($"/images/projects/{file.Name}")) continue;
 
             var title = Path.GetFileNameWithoutExtension(file.Name).Replace('-', ' ').Replace('_', ' ');
-            model.HeroPreviews.Add((path, title));
+            previews.Add((path, title));
         }
-        model.Services = await _database.Services.AsNoTracking().Where(item => item.IsPublished)
-            .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
-        model.TeamMembers = await _database.TeamMembers.AsNoTracking().Where(item => item.IsPublished)
-            .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
-        model.SocialLinks = await _database.SocialLinks.AsNoTracking()
-            .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
-        return model;
+        return (publishedProjects, previews);
     }
 }

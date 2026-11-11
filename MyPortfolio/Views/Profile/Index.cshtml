@@ -1,23 +1,44 @@
 @model ProfileViewModel
 @{
     ViewData["Title"] = "My portal";
+    var fullName = string.Join(" ", new[] { Model.FirstName, Model.MiddleName, Model.LastName }.Where(name => !string.IsNullOrWhiteSpace(name)));
+    var initials = string.Concat(Model.FirstName.Take(1).Concat(Model.LastName.Take(1))).ToUpperInvariant();
 }
-<div class="account-panel lg:max-w-2xl">
-    <h1 class="page-title">My portal</h1>
-    <p class="mt-4">Update your own profile.</p>
-    @if (!string.IsNullOrEmpty(Model.ProfileImagePath))
-    {
-        <img src="@Model.ProfileImagePath" alt="Your profile photo" class="mt-6 h-24 w-24 rounded-lg object-cover" />
-    }
-    <form asp-action="Edit" method="post" enctype="multipart/form-data" class="mt-6 space-y-5">
-        <div asp-validation-summary="ModelOnly" role="alert" class="text-red-700"></div>
-        <div><label asp-for="FirstName" class="block"></label><input asp-for="FirstName" class="mt-2 w-full" /><span asp-validation-for="FirstName" class="field-error"></span></div>
-        <div><label asp-for="MiddleName" class="block"></label><input asp-for="MiddleName" class="mt-2 w-full" /><span asp-validation-for="MiddleName" class="field-error"></span></div>
-        <div><label asp-for="LastName" class="block"></label><input asp-for="LastName" class="mt-2 w-full" /><span asp-validation-for="LastName" class="field-error"></span></div>
-        <div><label asp-for="Email" class="block"></label><input asp-for="Email" class="mt-2 w-full" /><span asp-validation-for="Email" class="field-error"></span></div>
-        <div><label asp-for="Photo" class="block"></label><input asp-for="Photo" type="file" accept="image/png,image/jpeg,image/webp" class="mt-2 block" /><span asp-validation-for="Photo" class="field-error"></span></div>
-        <label class="block"><input asp-for="RemovePhoto" /> Remove current photo</label>
-        <button type="submit" class="action-primary">Save profile</button>
-    </form>
-    <a asp-action="ChangePassword" class="mt-8 inline-block underline">Change password</a>
+<div class="max-w-6xl @(User.IsInRole("Admin") ? "" : "mx-auto my-10 w-[calc(100%-3rem)] md:my-16")">
+    <section aria-labelledby="profile-heading" class="rounded-xl border border-neutral-200 bg-white p-6 md:p-8">
+        <div class="flex items-center justify-between gap-4">
+            <h1 id="profile-heading" class="text-xl font-semibold">Personal information</h1>
+            <a asp-action="Edit" class="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-lg border border-neutral-300 px-4 text-sm font-medium hover:bg-neutral-100">
+                <svg aria-hidden="true" viewBox="0 0 24 24" class="size-4 fill-none stroke-current" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m14 5 5 5M4 20l5-1L20 8a2 2 0 0 0-4-4L5 15z" /></svg>
+                Edit
+            </a>
+        </div>
+        <div class="mt-7 flex items-center gap-5">
+            @if (!string.IsNullOrEmpty(Model.ProfileImagePath))
+            {
+                <img src="@Model.ProfileImagePath" alt="" class="size-20 shrink-0 rounded-full object-cover" />
+            }
+            else
+            {
+                <span aria-hidden="true" class="grid size-20 shrink-0 place-items-center rounded-full bg-neutral-100 text-xl font-semibold">@initials</span>
+            }
+            <div class="min-w-0">
+                <p class="break-words text-xl font-semibold">@fullName</p>
+                <p class="mt-1 text-sm text-neutral-600">@User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</p>
+            </div>
+        </div>
+        <dl class="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div><dt class="text-sm text-neutral-600">First name</dt><dd class="mt-1 break-words font-medium">@Model.FirstName</dd></div>
+            @if (!string.IsNullOrWhiteSpace(Model.MiddleName))
+            {
+                <div><dt class="text-sm text-neutral-600">Middle name</dt><dd class="mt-1 break-words font-medium">@Model.MiddleName</dd></div>
+            }
+            <div><dt class="text-sm text-neutral-600">Last name</dt><dd class="mt-1 break-words font-medium">@Model.LastName</dd></div>
+            <div><dt class="text-sm text-neutral-600">Email address</dt><dd class="mt-1 break-all font-medium">@Model.Email</dd></div>
+        </dl>
+    </section>
+    <section aria-labelledby="profile-security-heading" class="mt-5 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-neutral-200 bg-white p-6 md:p-8">
+        <h2 id="profile-security-heading" class="text-xl font-semibold">Security</h2>
+        <a asp-action="ChangePassword" class="inline-flex min-h-10 items-center rounded-lg border border-neutral-300 px-4 text-sm font-medium hover:bg-neutral-100">Change password</a>
+    </section>
 </div>

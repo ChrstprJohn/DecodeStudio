@@ -1,5 +1,7 @@
 @{
     var heroHeader = ViewData["HeroHeader"] is true;
+    var adminShell = ViewData["AdminShell"] is true;
+    var profilePage = string.Equals(ViewContext.RouteData.Values["controller"]?.ToString(), "Profile", StringComparison.OrdinalIgnoreCase);
     var studioName = ViewData["StudioName"] as string ?? "Decode Studio";
 }
 <!DOCTYPE html>
@@ -21,6 +23,8 @@
 </head>
 <body>
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:p-4">Skip to content</a>
+    @if (!adminShell)
+    {
     <header class="z-50 @(heroHeader ? "home-header" : "sticky top-0 bg-canvas")">
         <div class="public-width flex min-h-24 items-center justify-between gap-8">
             <a asp-controller="Home" asp-action="Index" aria-label="@studioName home" class="shrink-0 text-2xl font-semibold tracking-[-0.07em]"><partial name="_StudioWordmark" /></a>
@@ -32,19 +36,14 @@
                 <a asp-controller="Home" asp-action="Index" asp-fragment="contact" class="hover:underline">Contact</a>
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <a asp-controller="Profile" asp-action="Index" class="hover:underline">My portal</a>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a asp-controller="Admin" asp-action="Index" class="hover:underline">Admin</a>
-                    }
-                    <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit" class="action-primary">Log out</button></form>
+                    <partial name="_ProfileMenu" />
                 }
                 else
                 {
                     <a asp-controller="Account" asp-action="Login" class="action-primary" aria-label="Login / Sign up">Login <svg class="auth-slash" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21 21 3" fill="none" stroke="currentColor" stroke-width="1.2" /></svg> Sign up</a>
                 }
             </nav>
-            <details class="group lg:hidden">
+            <details class="mobile-menu group lg:hidden">
                 <summary class="mobile-menu-toggle" aria-label="Menu"><span aria-hidden="true"></span><span aria-hidden="true"></span></summary>
                 <nav aria-label="Mobile navigation" class="absolute inset-x-0 top-full flex flex-col gap-5 border-t border-[#dddddd] bg-canvas px-6 py-7 text-base">
                     <a asp-controller="Home" asp-action="Index" asp-fragment="hero">Home</a>
@@ -55,12 +54,7 @@
                     <a asp-controller="Home" asp-action="Index" asp-fragment="team">Team</a>
                     @if (User.Identity?.IsAuthenticated == true)
                     {
-                        <a asp-controller="Profile" asp-action="Index">My portal</a>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <a asp-controller="Admin" asp-action="Index">Admin</a>
-                        }
-                        <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit" class="action-primary">Log out</button></form>
+                        <partial name="_ProfileMenu" />
                     }
                     else
                     {
@@ -71,18 +65,25 @@
             </details>
         </div>
     </header>
+    }
     <main id="main-content" tabindex="-1">
-        @if (TempData["SuccessMessage"] is string success)
-        {
-            <p role="status" class="notice">@success</p>
-        }
         @if (TempData["ErrorMessage"] is string error)
         {
             <p role="alert" class="notice text-red-700">@error</p>
         }
         @RenderBody()
     </main>
-    <partial name="_Footer" />
+    @if (TempData["SuccessMessage"] is string success)
+    {
+        <div role="status" class="fixed right-4 bottom-4 z-50 w-[calc(100%-2rem)] max-w-sm rounded-lg border border-emerald-200 bg-white px-4 py-3 shadow-lg sm:right-6 sm:bottom-6" data-success-alert>
+            <p class="text-sm font-semibold text-emerald-800">Success</p>
+            <p class="mt-1 break-words text-sm">@success</p>
+        </div>
+    }
+    @if (!adminShell && !profilePage)
+    {
+        <partial name="_Footer" />
+    }
     <script src="~/lib/gsap/gsap.min.js" asp-append-version="true" defer></script>
     <script src="~/lib/gsap/CustomEase.min.js" asp-append-version="true" defer></script>
     <script src="~/js/site.js" asp-append-version="true" defer></script>
