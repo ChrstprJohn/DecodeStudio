@@ -7,6 +7,8 @@ ASP.NET Core MVC (.NET 10), Razor views, and Tailwind CSS 4.
 See [docs](docs/README.md) for the architecture and folder structure, development
 guide, and a dated record of completed work and pending features.
 
+See the [branch workflow](docs/branch-workflow.md) for both variants, database sharing, and how to carry changes across.
+
 ## Run locally
 
 Requires the .NET 10 SDK and Node.js/npm.
@@ -49,7 +51,7 @@ Use complete Tailwind class names so the compiler can detect them.
 - Project-local `dotnet-ef` tool for future migrations.
 - Tailwind CSS and CLI as build-only npm dependencies.
 
-The home page reads SiteContent row 1 from portfolio through EF Core. The local connection is configured in .NET User Secrets. See docs/development.md for setup on another machine. No content is inserted automatically. Login/signup/logout are implemented; content CRUD and profile/account portals are implemented; analytics is blank and migrations are not used. In Development, anonymous home requests redirect to /Account/Login. See [account documentation](docs/authentication.md).
+The home page reads SiteContent row 1 from portfolio through EF Core. The local connection is configured in .NET User Secrets. See docs/development.md for setup on another machine. No content is inserted automatically. Login/signup/logout are implemented; content CRUD and profile/account portals are implemented; analytics is blank and migrations are not used. Anonymous home requests redirect to /Account/Login by default. See [account documentation](docs/authentication.md).
 
 Bootstrap, jQuery, and the demo Privacy page have been removed. Forms should use
 server-side validation; jQuery client validation is no longer included.

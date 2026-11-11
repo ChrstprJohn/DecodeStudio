@@ -58,7 +58,7 @@ not restore full Identity account management or add AspNet account tables.
 
 ## Local school mode and public deployment
 
-appsettings.Development.json sets Portfolio:RequireLogin to true. Anonymous home
+Both appsettings.json and appsettings.Development.json set Portfolio:RequireLogin to true. Anonymous home
 requests redirect to Login. Account entry pages, the error page, and static assets
 remain available anonymously.
 
