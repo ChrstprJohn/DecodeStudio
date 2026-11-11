@@ -1,33 +1,41 @@
 @model SiteContentViewModel
 @{
     Layout = "_AdminLayout";
-    ViewData["Title"] = "Studio content";
-}
-<h1 class="page-title">Studio content</h1>
-<p class="mt-4">Save this form to create or update the studio's single content record.</p>
-<form asp-action="Edit" method="post" enctype="multipart/form-data" class="mt-8 max-w-3xl space-y-6 rounded-xl bg-white p-6 md:p-8">
-    <div asp-validation-summary="ModelOnly" role="alert" class="text-red-700"></div>
-    <div><label asp-for="StudioName" class="block"></label><input asp-for="StudioName" class="mt-2 w-full" /><span asp-validation-for="StudioName" class="field-error"></span></div>
-    <div><label asp-for="Tagline" class="block"></label><input asp-for="Tagline" class="mt-2 w-full" /><span asp-validation-for="Tagline" class="field-error"></span></div>
-    <div><label asp-for="HeroTitle" class="block"></label><input asp-for="HeroTitle" class="mt-2 w-full" /><span asp-validation-for="HeroTitle" class="field-error"></span></div>
-    <div><label asp-for="HeroDescription" class="block"></label><textarea asp-for="HeroDescription" rows="4" class="mt-2 w-full"></textarea><span asp-validation-for="HeroDescription" class="field-error"></span></div>
-    @if (!string.IsNullOrEmpty(Model.HeroImagePath))
+    ViewData["Title"] = "Website Details";
+    var editingSection = ViewData["EditingSection"] as string;
+    var studio = Model;
+    var studioFields = new (string Label, string? Value)[]
     {
-        <img src="@Model.HeroImagePath" alt="Current image" class="h-32 max-w-full rounded-lg object-contain" />
-    }
-    <div>
-        <label asp-for="ImageFile" class="block"></label>
-        <input asp-for="ImageFile" type="file" accept="image/png,image/jpeg,image/webp" class="mt-2 block max-w-full" />
-        <span asp-validation-for="ImageFile" class="field-error"></span>
-    </div>
-    <label class="block"><input asp-for="RemoveImage" /> Remove current image</label>
-
-    <div><label asp-for="HeroLinkText" class="block"></label><input asp-for="HeroLinkText" class="mt-2 w-full" /><span asp-validation-for="HeroLinkText" class="field-error"></span></div>
-    <div><label asp-for="HeroLinkUrl" class="block"></label><input asp-for="HeroLinkUrl" class="mt-2 w-full" /><span asp-validation-for="HeroLinkUrl" class="field-error"></span></div>
-    <div><label asp-for="AboutTitle" class="block"></label><input asp-for="AboutTitle" class="mt-2 w-full" /><span asp-validation-for="AboutTitle" class="field-error"></span></div>
-    <div><label asp-for="AboutDescription" class="block"></label><textarea asp-for="AboutDescription" rows="4" class="mt-2 w-full"></textarea><span asp-validation-for="AboutDescription" class="field-error"></span></div>
-    <div><label asp-for="FooterText" class="block"></label><input asp-for="FooterText" class="mt-2 w-full" /><span asp-validation-for="FooterText" class="field-error"></span></div>
-    <p>Hero link: http/https URL, /path, or #section.</p>
-    <button class="action-primary" type="submit">Save studio content</button>
-</form>
-<a asp-action="Delete" class="mt-8 inline-block underline">Clear studio content</a>
+        ("Studio name", studio.StudioName), ("Tagline", studio.Tagline),
+        ("Hero title", studio.HeroTitle), ("Hero description", studio.HeroDescription),
+        ("About heading", studio.AboutTitle), ("About description", studio.AboutDescription)
+    };
+}
+<h1 class="page-title">Website Details</h1>
+<div class="mt-8 max-w-3xl">
+    <section aria-labelledby="studio-details-heading" class="min-w-0 rounded-xl bg-white p-6 md:p-8">
+        <div class="mb-6 flex items-center justify-between gap-4">
+            <h2 id="studio-details-heading" class="text-xl font-semibold">Brand &amp; copy</h2>
+            @if (editingSection != "studio")
+            {
+                <partial name="_SettingsEditLink" model='@("studio")' />
+            }
+        </div>
+        @if (editingSection == "studio")
+        {
+            <partial name="_StudioForm" model="studio" />
+        }
+        else
+        {
+            <dl class="grid gap-5">
+                @foreach (var field in studioFields)
+                {
+                    <div>
+                        <dt class="text-sm text-neutral-600">@field.Label</dt>
+                        <dd class="mt-1 whitespace-pre-line break-words">@(string.IsNullOrWhiteSpace(field.Value) ? "Not set" : field.Value)</dd>
+                    </div>
+                }
+            </dl>
+        }
+    </section>
+</div>

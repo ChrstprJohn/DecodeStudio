@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyPortfolio.Models;
 using MyPortfolio.Models.ViewModels;
 using MyPortfolio.Services;
 
@@ -35,7 +36,15 @@ public class LinksController : Controller
         {
             return View("Edit", model);
         }
-        await _service.SaveAsync(model);
+        try
+        {
+            await _service.SaveAsync(model);
+        }
+        catch (ArgumentException exception)
+        {
+            ModelState.AddModelError(nameof(model.CustomIconFile), exception.Message);
+            return View("Edit", model);
+        }
         TempData["SuccessMessage"] = "Social link created.";
         return RedirectToAction(nameof(Index));
     }
@@ -53,6 +62,7 @@ public class LinksController : Controller
             Id = item.Id,
             Label = item.Label,
             Url = item.Url,
+            CurrentIconSource = SocialIcon.Source(item.CustomIconSvg),
             SortOrder = item.SortOrder
         });
     }
@@ -64,13 +74,20 @@ public class LinksController : Controller
         {
             return NotFound();
         }
+        model.CurrentIconSource = SocialIcon.Source((await _service.GetAsync(model.Id))?.CustomIconSvg);
         if (!ModelState.IsValid)
         {
             return View(model);
         }
-        if (!await _service.SaveAsync(model))
+        try
         {
-            return NotFound();
+            if (!await _service.SaveAsync(model))
+                return NotFound();
+        }
+        catch (ArgumentException exception)
+        {
+            ModelState.AddModelError(nameof(model.CustomIconFile), exception.Message);
+            return View(model);
         }
         TempData["SuccessMessage"] = "Social link updated.";
         return RedirectToAction(nameof(Index));

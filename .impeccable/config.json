@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-11-11T07:32:48.378Z",
+        "reason": "Codex verified Inter was already the self-hosted font on the public portfolio branch. The transfer retains the established typography, consistent with the school branch exception."
+      }
+    ]
+  }
+}

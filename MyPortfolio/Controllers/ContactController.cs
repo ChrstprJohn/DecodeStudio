@@ -10,7 +10,11 @@ namespace MyPortfolio.Controllers;
 public class ContactController(SiteContentService service) : Controller
 {
     [HttpGet]
-    public async Task<IActionResult> Index() => View(await service.GetContactAsync());
+    public async Task<IActionResult> Index(string? edit)
+    {
+        ViewData["EditingSection"] = edit;
+        return View(await service.GetContactAsync());
+    }
 
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(ContactViewModel model)
@@ -28,6 +32,7 @@ public class ContactController(SiteContentService service) : Controller
         }
         if (!ModelState.IsValid)
         {
+            ViewData["EditingSection"] = "contact";
             model.BackgroundImagePath = (await service.GetContactAsync()).BackgroundImagePath;
             return View(model);
         }

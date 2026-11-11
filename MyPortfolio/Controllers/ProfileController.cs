@@ -25,6 +25,13 @@ public class ProfileController : Controller
         return model is null ? NotFound() : View(model);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Edit()
+    {
+        var model = await _service.GetAsync(GetUserId());
+        return model is null ? NotFound() : View(model);
+    }
+
     [HttpPost, ValidateAntiForgeryToken]
     [RequestSizeLimit(3 * 1024 * 1024)]
     public async Task<IActionResult> Edit(ProfileViewModel model)
@@ -40,7 +47,7 @@ public class ProfileController : Controller
             ModelState.AddModelError("", error);
         }
         model.ProfileImagePath = (await _service.GetAsync(GetUserId()))?.ProfileImagePath;
-        return View("Index", model);
+        return View(model);
     }
 
     [HttpGet]

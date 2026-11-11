@@ -8,6 +8,8 @@
 <form asp-action="Delete" method="post" class="mt-6">
     <input type="hidden" name="id" value="@Model.Id" />
     <input type="hidden" name="confirmed" value="true" />
-    <button type="submit" class="action-secondary">Delete</button>
-    <a asp-action="Index" class="ml-4 underline">Cancel</a>
+    <div class="flex flex-wrap items-center gap-2">
+        <button type="submit" class="admin-secondary">Delete</button>
+        <a asp-action="Index" class="admin-secondary">Cancel</a>
+    </div>
 </form>

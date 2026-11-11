@@ -2,47 +2,47 @@
 @{
     Layout = "_AdminLayout";
     var action = Model.Id == 0 ? "Create" : "Edit";
-    ViewData["Title"] = action + " project";
+    ViewData["Title"] = action + " product";
 }
+<partial name="_EditBackLink" model='("Back to products")' />
 <h1 class="page-title">@ViewData["Title"]</h1>
-<form asp-action="@action" method="post" enctype="multipart/form-data" class="mt-8 max-w-3xl space-y-6 rounded-xl bg-white p-6 md:p-8">
+<form asp-action="@action" method="post" enctype="multipart/form-data" class="edit-form mt-6 max-w-3xl rounded-xl border border-neutral-200 bg-white p-5 sm:p-7">
     <div asp-validation-summary="ModelOnly" role="alert" class="text-red-700"></div>
     <input asp-for="Id" type="hidden" />
     <div>
         <label asp-for="Title" class="block"></label>
-        <input asp-for="Title" class="mt-2 w-full" />
+        <input asp-for="Title" placeholder="e.g. SchedSnap" class="mt-2 w-full" />
         <span asp-validation-for="Title" class="field-error"></span>
     </div>
     <div>
         <label asp-for="Description" class="block"></label>
-        <textarea asp-for="Description" rows="4" class="mt-2 w-full"></textarea>
+        <textarea asp-for="Description" placeholder="Describe what the product does and who it is for." rows="4" class="mt-2 w-full"></textarea>
         <span asp-validation-for="Description" class="field-error"></span>
     </div>
-    @if (!string.IsNullOrEmpty(Model.ImagePath))
-    {
-        <img src="@Model.ImagePath" alt="Current image" class="h-32 max-w-full rounded-lg object-contain" />
-    }
     <div>
         <label asp-for="ImageFile" class="block"></label>
-        <input asp-for="ImageFile" type="file" accept="image/png,image/jpeg,image/webp" class="mt-2 block max-w-full" />
+        <input asp-for="ImageFile" type="file" accept="image/png,image/jpeg,image/webp" class="sr-only" data-upload-preview />
+        <partial name="_UploadPreview" model='("ImageFile", Model.ImagePath)' />
         <span asp-validation-for="ImageFile" class="field-error"></span>
     </div>
 
     <div>
         <label asp-for="WebsiteUrl" class="block"></label>
-        <input asp-for="WebsiteUrl" class="mt-2 w-full" />
+        <input asp-for="WebsiteUrl" placeholder="https://your-product.example" class="mt-2 w-full" />
         <span asp-validation-for="WebsiteUrl" class="field-error"></span>
     </div>
     <div>
         <label asp-for="SortOrder" class="block"></label>
         <input asp-for="SortOrder" class="mt-2 w-full" aria-describedby="project-sort-order-help" />
-        <p id="project-sort-order-help" class="mt-2 text-sm">Lower numbers appear first in the homepage gallery and website showcase.</p>
+        <p id="project-sort-order-help" class="mt-2 text-sm">Lower numbers appear first in the homepage gallery and product showcase.</p>
         <span asp-validation-for="SortOrder" class="field-error"></span>
     </div>
     <div>
         <label><input asp-for="IsPublished" /> Published</label>
         <span asp-validation-for="IsPublished" class="field-error"></span>
     </div>
-    <button type="submit" class="action-primary">Save</button>
-    <a asp-action="Index" class="ml-4 underline">Cancel</a>
+    <div class="edit-form-actions">
+        <button type="submit" class="admin-primary">Save</button>
+        <a asp-action="Index" class="admin-secondary">Cancel</a>
+    </div>
 </form>

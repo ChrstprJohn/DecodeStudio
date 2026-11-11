@@ -1,0 +1,9 @@
+@model System.ValueTuple<string, string?>
+@{
+    var (field, source) = Model;
+}
+<label for="@field" class="upload-preview">
+    <img src="@source" alt="" hidden="@(string.IsNullOrEmpty(source))" />
+    <partial name="_UploadPencil" />
+</label>
+<span class="sr-only" role="status" data-upload-status></span>

@@ -43,7 +43,6 @@ public class TeamMemberService
         item.LastName = model.LastName.Trim();
         item.RoleTitle = model.RoleTitle.Trim();
         item.Bio = model.Bio.Trim();
-        item.IsOwner = model.IsOwner;
         item.SortOrder = model.SortOrder;
         item.IsPublished = model.IsPublished;
 

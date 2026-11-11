@@ -15,4 +15,6 @@ public class SocialLink
     public string Url { get; set; } = "";
 
     public int SortOrder { get; set; }
+
+    public string? CustomIconSvg { get; set; }
 }

@@ -20,9 +20,13 @@ role changes invalidate the previous login cookie.
 ./scripts/Seed-SampleData.ps1
 ```
 
-Adds eight entries per collection and demo-user set, plus one studio record and
-local sample images. Preserves existing matching data and your admin account.
-See [sample-data documentation](../docs/sample-data.md) for demo login details.
+Populates empty website content tables. See [sample-data documentation](../docs/sample-data.md).
+
+## Upgrade an existing deployment database
+
+Back up the VM database and run [upgrade-public-portfolio.sql](database/upgrade-public-portfolio.sql)
+before deploying the updated app. For a fresh database, use
+[schema.sql](../docs/database/schema.sql).
 
 ## Checks
 

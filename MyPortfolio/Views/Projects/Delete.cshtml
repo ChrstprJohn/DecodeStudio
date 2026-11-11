@@ -1,13 +1,15 @@
 @model MyPortfolio.Models.Entities.Project
 @{
     Layout = "_AdminLayout";
-    ViewData["Title"] = "Delete project";
+    ViewData["Title"] = "Delete product";
 }
-<h1 class="page-title">Delete project</h1>
+<h1 class="page-title">Delete product</h1>
 <p class="mt-6">Delete @Model.Title? This cannot be undone.</p>
 <form asp-action="Delete" method="post" class="mt-6">
     <input type="hidden" name="id" value="@Model.Id" />
     <input type="hidden" name="confirmed" value="true" />
-    <button type="submit" class="action-secondary">Delete</button>
-    <a asp-action="Index" class="ml-4 underline">Cancel</a>
+    <div class="flex flex-wrap items-center gap-2">
+        <button type="submit" class="admin-secondary">Delete</button>
+        <a asp-action="Index" class="admin-secondary">Cancel</a>
+    </div>
 </form>

@@ -26,7 +26,6 @@ public class TeamMember
     [MaxLength(500)]
     public string? PhotoPath { get; set; }
 
-    public bool IsOwner { get; set; }
 
     public int SortOrder { get; set; }
 

@@ -6,7 +6,6 @@ using MyPortfolio.Services;
 namespace MyPortfolio.Controllers;
 
 [Authorize(Roles = "Admin")]
-[RequestSizeLimit(3 * 1024 * 1024)]
 public class StudioController : Controller
 {
     private readonly SiteContentService _service;
@@ -17,31 +16,26 @@ public class StudioController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? edit)
     {
+        if (edit == "contact")
+            return RedirectToAction(nameof(ContactController.Index), "Contact", new { edit });
+
+        ViewData["EditingSection"] = edit;
         return View(await _service.GetAsync());
     }
 
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(SiteContentViewModel model)
     {
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                await _service.SaveAsync(model);
-            }
-            catch (ArgumentException exception)
-            {
-                ModelState.AddModelError(nameof(model.ImageFile), exception.Message);
-            }
-        }
         if (!ModelState.IsValid)
         {
-            model.HeroImagePath = (await _service.GetAsync()).HeroImagePath;
+            ViewData["EditingSection"] = "studio";
             return View("Index", model);
         }
-        TempData["SuccessMessage"] = "Studio content saved.";
+
+        await _service.SaveAsync(model);
+        TempData["SuccessMessage"] = "Brand and copy saved.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -59,7 +53,7 @@ public class StudioController : Controller
             return BadRequest();
         }
         await _service.DeleteAsync();
-        TempData["SuccessMessage"] = "Studio content cleared.";
+        TempData["SuccessMessage"] = "Studio and contact details cleared.";
         return RedirectToAction(nameof(Index));
     }
 }

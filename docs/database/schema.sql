@@ -32,15 +32,11 @@ CREATE TABLE dbo.SiteContent (
     Tagline nvarchar(250) NULL,
     HeroTitle nvarchar(200) NOT NULL,
     HeroDescription nvarchar(2000) NOT NULL,
-    HeroImagePath nvarchar(500) NULL,
     ContactBackgroundImagePath nvarchar(500) NULL,
-    HeroLinkText nvarchar(100) NULL,
-    HeroLinkUrl nvarchar(2048) NULL,
     AboutTitle nvarchar(200) NOT NULL,
     AboutDescription nvarchar(max) NOT NULL,
     ContactEmail nvarchar(256) NOT NULL,
-    ContactPhone nvarchar(30) NULL,
-    FooterText nvarchar(500) NULL
+    ContactPhone nvarchar(30) NULL
 );
 
 CREATE TABLE dbo.Projects (
@@ -70,7 +66,6 @@ CREATE TABLE dbo.TeamMembers (
     RoleTitle nvarchar(150) NOT NULL,
     Bio nvarchar(2000) NOT NULL,
     PhotoPath nvarchar(500) NULL,
-    IsOwner bit NOT NULL,
     SortOrder int NOT NULL,
     IsPublished bit NOT NULL
 );
@@ -79,6 +74,7 @@ CREATE TABLE dbo.SocialLinks (
     Id int IDENTITY(1,1) NOT NULL CONSTRAINT PK_SocialLinks PRIMARY KEY,
     Label nvarchar(100) NOT NULL,
     Url nvarchar(2048) NOT NULL,
-    SortOrder int NOT NULL
+    SortOrder int NOT NULL,
+    CustomIconSvg nvarchar(max) NULL
 );
 

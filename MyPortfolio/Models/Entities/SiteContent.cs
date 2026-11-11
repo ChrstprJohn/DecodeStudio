@@ -21,15 +21,6 @@ public class SiteContent
     [MaxLength(2000)]
     public string HeroDescription { get; set; } = "";
 
-    [MaxLength(500)]
-    public string? HeroImagePath { get; set; }
-
-    [MaxLength(100)]
-    public string? HeroLinkText { get; set; }
-
-    [MaxLength(2048)]
-    public string? HeroLinkUrl { get; set; }
-
     [MaxLength(200)]
     public string AboutTitle { get; set; } = "";
 
@@ -44,6 +35,4 @@ public class SiteContent
     [MaxLength(500)]
     public string? ContactBackgroundImagePath { get; set; }
 
-    [MaxLength(500)]
-    public string? FooterText { get; set; }
 }

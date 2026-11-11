@@ -37,9 +37,6 @@ public class TeamMemberViewModel
     [Display(Name = "Remove current image")]
     public bool RemoveImage { get; set; }
 
-    [Display(Name = "Owner")]
-    public bool IsOwner { get; set; }
-
     [Range(0, int.MaxValue)]
     [Display(Name = "Display order")]
     public int SortOrder { get; set; }
