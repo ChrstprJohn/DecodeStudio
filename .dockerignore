@@ -1,0 +1,11 @@
+**
+!MyPortfolio/
+!MyPortfolio/**
+MyPortfolio/**/bin/
+MyPortfolio/**/obj/
+MyPortfolio/**/node_modules/
+MyPortfolio/**/.vs/
+MyPortfolio/**/*.user
+MyPortfolio/**/.env*
+MyPortfolio/appsettings.Development.json
+MyPortfolio/wwwroot/uploads/

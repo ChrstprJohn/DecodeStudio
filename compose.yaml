@@ -1,0 +1,53 @@
+name: decodestudio
+
+services:
+  decodestudio-web:
+    build: .
+    image: decodestudio-web:${DECODESTUDIO_REVISION:-local}
+    restart: unless-stopped
+    mem_limit: 384m
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      AllowedHosts: ${DECODESTUDIO_HOST:-chrbuilds.dev}
+      ReverseProxy__KnownProxy: ${DECODESTUDIO_PROXY_IP:?Set the Caddy IP on app_network}
+      ConnectionStrings__Portfolio: 'Server=decodestudio-sql,1433;Database=portfolio;User ID=portfolio_app;Password=${PORTFOLIO_DB_PASSWORD:?Set the portfolio SQL password};Encrypt=True;TrustServerCertificate=True;'
+    depends_on:
+      decodestudio-sql:
+        condition: service_healthy
+    networks:
+      - database
+      - app_network
+    volumes:
+      - uploads:/app/wwwroot/uploads
+      - data-protection-keys:/home/app/.aspnet/DataProtection-Keys
+
+  decodestudio-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
+    mem_limit: 2560m
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_PID: Express
+      MSSQL_MEMORY_LIMIT_MB: '2048'
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set the SQL Server administrator password}
+    healthcheck:
+      test: [CMD-SHELL, 'SQLCMDPASSWORD="$$MSSQL_SA_PASSWORD" /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -C -b -Q "SELECT 1" >/dev/null']
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    networks:
+      - database
+    volumes:
+      - sql-data:/var/opt/mssql
+
+networks:
+  app_network:
+    external: true
+  database:
+    internal: true
+
+volumes:
+  uploads:
+  data-protection-keys:
+  sql-data:

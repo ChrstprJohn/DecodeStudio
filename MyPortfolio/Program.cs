@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using MyPortfolio.Data;
 using MyPortfolio.Models.Entities;
 using MyPortfolio.Services;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +39,23 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization();
 
+var knownProxy = builder.Configuration["ReverseProxy:KnownProxy"];
+if (!string.IsNullOrWhiteSpace(knownProxy))
+{
+    var proxyAddress = IPAddress.Parse(knownProxy);
+    builder.Services.Configure<ForwardedHeadersOptions>(options =>
+    {
+        options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        options.KnownProxies.Add(proxyAddress);
+    });
+}
+
 var app = builder.Build();
+
+if (!string.IsNullOrWhiteSpace(knownProxy))
+{
+    app.UseForwardedHeaders();
+}
 
 if (!app.Environment.IsDevelopment())
 {
