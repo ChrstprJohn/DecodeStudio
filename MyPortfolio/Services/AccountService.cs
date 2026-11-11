@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MyPortfolio.Data;
 using MyPortfolio.Models.Entities;
@@ -24,49 +23,12 @@ public class AccountService
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<bool> RegisterAsync(RegisterViewModel model)
-    {
-        var email = model.Email.Trim().ToLowerInvariant();
-
-        if (await _database.Users.AnyAsync(user => user.Email == email))
-        {
-            return false;
-        }
-
-        var user = new User
-        {
-            FirstName = model.FirstName.Trim(),
-            MiddleName = string.IsNullOrWhiteSpace(model.MiddleName) ? null : model.MiddleName.Trim(),
-            LastName = model.LastName.Trim(),
-            Email = email,
-            Role = "User",
-            IsActive = true,
-            CreatedAtUtc = DateTime.UtcNow
-        };
-
-        user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
-        _database.Users.Add(user);
-
-        try
-        {
-            await _database.SaveChangesAsync();
-            return true;
-        }
-        catch (DbUpdateException exception) when (
-            exception.InnerException is SqlException { Number: 2601 or 2627 })
-        {
-            // Another registration may have saved this email after the check.
-            _database.Entry(user).State = EntityState.Detached;
-            return false;
-        }
-    }
-
     public async Task<User?> LoginAsync(LoginViewModel model)
     {
         var email = model.Email.Trim().ToLowerInvariant();
         var user = await _database.Users.SingleOrDefaultAsync(user => user.Email == email);
 
-        if (user is null || !user.IsActive || (user.Role != "User" && user.Role != "Admin"))
+        if (user is null || !user.IsActive || user.Role != "Admin")
         {
             return null;
         }

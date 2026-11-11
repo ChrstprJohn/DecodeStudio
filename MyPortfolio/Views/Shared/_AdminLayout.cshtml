@@ -9,8 +9,7 @@
         new { Controller = "Offerings", Label = "Services" },
         new { Controller = "Team", Label = "Owner and team" },
         new { Controller = "Contact", Label = "Contact" },
-        new { Controller = "Links", Label = "Social links" },
-        new { Controller = "Accounts", Label = "Account management" }
+        new { Controller = "Links", Label = "Social links" }
     };
 }
 <div class="mx-auto min-h-[calc(100svh-6rem)] max-w-[1600px] lg:grid lg:grid-cols-[16rem_1fr]">
@@ -21,7 +20,11 @@
             {
                 <a asp-controller="@item.Controller" asp-action="Index" aria-current="@(currentController == item.Controller ? "page" : null)" class="admin-link shrink-0">@item.Label</a>
             }
+            <a asp-controller="Profile" asp-action="Index" class="admin-link shrink-0">My profile</a>
         </nav>
+        <form asp-controller="Account" asp-action="Logout" method="post" class="mt-6">
+            <button type="submit" class="action-secondary">Log out</button>
+        </form>
     </aside>
     <div class="min-w-0 px-6 pb-14 pt-4 lg:px-10 lg:pt-10">
         @RenderBody()

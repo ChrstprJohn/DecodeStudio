@@ -5,11 +5,9 @@ working MVC forms, database operations, authorization, and navigation.
 
 ## Entry points
 
-- Admin login redirects to /Admin, the blank analytics page with a sidebar.
-- User login redirects to /. Shared navigation offers My portal and logout.
-- /Profile lets a signed-in user edit their own account, including admins.
-- School mode requires portfolio login; public mode permits anonymous browsing.
-  Admin and profile operations remain protected in both modes.
+- The landing page is public.
+- /admin sends signed-out visitors to /admin/login.
+- Only admins can access content editors and their own profile.
 
 ## Content endpoints
 
@@ -86,18 +84,7 @@ The shared layout adds section anchor links on the landing page and renders the
 footer afterward. The public sections use editorial headings, alternating light/dark fields, and image-led layouts.
 See [pages.md](pages.md) for the section-to-file and data mapping.
 
-## Account management
-
-- GET /Accounts: all users, with active/inactive filters.
-- GET /Accounts/Details/{id}: read-only names, email, photo, role, status, and UTC
-  registration date. Password hashes are never included in the view model.
-- POST /Accounts/SetActive: activate/deactivate the selected account.
-- Admins cannot deactivate themselves. Status changes invalidate affected cookies
-  on the next authenticated request.
-- No account delete action, personal-detail editing of other users, or in-app role
-  assignment exists. Use the local promotion script for the selected owner account.
-
-## User portal
+## Admin profile
 
 - GET /Profile: own names, email, and photo.
 - POST /Profile/Edit: validate/save only the signed-in user's data. Email remains
@@ -114,16 +101,7 @@ models accept permitted fields; entities map the existing six tables. The shared
 _AdminLayout supplies the sidebar. No generic CRUD controllers, repository layer,
 new schema tables, startup migrations, or automatic content seeding were added.
 
-With the Development test server on port 5041, run scripts/Test-Portals.ps1 from
-the root. It creates two uniquely named temporary accounts and content entries,
-tests CRUD, publication, role boundaries, activation, profile/photo/password
-operations and session revocation, then removes its records/files. Studio write
-tests run only if row 1 is initially absent, preserving existing studio content.
-The script captures rendered HTML under ignored .taste-skill/portals for checks.
-
-Test-Accounts.ps1 covers authentication regression. Test-Home.ps1 checks the
-landing section order/anchors or school-mode login form, plus CSS. Sample data
+Run scripts/Test-Home.ps1 against the public server to check the landing page and admin sign-in routes. Account and registration tests belong to the school branch. Sample data
 is added only by the explicit [seed script](sample-data.md).
 
-Analytics calculations, password recovery, email verification, login throttling,
-and disabling public registration for deployment remain separate work.
+Analytics calculations, password recovery, email verification, and login throttling remain separate work.

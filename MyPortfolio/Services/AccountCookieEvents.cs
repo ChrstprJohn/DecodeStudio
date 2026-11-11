@@ -21,7 +21,7 @@ public class AccountCookieEvents : CookieAuthenticationEvents
             : null;
 
         // Recheck each request so deactivation and role changes invalidate old cookies.
-        if (user is null || user.Role != context.Principal?.FindFirstValue(ClaimTypes.Role) ||
+        if (user is null || user.Role != "Admin" || user.Role != context.Principal?.FindFirstValue(ClaimTypes.Role) ||
             AccountService.GetPasswordVersion(user) != context.Principal?.FindFirstValue("PasswordVersion"))
         {
             context.RejectPrincipal();

@@ -46,25 +46,7 @@ Use a custom Users table, ASP.NET Core cookie authentication, and Microsoft's pa
 
 ## School demo and public deployment
 
-There are two intended access modes:
-
-| Mode | Portfolio content | Profile and admin functions |
-| --- | --- | --- |
-| Local school demo | Login required, except registration/login and required public assets | Login required; admin functions require the Admin role |
-| Public deployment | Visitors can browse without an account | Remain protected; admin functions require the Admin role |
-
-Plan one explicit configuration setting, `Portfolio:RequireLogin`, to control
-access to portfolio content. Set it to `true` for the local school demo and
-explicitly to `false` for the public deployment. This is a proposed setting and
-does not exist in the application yet.
-
-Enforce this on the server. Hiding login buttons or navigation alone does not
-change access permissions. Public mode must never disable admin authorization
-or allow anonymous profile editing. Login can remain reachable for the owner
-even if it is not prominent in the public navigation.
-
-The assignment requires login before viewing the website. Demonstrate and submit
-that mode for grading; public deployment is a separate intended configuration.
+The school and public variants live on separate branches. The school variant requires visitor sign-in. The public variant allows anonymous browsing and provides admin sign-in through /admin. See the [branch workflow](branch-workflow.md) for deployment and how to share changes.
 
 ## Proposed database
 

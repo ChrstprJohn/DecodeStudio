@@ -17,39 +17,13 @@ public class AccountController : Controller
         _accountService = accountService;
     }
 
-    [HttpGet, AllowAnonymous]
-    public IActionResult Register()
-    {
-        return View(new RegisterViewModel());
-    }
-
-    [HttpPost, AllowAnonymous, ValidateAntiForgeryToken]
-    public async Task<IActionResult> Register(RegisterViewModel model)
-    {
-        if (!ModelState.IsValid)
-        {
-            return View(model);
-        }
-
-        var created = await _accountService.RegisterAsync(model);
-
-        if (!created)
-        {
-            ModelState.AddModelError(nameof(model.Email), "This email is already registered.");
-            return View(model);
-        }
-
-        TempData["SuccessMessage"] = "Account created. You can now log in.";
-        return RedirectToAction(nameof(Login));
-    }
-
-    [HttpGet, AllowAnonymous]
+    [HttpGet("/admin/login"), AllowAnonymous]
     public IActionResult Login()
     {
         return View(new LoginViewModel());
     }
 
-    [HttpPost, AllowAnonymous, ValidateAntiForgeryToken]
+    [HttpPost("/admin/login"), AllowAnonymous, ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         if (!ModelState.IsValid)
@@ -78,12 +52,10 @@ public class AccountController : Controller
             CookieAuthenticationDefaults.AuthenticationScheme,
             new ClaimsPrincipal(identity));
 
-        return user.Role == "Admin"
-            ? RedirectToAction("Index", "Admin")
-            : RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Admin");
     }
 
-    [HttpPost, Authorize, ValidateAntiForgeryToken]
+    [HttpPost, Authorize(Roles = "Admin"), ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

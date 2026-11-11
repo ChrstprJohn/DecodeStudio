@@ -8,7 +8,7 @@ using MyPortfolio.Services;
 
 namespace MyPortfolio.Controllers;
 
-[Authorize]
+[Authorize(Roles = "Admin")]
 public class ProfileController : Controller
 {
     private readonly ProfileService _service;

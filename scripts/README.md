@@ -26,11 +26,8 @@ See [sample-data documentation](../docs/sample-data.md) for demo login details.
 
 ## Checks
 
-- Test-Home.ps1: check the running landing/login page and stylesheet.
-- Test-Accounts.ps1: exercise authentication with a temporary account and remove
-  that test account afterward. See ../docs/authentication.md for setup.
-- Test-Portals.ps1: verify content CRUD, admin access, account activation, profile,
-  photo, and password changes using temporary data. See ../docs/features.md.
+- Test-Home.ps1: check the public landing page, stylesheet, and admin sign-in routes.
+- Test-Accounts.ps1 and Test-Portals.ps1 exercise the school variant; run them on the school branch against a test database.
 - `node scripts/Test-Design.mjs`: verify gallery pause/reduced-motion/visibility
   behavior and mobile-menu closing without starting a browser or changing data.
 

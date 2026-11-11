@@ -2,8 +2,7 @@
 
 Status: functional implementation with the shared Studio.Design-inspired visual direction. Working brand: DCD / Decode Studio.
 
-Landing sections render saved published content. Login/signup, an admin sidebar,
-content CRUD, account activation, and the own-profile portal are implemented.
+Landing sections render saved published content. Admin sign-in, content CRUD, and the admin profile are implemented.
 See [features.md](features.md) for actual endpoints. Analytics remains blank.
 
 ## Landing page
@@ -13,7 +12,7 @@ as sections rather than separate pages for the initial version.
 
 | Section | Content and behavior | Database source |
 | --- | --- | --- |
-| Header/navigation | Studio name and links to sections; account navigation depends on access mode | SiteContent plus fixed navigation markup |
+| Header/navigation | Studio name and links to sections; no account links | SiteContent plus fixed navigation markup |
 | Hero | Gray editorial canvas, moving project gallery, database headline/description and primary link | SiteContent and published Projects |
 | About the studio | Business/company description | SiteContent |
 | Services | Web design, web development, deployment, and other studio services | Published Services in SortOrder |
@@ -58,19 +57,16 @@ SortOrder then Id ordering. Section containers/headings remain present if data
 is empty; optional images and links render only when configured.
 
 The shared layout owns the sticky public header and mobile menu. All section
-anchors, account links, and role-aware actions remain available. The current gray,
+anchors remain available. The current gray,
 white, and charcoal design applies across public sections, auth/profile forms,
 and admin views. See [hero-design.md](hero-design.md) and [DESIGN.md](../DESIGN.md).
 Edit one section partial when designing that section, or Index.cshtml to reorder.
 
-## Account pages
+## Admin account pages
 
-- Login, registration, and logout behavior.
+- Admin sign-in at /admin/login and logout from the admin sidebar.
 - My profile: view/edit own first, middle, and last name and profile image.
 - Change password through the custom account service and Microsoft's password hasher.
-
-Users cannot edit studio content or other users' accounts. Their profile does
-not automatically appear in the studio's team section.
 
 ## Admin pages
 
@@ -82,20 +78,8 @@ not automatically appear in the studio's team section.
 | Services | Add/edit/remove services; order and publish/unpublish |
 | Team | Manage owner/team names, roles, bios, photos; order and publish/unpublish |
 | Social links | Manage shared contact/social links and ordering |
-| Accounts | List/view users and deactivate/reactivate accounts; personal details remain read-only |
 
-Admin pages require the Admin role in every deployment mode. Deactivating users
-must also prevent continued access through an existing signed-in session.
-
-## Access modes
-
-- School/local demo: require login to view the portfolio. Login, registration,
-  and their required public assets remain accessible.
-- Public deployment: allow anonymous portfolio browsing. Keep admin and profile
-  operations protected. Owner login remains available.
-
-The `Portfolio:RequireLogin` setting controls portfolio access on the
-server. Hiding navigation alone does not enforce permissions.
+Admin pages require the Admin role. See the [branch workflow](branch-workflow.md) for how school access differs.
 
 Contact forms, ecommerce, visitor tracking, and a general drag-and-drop page
 builder are outside the initial scope. Traffic analytics can be planned later.

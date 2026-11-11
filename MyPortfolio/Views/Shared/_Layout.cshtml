@@ -30,19 +30,6 @@
                 <a asp-controller="Home" asp-action="Index" asp-fragment="projects" class="hover:underline">Work</a>
                 <a asp-controller="Home" asp-action="Index" asp-fragment="team" class="hover:underline">Team</a>
                 <a asp-controller="Home" asp-action="Index" asp-fragment="contact" class="hover:underline">Contact</a>
-                @if (User.Identity?.IsAuthenticated == true)
-                {
-                    <a asp-controller="Profile" asp-action="Index" class="hover:underline">My portal</a>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a asp-controller="Admin" asp-action="Index" class="hover:underline">Admin</a>
-                    }
-                    <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit" class="action-primary">Log out</button></form>
-                }
-                else
-                {
-                    <a asp-controller="Account" asp-action="Login" class="action-primary" aria-label="Login / Sign up">Login <svg class="auth-slash" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21 21 3" fill="none" stroke="currentColor" stroke-width="1.2" /></svg> Sign up</a>
-                }
             </nav>
             <details class="group lg:hidden">
                 <summary class="mobile-menu-toggle" aria-label="Menu"><span aria-hidden="true"></span><span aria-hidden="true"></span></summary>
@@ -53,20 +40,6 @@
                     <a asp-controller="Home" asp-action="Index" asp-fragment="projects">Work</a>
                     <a asp-controller="Home" asp-action="Index" asp-fragment="contact">Contact</a>
                     <a asp-controller="Home" asp-action="Index" asp-fragment="team">Team</a>
-                    @if (User.Identity?.IsAuthenticated == true)
-                    {
-                        <a asp-controller="Profile" asp-action="Index">My portal</a>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <a asp-controller="Admin" asp-action="Index">Admin</a>
-                        }
-                        <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit" class="action-primary">Log out</button></form>
-                    }
-                    else
-                    {
-                        <a asp-controller="Account" asp-action="Login">Log in</a>
-                        <a asp-controller="Account" asp-action="Register">Sign up</a>
-                    }
                 </nav>
             </details>
         </div>

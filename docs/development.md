@@ -117,7 +117,7 @@ While the app is running, from the repository root:
 ./scripts/Test-Home.ps1
 ```
 
-The check verifies the landing section containers in public mode, or the login form after the school-mode redirect, plus CSS. Use [Test-Accounts](authentication.md) for authenticated database checks.
+The check verifies the public landing sections, CSS, and the admin sign-in boundary.
 Stop the server/watchers with Ctrl+C after testing.
 
 ## Image files

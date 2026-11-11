@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using MyPortfolio.Data;
 using MyPortfolio.Models.Entities;
@@ -18,16 +17,15 @@ builder.Services.AddScoped<ProjectService>();
 builder.Services.AddScoped<ServiceOfferingService>();
 builder.Services.AddScoped<TeamMemberService>();
 builder.Services.AddScoped<SocialLinkService>();
-builder.Services.AddScoped<AccountManagementService>();
 builder.Services.AddScoped<ProfileService>();
 builder.Services.AddScoped<ImageUploadService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Account/Login";
+        options.LoginPath = "/admin/login";
         options.AccessDeniedPath = "/Account/AccessDenied";
-        options.Cookie.Name = "DecodeStudio.Auth";
+        options.Cookie.Name = "DecodeStudio.PublicAdmin.Auth";
         options.Cookie.HttpOnly = true;
         options.Cookie.SameSite = SameSiteMode.Lax;
         options.Cookie.SecurePolicy = builder.Environment.IsDevelopment()
@@ -37,14 +35,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.EventsType = typeof(AccountCookieEvents);
     });
 
-builder.Services.AddAuthorization(options =>
-{
-    if (builder.Configuration.GetValue<bool>("Portfolio:RequireLogin"))
-    {
-        options.FallbackPolicy = new AuthorizationPolicyBuilder()
-            .RequireAuthenticatedUser().Build();
-    }
-});
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
