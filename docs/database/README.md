@@ -11,6 +11,11 @@ tables in dbo. Your SQL login needs database-creation permission if it is missin
 It does not change/drop existing tables, insert content, or create accounts. Existing tables
 with these names will cause errors; this is not a rerunnable migration script.
 
+For an existing database, run [add-favicon.sql](../../scripts/database/add-favicon.sql)
+against the portfolio database before starting either updated branch. A null
+FaviconPath uses the bundled favicon. The Studio editor stores an uploaded icon
+in the existing image storage and saves its path in SiteContent.
+
 ## Tables
 
 | Table | Purpose |

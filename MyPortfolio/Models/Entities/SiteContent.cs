@@ -35,4 +35,7 @@ public class SiteContent
     [MaxLength(500)]
     public string? ContactBackgroundImagePath { get; set; }
 
+    [MaxLength(500)]
+    public string? FaviconPath { get; set; }
+
 }

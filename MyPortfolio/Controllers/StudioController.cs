@@ -25,16 +25,27 @@ public class StudioController : Controller
         return View(await _service.GetAsync());
     }
 
-    [HttpPost, ValidateAntiForgeryToken]
+    [HttpPost, ValidateAntiForgeryToken, RequestSizeLimit(3 * 1024 * 1024)]
     public async Task<IActionResult> Edit(SiteContentViewModel model)
     {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                await _service.SaveAsync(model);
+            }
+            catch (ArgumentException exception)
+            {
+                ModelState.AddModelError(nameof(model.FaviconFile), exception.Message);
+            }
+        }
         if (!ModelState.IsValid)
         {
             ViewData["EditingSection"] = "studio";
+            model.FaviconPath = await _service.GetFaviconPathAsync();
             return View("Index", model);
         }
 
-        await _service.SaveAsync(model);
         TempData["SuccessMessage"] = "Brand and copy saved.";
         return RedirectToAction(nameof(Index));
     }
