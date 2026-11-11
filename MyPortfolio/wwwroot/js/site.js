@@ -119,6 +119,19 @@ if (mobileMenu) {
     backdrop.className = 'mobile-menu-backdrop';
     backdrop.setAttribute('aria-hidden', 'true');
     header.prepend(backdrop);
+    const brand = home ? header.querySelector('.public-width > a') : null;
+    let closeIcon;
+    if (brand) {
+        const menuHeading = document.createElement('div');
+        menuHeading.className = 'mobile-menu-heading';
+        const menuBrand = brand.cloneNode(true);
+        menuBrand.removeAttribute('href');
+        closeIcon = document.createElement('span');
+        closeIcon.className = 'mobile-menu-close-icon';
+        menuHeading.append(menuBrand, closeIcon);
+        backdrop.append(menuHeading);
+        header.classList.add('menu-layered');
+    }
     rows.forEach(row => {
         if (row.tagName === 'A') {
             const label = document.createElement('span');
@@ -148,7 +161,10 @@ if (mobileMenu) {
         header.classList.remove('menu-active');
         document.querySelector('main').inert = false;
         document.querySelector('footer').inert = false;
-        if (window.gsap) gsap.set([backdrop, nav, ...labels, ...wipes], { clearProps: 'all' });
+        if (window.gsap) {
+            gsap.set([backdrop, nav, ...labels, ...wipes], { clearProps: 'all' });
+            if (closeIcon) gsap.set(closeIcon, { clearProps: 'opacity' });
+        }
     }
     function closeMenu() {
         if (!mobileMenu.open || closing) return;
@@ -160,6 +176,7 @@ if (mobileMenu) {
             .set(wipes, { opacity: 0 }, 0)
             .to(labels, { x: -16, opacity: 0, duration: .24, stagger: .022, ease: 'power2.in' }, 0)
             .to([backdrop, nav], { xPercent: -100, duration: .55, ease: 'power3.inOut' }, .12);
+        if (closeIcon) animation.to(closeIcon, { opacity: 0, duration: .18, ease: 'power2.in' }, 0);
     }
     toggle.addEventListener('click', event => {
         event.preventDefault();
@@ -173,15 +190,17 @@ if (mobileMenu) {
         document.querySelector('footer').inert = true;
         if (!home || !window.gsap || reducedMotion.matches) return;
         const stagger = .09;
-        const wipeStart = .27;
+        const wipeStart = .49;
         const wipeIn = .21;
         const revealStart = wipeStart + wipeIn;
+        if (closeIcon) gsap.set(closeIcon, { opacity: 0 });
         animation = gsap.timeline()
             .fromTo([backdrop, nav], { xPercent: -100 }, { xPercent: 0, duration: .68, ease: 'power3.inOut' }, 0)
             .set(linkLabels, { opacity: 0 }, 0)
             .fromTo(wipes, { clipPath: 'inset(0 100% 0 0)', opacity: 1 }, { clipPath: 'inset(0 0% 0 0)', duration: wipeIn, stagger, ease: 'power2.out' }, wipeStart)
             .set(linkLabels, { opacity: 1, stagger }, revealStart)
             .to(wipes, { clipPath: 'inset(0 0 0 100%)', duration: .32, stagger, ease: 'power2.inOut' }, revealStart);
+        if (closeIcon) animation.to(closeIcon, { opacity: 1, duration: .3, ease: 'power2.out' }, .68);
         const logoutButton = nav.querySelector('form button');
         if (logoutButton) {
             animation.fromTo(logoutButton, { x: -12, opacity: 0 }, { x: 0, opacity: 1, duration: .4, ease: 'power3.out' }, revealStart + wipes.length * stagger);

@@ -19,21 +19,25 @@ const summary = {
     setAttribute(name, value) { events[name] = value; },
     addEventListener(name, handler) { events.menuToggle = handler; }
 };
-const nav = { children: [], querySelectorAll(selector) {
+const nav = { children: [], querySelector() { return null; }, querySelectorAll(selector) {
     return selector === 'a' ? [{ addEventListener(name, handler) { events.menuLink = handler; } }] : [];
 } };
 const pageSection = { inert: false };
 const menu = {
     open: false,
-    closest() { return { prepend() {}, classList: { contains() { return true; }, add() {}, remove() {} } }; },
+    closest() { return { prepend() {}, querySelector() { return null; }, classList: { contains() { return true; }, add() {}, remove() {} } }; },
     querySelector(selector) { return selector === 'summary' ? summary : nav; }
 };
 const document = {
     documentElement: { classList: { remove() {} } },
     hidden: false,
+    querySelectorAll() { return []; },
     createElement() { return { setAttribute() {} }; },
     querySelector(selector) {
-        return selector === 'header details' ? menu : ['main', 'footer'].includes(selector) ? pageSection : gallery;
+        if (selector === 'header .mobile-menu') return menu;
+        if (selector === '[data-gallery]') return gallery;
+        if (selector === 'main' || selector === 'footer') return pageSection;
+        return null;
     },
     addEventListener(name, handler) { events[name] = handler; }
 };
@@ -48,7 +52,17 @@ const gsap = {
     set() {},
     registerPlugin() {},
     matchMedia() { return { add(query, callback) { if (!media.matches) callback(); } }; },
-    timeline() { return { from(target, vars, at) { entranceTargets.push(target); entranceCalls.push({ target, vars, at }); return this; } }; },
+    timeline() {
+        const labels = new Map();
+        return {
+            addLabel(name, at) { labels.set(name, at); return this; },
+            from(target, vars, at) {
+                entranceTargets.push(target);
+                entranceCalls.push({ target, vars, at: labels.get(at) ?? at });
+                return this;
+            }
+        };
+    },
     fromTo(target, from, to) {
     tweenVars = to;
     return {
@@ -74,9 +88,9 @@ for (const file of ['site.js', 'hero-animation.js']) {
     if (file === 'hero-animation.js') context.window.matchMedia = () => media;
     vm.runInContext(readFileSync(new URL(`../MyPortfolio/wwwroot/js/${file}`, import.meta.url), 'utf8'), context);
 }
-assert.deepEqual(entranceTargets, ['.hero-heading', '.hero-introduction', '.gallery-window']);
-assert.deepEqual(entranceCalls.map(call => call.at), [0.2, 0.4, 0.6]);
-assert.equal(entranceCalls[2].vars.duration, 1.6);
+assert.deepEqual(entranceTargets, ['.hero-heading', '.hero-introduction', '.home-header', '.gallery-window']);
+assert.deepEqual(entranceCalls.map(call => call.at), [0.2, 0.4, 0.4, 0.6]);
+assert.equal(entranceCalls[3].vars.duration, 1.6);
 assert.equal(customCurve, '0.2,1,1,1');
 assert.equal(tweenVars.x, 1600);
 assert.equal(tweenVars.y, -1600);
@@ -141,5 +155,3 @@ vm.runInNewContext(readFileSync(new URL('../MyPortfolio/wwwroot/js/hero-palette.
 assert.equal(colors['--project-color'], 'rgb(48,72,48)');
 assert.equal(colors['--project-accent'], 'rgb(216,240,216)');
 console.log('PASS: image palette sampling and unloaded-image fallback.');
-
-

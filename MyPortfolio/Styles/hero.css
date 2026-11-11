@@ -89,8 +89,8 @@ nav[aria-label="Mobile navigation"] .profile-menu-links { margin-top: 8px; }
     background: currentColor;
     transition: transform .3s ease;
 }
-details[open] > .mobile-menu-toggle span:first-child { transform: translateY(3.5px) rotate(45deg); }
-details[open] > .mobile-menu-toggle span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+header:not(.menu-layered) details[open] > .mobile-menu-toggle span:first-child { transform: translateY(3.5px) rotate(45deg); }
+header:not(.menu-layered) details[open] > .mobile-menu-toggle span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
 
 /* Keep the logo and toggle anchored while the overlay opens. */
 @media (max-width: 1199px) {
@@ -99,11 +99,18 @@ details[open] > .mobile-menu-toggle span:last-child { transform: translateY(-3.5
   .home-header > div > a { position: relative; z-index: 2; font-size: 20px; }
   .home-header > div > details { display: block; }
   .home-header .mobile-menu-toggle { position: relative; z-index: 2; }
-  .home-header:has(details[open]) { background: transparent; backdrop-filter: none; color: white; }
+  .home-header:not(.menu-layered):has(details[open]) { background: transparent; backdrop-filter: none; color: white; }
   .home-header .mobile-menu-backdrop { display: none; position: absolute; inset: -20px -10px auto; height: 100dvh; background: #000; z-index: -1; }
   .home-header.menu-active .mobile-menu-backdrop { display: block; }
-  .home-header details[open] .mobile-menu-toggle { background: transparent; border-color: #333; color: white; }
-  .home-header details[open] .mobile-menu-toggle span { width: 16px; }
+  .home-header:not(.menu-layered) details[open] .mobile-menu-toggle { background: transparent; border-color: #333; color: white; }
+  .home-header:not(.menu-layered) details[open] .mobile-menu-toggle span { width: 16px; }
+  .home-header.menu-layered .mobile-menu-backdrop { z-index: 3; pointer-events: none; }
+  .home-header.menu-layered nav[aria-label="Mobile navigation"] { z-index: 4; }
+  .mobile-menu-heading { display: flex; align-items: center; justify-content: space-between; height: 64px; margin: 20px 20px 0; color: white; font-size: 20px; }
+  .mobile-menu-close-icon { display: grid; width: 48px; height: 48px; place-content: center; border: 1px solid #555; border-radius: 50%; }
+  .mobile-menu-close-icon::before, .mobile-menu-close-icon::after { content: ''; grid-area: 1 / 1; width: 16px; height: 1px; background: currentColor; }
+  .mobile-menu-close-icon::before { transform: rotate(45deg); }
+  .mobile-menu-close-icon::after { transform: rotate(-45deg); }
   .home-header nav[aria-label="Mobile navigation"] { position: absolute; inset: 64px -10px auto; height: calc(100dvh - 84px); overflow-y: auto; overscroll-behavior: contain; gap: 0; padding: 14px 20px 40px; border: 0; background: transparent; color: white; font-size: 20px; font-weight: 600; }
   .home-header nav[aria-label="Mobile navigation"] > * { display: block; padding-block: 21px; border-bottom: 1px solid #333; overflow: hidden; }
   .mobile-link-label { display: inline-block; }
