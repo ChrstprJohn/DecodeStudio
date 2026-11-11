@@ -10,8 +10,9 @@
         gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
             gsap.timeline({ delay: 0.5, defaults: { duration: 0.8, ease: revealEase, clearProps: 'opacity,visibility,transform' } })
                 .from('.hero-heading', { autoAlpha: 0, x: -16, y: 16 }, 0.2)
-                .from('.home-header', { autoAlpha: 0 }, 0.4)
-                .from('.hero-introduction', { autoAlpha: 0, x: -16, y: 16 }, 0.4)
+                .addLabel('intro', 0.4)
+                .from('.hero-introduction', { autoAlpha: 0, x: -16, y: 16 }, 'intro')
+                .from('.home-header', { autoAlpha: 0, clearProps: 'opacity,visibility' }, 'intro')
                 .from('.gallery-window', { autoAlpha: 0, duration: 1.6, ease: 'none' }, 0.6);
         });
     }

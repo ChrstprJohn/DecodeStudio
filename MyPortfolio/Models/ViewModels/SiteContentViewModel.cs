@@ -46,14 +46,6 @@ public class SiteContentViewModel
     [Display(Name = "About description")]
     public string AboutDescription { get; set; } = "";
 
-    [Required, StringLength(256), EmailAddress]
-    [Display(Name = "Contact email")]
-    public string ContactEmail { get; set; } = "";
-
-    [StringLength(30)]
-    [Display(Name = "Contact phone")]
-    public string? ContactPhone { get; set; }
-
     [StringLength(500)]
     [Display(Name = "Footer text")]
     public string? FooterText { get; set; }

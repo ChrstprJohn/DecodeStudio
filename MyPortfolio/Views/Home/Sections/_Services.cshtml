@@ -1,13 +1,18 @@
 @model HomeViewModel
 <section id="services" aria-labelledby="services-heading" class="studio-services">
     <div class="studio-section-width">
-        <h2 id="services-heading" class="studio-section-heading">Start your next chapter.</h2>
-        <p class="sr-only">Services</p>
+        <h2 id="services-heading" class="studio-section-heading">Our services.</h2>
         <div class="service-grid">
             @for (var index = 0; index < Model.Services.Count; index++)
             {
                 var service = Model.Services[index];
                 var imagePath = DemoImagePaths.Service(service.Title, service.ImagePath);
+                var animationPath = imagePath switch
+                {
+                    "/images/services/deployment.webp" => "/images/services/deployment.gif",
+                    "/images/services/performance.webp" => "/images/services/performance.gif",
+                    _ => null
+                };
                 <article class="service-card @(index == 0 ? "service-card-featured" : "")">
                     <div class="service-copy">
                         <h3>@service.Title</h3>
@@ -16,10 +21,16 @@
                     @if (!string.IsNullOrEmpty(imagePath))
                     {
                         <div class="service-visual">
-                            <img src="@imagePath" alt="" loading="lazy" />
+                            <picture class="block h-full">
+                                @if (animationPath is not null)
+                                {
+                                    <source media="(prefers-reduced-motion: no-preference)" srcset="@animationPath" type="image/gif" />
+                                }
+                                <img src="@imagePath" asp-append-version="true" alt="" loading="lazy" />
+                            </picture>
                         </div>
                     }
-                    <a href="#contact" class="service-link @(index == 0 ? "service-link-light" : "")" aria-label="Learn more about @service.Title">Learn more <svg aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 16 16 4M4 4h12v12" /></svg></a>
+                    <a href="#contact" class="service-link @(index % 4 == 0 ? "service-link-light" : "")" aria-label="Learn more about @service.Title">Learn more <svg aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 16 16 4M4 4h12v12" /></svg></a>
                 </article>
             }
         </div>

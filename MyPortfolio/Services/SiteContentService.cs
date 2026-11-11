@@ -34,8 +34,6 @@ public class SiteContentService
             HeroLinkUrl = item.HeroLinkUrl,
             AboutTitle = item.AboutTitle,
             AboutDescription = item.AboutDescription,
-            ContactEmail = item.ContactEmail,
-            ContactPhone = item.ContactPhone,
             FooterText = item.FooterText
         };
     }
@@ -60,8 +58,6 @@ public class SiteContentService
         item.HeroLinkUrl = model.HeroLinkUrl?.Trim();
         item.AboutTitle = model.AboutTitle.Trim();
         item.AboutDescription = model.AboutDescription.Trim();
-        item.ContactEmail = model.ContactEmail.Trim();
-        item.ContactPhone = model.ContactPhone?.Trim();
         item.FooterText = model.FooterText?.Trim();
         try
         {
@@ -74,6 +70,28 @@ public class SiteContentService
         }
         if (previousImage is not null && previousImage != item.HeroImagePath)
             _images.DeleteGenerated(previousImage);
+    }
+
+    public async Task<ContactViewModel> GetContactAsync()
+    {
+        return await _database.SiteContent.AsNoTracking().Where(item => item.Id == 1)
+            .Select(item => new ContactViewModel { Email = item.ContactEmail, Phone = item.ContactPhone })
+            .SingleOrDefaultAsync() ?? new ContactViewModel();
+    }
+
+    public async Task SaveContactAsync(ContactViewModel model)
+    {
+        var item = await _database.SiteContent.FindAsync(1);
+        if (item is null)
+        {
+            if (string.IsNullOrWhiteSpace(model.Email) && string.IsNullOrWhiteSpace(model.Phone)) return;
+            var defaults = new HomeViewModel();
+            item = new SiteContent { Id = 1, StudioName = defaults.StudioName, HeroTitle = defaults.HeroTitle };
+            _database.SiteContent.Add(item);
+        }
+        item.ContactEmail = model.Email?.Trim() ?? "";
+        item.ContactPhone = string.IsNullOrWhiteSpace(model.Phone) ? null : model.Phone.Trim();
+        await _database.SaveChangesAsync();
     }
 
     public async Task DeleteAsync()

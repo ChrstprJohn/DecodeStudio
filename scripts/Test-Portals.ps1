@@ -93,7 +93,7 @@ try {
     Assert ((Login $admin $adminEmail $password).Location -eq '/Admin') 'Admin login must land on analytics'
     Assert ((Login $user $userEmail $password).Location -eq '/') 'User login must land on home'
     Assert ((Login $otherSession $userEmail $password).Status -eq 302) 'Second user session failed'
-    foreach ($path in @('/Admin','/Studio','/Projects','/Offerings','/Team','/Links','/Accounts')) {
+    foreach ($path in @('/Admin','/Studio','/Projects','/Offerings','/Team','/Contact','/Links','/Accounts')) {
         Assert ((Page $admin $path).Status -eq 200) "Admin cannot read $path"
         $denied = Page $user $path
         Assert ($denied.Status -eq 302 -and $denied.Location.Contains('/Account/AccessDenied')) "User can reach $path"
@@ -160,7 +160,7 @@ try {
     Assert ((Sql 'SELECT Id FROM dbo.Projects WHERE Title=@Title' @{Title=$marker}).Rows.Count -eq 0) 'Unsafe URL was saved'
 
     if ((Sql 'SELECT Id FROM dbo.SiteContent WHERE Id=1').Rows.Count -eq 0) {
-        $studio=@{ImageFile=$pngBytes;StudioName=$marker;HeroTitle=$marker+' hero';HeroDescription='Hero description';AboutTitle='About';AboutDescription='About description';ContactEmail='studio@example.test'}
+        $studio=@{ImageFile=$pngBytes;StudioName=$marker;HeroTitle=$marker+' hero';HeroDescription='Hero description';AboutTitle='About';AboutDescription='About description'}
         Assert ((Post $admin '/Studio/Edit' $studio '/Studio').Status -eq 302) 'Studio create failed'
         $studioCreated=$true
         $heroImage=(Sql 'SELECT HeroImagePath FROM dbo.SiteContent WHERE Id=1').Rows[0].HeroImagePath
@@ -171,6 +171,10 @@ try {
         $studio.HeroTitle += ' edited'
         Assert ((Post $admin '/Studio/Edit' $studio '/Studio').Status -eq 302) 'Studio update failed'
         Assert ((Page $user '/').Html.Contains($studio.HeroTitle)) 'Updated studio content missing'
+        Assert ((Post $admin '/Contact' @{Email='studio@example.test';Phone='555-0100'} '/Contact').Status -eq 302) 'Contact save failed'
+        Assert ((Page $user '/').Html.Contains('mailto:studio@example.test')) 'Contact email missing from home'
+        Assert ((Post $admin '/Contact' @{Email='';Phone=''} '/Contact').Status -eq 302) 'Contact clear failed'
+        Assert (-not (Page $user '/').Html.Contains('mailto:studio@example.test')) 'Cleared contact email still visible'
         Assert ((Post $admin '/Studio/Delete' @{confirmed='true'} '/Studio/Delete').Status -eq 302) 'Studio delete failed'
         Assert ((Sql 'SELECT Id FROM dbo.SiteContent WHERE Id=1').Rows.Count -eq 0) 'Studio record not deleted'
         Assert (-not (Test-Path -LiteralPath (Join-Path (Get-Location) ('MyPortfolio/wwwroot' + $heroImage)))) 'Hero image not cleaned up after deletion' 

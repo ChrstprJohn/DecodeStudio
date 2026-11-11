@@ -35,7 +35,8 @@
     </div>
     <div>
         <label asp-for="SortOrder" class="block"></label>
-        <input asp-for="SortOrder" class="mt-2 w-full" />
+        <input asp-for="SortOrder" class="mt-2 w-full" aria-describedby="project-sort-order-help" />
+        <p id="project-sort-order-help" class="mt-2 text-sm">Lower numbers appear first in the homepage gallery and website showcase.</p>
         <span asp-validation-for="SortOrder" class="field-error"></span>
     </div>
     <div>

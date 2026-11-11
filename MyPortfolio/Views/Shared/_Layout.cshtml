@@ -83,6 +83,8 @@
         @RenderBody()
     </main>
     <partial name="_Footer" />
+    <script src="~/lib/gsap/gsap.min.js" asp-append-version="true" defer></script>
+    <script src="~/lib/gsap/CustomEase.min.js" asp-append-version="true" defer></script>
     <script src="~/js/site.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

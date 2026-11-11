@@ -9,6 +9,7 @@ public class HomeViewModel
     public string HeroDescription { get; set; } = "";
     public SiteContent? Content { get; set; }
     public List<Project> Projects { get; set; } = [];
+    public List<(string ImagePath, string Title)> HeroPreviews { get; set; } = [];
     public List<ServiceOffering> Services { get; set; } = [];
     public List<TeamMember> TeamMembers { get; set; } = [];
     public List<SocialLink> SocialLinks { get; set; } = [];

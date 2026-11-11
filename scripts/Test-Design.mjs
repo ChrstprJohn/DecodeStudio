@@ -14,16 +14,27 @@ const gallery = {
     contains(target) { return target === track; }
 };
 const media = { matches: false, addEventListener(name, handler) { events.media = handler; } };
-const summary = { focus() { events.focused = true; } };
+const summary = {
+    focus() { events.focused = true; },
+    setAttribute(name, value) { events[name] = value; },
+    addEventListener(name, handler) { events.menuToggle = handler; }
+};
+const nav = { children: [], querySelectorAll(selector) {
+    return selector === 'a' ? [{ addEventListener(name, handler) { events.menuLink = handler; } }] : [];
+} };
+const pageSection = { inert: false };
 const menu = {
     open: false,
-    querySelectorAll() { return [{ addEventListener(name, handler) { events.menuLink = handler; } }]; },
-    querySelector() { return summary; }
+    closest() { return { prepend() {}, classList: { contains() { return true; }, add() {}, remove() {} } }; },
+    querySelector(selector) { return selector === 'summary' ? summary : nav; }
 };
 const document = {
     documentElement: { classList: { remove() {} } },
     hidden: false,
-    querySelector(selector) { return selector === 'header details' ? menu : gallery; },
+    createElement() { return { setAttribute() {} }; },
+    querySelector(selector) {
+        return selector === 'header details' ? menu : ['main', 'footer'].includes(selector) ? pageSection : gallery;
+    },
     addEventListener(name, handler) { events[name] = handler; }
 };
 let stopped = false;
@@ -34,6 +45,7 @@ const entranceCalls = [];
 let customCurve;
 const CustomEase = { create(name, curve) { customCurve = curve; return name; } };
 const gsap = {
+    set() {},
     registerPlugin() {},
     matchMedia() { return { add(query, callback) { if (!media.matches) callback(); } }; },
     timeline() { return { from(target, vars, at) { entranceTargets.push(target); entranceCalls.push({ target, vars, at }); return this; } }; },
@@ -46,7 +58,9 @@ const gsap = {
     };
 } };
 const context = vm.createContext({
-    document, gsap, CustomEase, window: { gsap, CustomEase, matchMedia() { return media; } },
+    document, gsap, CustomEase, window: { gsap, CustomEase, matchMedia(query) {
+        return query ? { matches: query.includes('reduce'), addEventListener() {} } : media;
+    } },
     IntersectionObserver: class {
         constructor(handler) { events.intersection = handler; }
         observe() {}
@@ -57,11 +71,12 @@ const context = vm.createContext({
     }
 });
 for (const file of ['site.js', 'hero-animation.js']) {
+    if (file === 'hero-animation.js') context.window.matchMedia = () => media;
     vm.runInContext(readFileSync(new URL(`../MyPortfolio/wwwroot/js/${file}`, import.meta.url), 'utf8'), context);
 }
-assert.deepEqual(entranceTargets, ['.hero-heading', '.home-header', '.hero-introduction', '.gallery-window']);
-assert.deepEqual(entranceCalls.map(call => call.at), [0.2, 0.4, 0.4, 0.6]);
-assert.equal(entranceCalls[3].vars.duration, 1.6);
+assert.deepEqual(entranceTargets, ['.hero-heading', '.hero-introduction', '.gallery-window']);
+assert.deepEqual(entranceCalls.map(call => call.at), [0.2, 0.4, 0.6]);
+assert.equal(entranceCalls[2].vars.duration, 1.6);
 assert.equal(customCurve, '0.2,1,1,1');
 assert.equal(tweenVars.x, 1600);
 assert.equal(tweenVars.y, -1600);
@@ -90,10 +105,14 @@ track.firstElementChild.getBoundingClientRect = () => ({ height: 400 });
 events.resize();
 assert.equal(tweenVars.x, 3200);
 assert.equal(progress, .4);
-menu.open = true;
+media.matches = true;
+events.menuToggle({ preventDefault() {} });
+assert.equal(menu.open, true);
+assert.equal(pageSection.inert, true);
 events.menuLink();
 assert.equal(menu.open, false);
-menu.open = true;
+assert.equal(pageSection.inert, false);
+events.menuToggle({ preventDefault() {} });
 events.keydown({ key: 'Escape' });
 assert.equal(menu.open, false);
 assert.equal(events.focused, true);

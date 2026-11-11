@@ -226,6 +226,14 @@
       "WebsiteUrl": "https://signwisely.vercel.app/",
       "SortOrder": 22,
       "IsPublished": true
+    },
+    {
+      "Title": "PixelPlaza",
+      "Description": "A shared pixel-art plaza where visitors pick a character, explore, and chat.",
+      "ImagePath": "/images/projects/pixelplaza.jpg",
+      "WebsiteUrl": "https://pixelplaza-live.vercel.app/",
+      "SortOrder": 23,
+      "IsPublished": true
     }
   ],
   "Services": [
@@ -251,11 +259,11 @@
       "ImagePath": "/images/services/landing-pages.webp"
     },
     {
-      "Title": "Ecommerce Websites",
-      "Description": "Product catalogs and storefront experiences designed to make browsing and purchasing straightforward.",
+      "Title": "Responsive Design",
+      "Description": "Layouts that adapt to desktop, tablet, and phone, keeping content readable and navigation easy to use at every size.",
       "SortOrder": 4,
       "IsPublished": true,
-      "ImagePath": "/images/services/ecommerce.webp"
+      "ImagePath": "/images/services/responsive-design.webp"
     },
     {
       "Title": "Website Redesign",

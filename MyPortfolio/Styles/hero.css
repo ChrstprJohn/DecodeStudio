@@ -2,9 +2,10 @@
 .studio-wordmark { display: inline-flex; align-items: center; gap: 1px; white-space: nowrap; }
 .studio-slash { width: .8em; height: .8em; flex: none; }
 .auth-slash { width: 24px; height: 24px; flex: none; margin-inline: -12px; }
-.home-header { position: fixed; inset: 20px 20px auto; padding: 0 10px; border-radius: 3px; background: rgb(245 245 245 / 42%); backdrop-filter: blur(50px) saturate(160%); }
-.home-header > div { max-width: none; min-height: 62px; padding: 0; }
-.home-header nav[aria-label="Main navigation"] { gap: 28px; padding: 8px 0 8px 60px; background: transparent; font-size: 16px; font-weight: 500; }
+.home-header { position: fixed; inset: 20px 20px auto; padding: 0 10px; border-radius: 3px; backdrop-filter: blur(50px); }
+.home-header > .public-width { max-width: none; min-height: 62px; padding: 0; }
+.home-header .mobile-menu-backdrop { display: none; }
+.home-header nav[aria-label="Main navigation"] { gap: 28px; padding: 8px 0 8px 60px; font-size: 16px; font-weight: 500; }
 .home-header .action-primary { border-radius: 3px; min-height: 46px; padding-inline: 24px; font-size: 16px; gap: 16px; }
 .home-header.is-over-dark { background: #eeeeeeaa; }
 .studio-hero { position: relative; isolation: isolate; overflow: hidden; height: 100svh; min-height: 680px; background: #eee; }
@@ -35,7 +36,6 @@
 }
 @media (max-width: 1023px) {
   .home-header { inset: 20px 20px auto; }
-  .home-header > div { min-height: 44px; }
   .home-header .studio-slash { width: 14px; height: 14px; margin-inline-end: -1px; }
   .home-header details summary { border-radius: 50%; width: 48px; height: 48px; padding: 0; display: grid; place-items: center; font-size: 11px; background: white; color: #222; }
   .studio-hero { height: auto; min-height: 100svh; padding: 450px 20px 50px; }
@@ -48,7 +48,6 @@
 }
 @media (max-width: 767px) {
   .home-header { inset-inline: 10px; }
-  .home-header > div { min-height: 64px; }
   .hero-heading { font-size: 38px; }
   .hero-introduction p { font-size: 16px; }
 }
@@ -56,8 +55,8 @@
 
 
 @media (prefers-reduced-motion: no-preference) {
-    .hero-pending .home-header,
     .hero-pending .hero-heading,
+    .hero-pending .home-header,
     .hero-pending .hero-introduction,
     .hero-pending .gallery-window { visibility: hidden; }
 }
@@ -86,64 +85,21 @@
 details[open] > .mobile-menu-toggle span:first-child { transform: translateY(3.5px) rotate(45deg); }
 details[open] > .mobile-menu-toggle span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
 
+/* Keep the logo and toggle anchored while the overlay opens. */
 @media (max-width: 1199px) {
-    .home-header { transition: background-color .3s ease, color .3s ease; }
-    .home-header:has(details[open]) {
-        inset: 0 0 auto;
-        padding: 14px 20px 0;
-        border-radius: 0;
-        background: #080808;
-        color: white;
-    }
-    .home-header details[open] .mobile-menu-toggle {
-        background: transparent;
-        border-color: #444;
-        color: white;
-    }
-    .home-header details::details-content {
-        opacity: 0;
-        transition: opacity .4s cubic-bezier(.4,.4,0,1), content-visibility .4s allow-discrete;
-    }
-    .home-header details[open]::details-content { opacity: 1; }
-    .home-header nav[aria-label="Mobile navigation"] {
-        height: calc(100dvh - 78px);
-        overflow-y: auto;
-        gap: 0;
-        padding: 16px 20px 32px;
-        border: 0;
-        background: #080808;
-        color: white;
-        font-size: 20px;
-        font-weight: 600;
-    }
-    .home-header nav[aria-label="Mobile navigation"] {
-        transform: translateX(-100%);
-        transition: transform .4s cubic-bezier(.4,.4,0,1);
-    }
-    .home-header details[open] nav[aria-label="Mobile navigation"] { transform: translateX(0); }
-
-    .home-header nav[aria-label="Mobile navigation"] > * {
-        display: block;
-        padding-block: 18px;
-        border-bottom: 1px solid #393939;
-    }
+  .home-header { inset: 20px 10px auto; padding: 0 10px; background: rgb(245 245 245 / 42%); backdrop-filter: blur(50px); }
+  .home-header > .public-width { min-height: 64px; }
+  .home-header > div > a { position: relative; z-index: 2; font-size: 20px; }
+  .home-header > div > details { display: block; }
+  .home-header .mobile-menu-toggle { position: relative; z-index: 2; }
+  .home-header:has(details[open]) { background: transparent; backdrop-filter: none; color: white; }
+  .home-header .mobile-menu-backdrop { display: none; position: absolute; inset: -20px -10px auto; height: 100dvh; background: #000; z-index: -1; }
+  .home-header.menu-active .mobile-menu-backdrop { display: block; }
+  .home-header details[open] .mobile-menu-toggle { background: transparent; border-color: #333; color: white; }
+  .home-header nav[aria-label="Mobile navigation"] { position: absolute; inset: 64px -10px auto; height: calc(100dvh - 84px); overflow-y: auto; overscroll-behavior: contain; gap: 0; padding: 14px 20px 40px; border: 0; background: transparent; color: white; font-size: 20px; font-weight: 600; }
+  .home-header nav[aria-label="Mobile navigation"] > * { display: block; padding-block: 22px; border-bottom: 1px solid #333; overflow: hidden; }
+  .mobile-link-label { display: inline-block; }
+  html:has(.home-header) { scrollbar-gutter: stable; }
+  html:has(.home-header details[open]) { overflow: hidden; }
 }
-@media (prefers-reduced-motion: reduce) {
-    .mobile-menu-toggle span,
-    .home-header,
-    .home-header details::details-content { transition: none; }
-}
-
-@media (max-width: 1199px) and (prefers-reduced-motion: no-preference) {
-    .home-header details[open] nav[aria-label="Mobile navigation"] > * {
-        animation: mobile-menu-link-in .35s cubic-bezier(.2,1,1,1) both;
-        animation-delay: calc(100ms + sibling-index() * 25ms);
-    }
-}
-@keyframes mobile-menu-link-in {
-    from { opacity: 0; transform: translateX(-16px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-@media (prefers-reduced-motion: reduce) {
-    .home-header nav[aria-label="Mobile navigation"] { transition: none; }
-}
+@media (prefers-reduced-motion: reduce) { .mobile-menu-toggle span { transition: none; } }

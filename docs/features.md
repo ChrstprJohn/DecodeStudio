@@ -17,7 +17,8 @@ All content-management controllers require the Admin role.
 
 | Controller / URL prefix | Content | Service |
 | --- | --- | --- |
-| Studio | Studio identity, hero, About, contact, footer | SiteContentService |
+| Studio | Studio identity, hero, About, footer | SiteContentService |
+| Contact | Public email address and phone number | SiteContentService |
 | Projects | Website showcase | ProjectService |
 | Offerings | Service entries in the Services table | ServiceOfferingService |
 | Team | Owner/team information | TeamMemberService |
@@ -42,6 +43,9 @@ return 404; invalid input redisplays the form with errors.
 Studio is a singleton: GET /Studio shows its form; POST /Studio/Edit creates or
 updates row 1. GET /Studio/Delete confirms clearing it; POST /Studio/Delete clears
 that record with confirmed=true. Other content tables are unaffected.
+
+GET /Contact displays the saved contact details. POST /Contact adds, updates, or
+clears either field on row 1. Both actions require the Admin role.
 
 ## Image files
 

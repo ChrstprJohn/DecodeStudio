@@ -1,0 +1,21 @@
+@model ContactViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Contact";
+}
+<h1 class="page-title">Contact</h1>
+<p class="mt-4">Manage the email address and phone number shown on the website. Leave a field blank to remove it.</p>
+<form asp-action="Index" method="post" class="mt-8 max-w-3xl space-y-6 rounded-xl bg-white p-6 md:p-8">
+    <div asp-validation-summary="ModelOnly" role="alert" class="text-red-700"></div>
+    <div>
+        <label asp-for="Email" class="block"></label>
+        <input asp-for="Email" class="mt-2 w-full" />
+        <span asp-validation-for="Email" class="field-error"></span>
+    </div>
+    <div>
+        <label asp-for="Phone" class="block"></label>
+        <input asp-for="Phone" class="mt-2 w-full" />
+        <span asp-validation-for="Phone" class="field-error"></span>
+    </div>
+    <button class="action-primary" type="submit">Save contact details</button>
+</form>

@@ -15,7 +15,7 @@ const demoPalettes = {
 document.querySelectorAll('[data-gallery-project]').forEach(project => {
     const image = project.querySelector('img');
     const panel = project.querySelector('.gallery-palette');
-    const theme = demoPalettes[image.getAttribute('src')];
+    const theme = demoPalettes[image.getAttribute('src').split('?')[0]];
     if (theme) {
         panel.style.setProperty('--project-color', theme[0]);
         panel.style.setProperty('--project-accent', theme[1]);

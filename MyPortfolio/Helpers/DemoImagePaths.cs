@@ -8,7 +8,7 @@ public static class DemoImagePaths
         ["Web Design"] = "web-design",
         ["Web Development"] = "web-development",
         ["Landing Pages"] = "landing-pages",
-        ["Ecommerce Websites"] = "ecommerce",
+        ["Responsive Design"] = "responsive-design",
         ["Website Redesign"] = "website-redesign",
         ["Deployment and Hosting Setup"] = "deployment",
         ["Performance Optimization"] = "performance",

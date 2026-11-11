@@ -14,7 +14,7 @@
                 var destination = isSample ? project.ImagePath : project.WebsiteUrl;
                 var action = isSample ? "View preview of" : "Visit";
                 <a href="@destination" class="showcase-project" aria-label="@action @project.Title">
-                    <img src="@project.ImagePath" alt="@project.Title preview" loading="lazy" />
+                    <img src="@project.ImagePath" alt="@project.Title preview" loading="lazy" asp-append-version="true" />
                     <span>@project.Title.Replace(" (Demo)", "") <span aria-hidden="true">↗</span></span>
                 </a>
             }
