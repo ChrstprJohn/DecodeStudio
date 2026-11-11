@@ -30,8 +30,17 @@ public class SiteContentService
             HeroTitle = item.HeroTitle,
             HeroDescription = item.HeroDescription,
             AboutTitle = item.AboutTitle,
-            AboutDescription = item.AboutDescription
+            AboutDescription = item.AboutDescription,
+            FaviconPath = item.FaviconPath
         };
+    }
+
+    public Task<string?> GetFaviconPathAsync()
+    {
+        return _database.SiteContent.AsNoTracking()
+            .Where(item => item.Id == 1)
+            .Select(item => item.FaviconPath)
+            .SingleOrDefaultAsync();
     }
 
     public async Task SaveAsync(SiteContentViewModel model)
@@ -48,7 +57,21 @@ public class SiteContentService
         item.HeroDescription = model.HeroDescription.Trim();
         item.AboutTitle = model.AboutTitle.Trim();
         item.AboutDescription = model.AboutDescription.Trim();
-        await _database.SaveChangesAsync();
+
+        var previousFavicon = item.FaviconPath;
+        var uploadedFavicon = model.FaviconFile is null ? null : await _images.SaveAsync(model.FaviconFile);
+        item.FaviconPath = uploadedFavicon ?? previousFavicon;
+        try
+        {
+            await _database.SaveChangesAsync();
+        }
+        catch
+        {
+            if (uploadedFavicon is not null) _images.DeleteGenerated(uploadedFavicon);
+            throw;
+        }
+        if (uploadedFavicon is not null && previousFavicon is not null)
+            _images.DeleteGenerated(previousFavicon);
     }
 
     public async Task<ContactViewModel> GetContactAsync()
@@ -100,6 +123,7 @@ public class SiteContentService
             _database.SiteContent.Remove(item);
             await _database.SaveChangesAsync();
             if (item.ContactBackgroundImagePath is not null) _images.DeleteGenerated(item.ContactBackgroundImagePath);
+            if (item.FaviconPath is not null) _images.DeleteGenerated(item.FaviconPath);
         }
     }
 }

@@ -17,6 +17,15 @@
     }
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @studioName</title>
+    <link rel="icon" href="~/favicon.ico" />
+    @if (heroHeader)
+    {
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="@studioName" />
+        <meta property="og:url" content="@Url.Action("Index", "Home", values: null, protocol: Context.Request.Scheme)" />
+        <meta property="og:image" content="@(Context.Request.Scheme + "://" + Context.Request.Host + Url.Content("~/favicon.png"))" />
+        <meta property="og:image:alt" content="decide." />
+    }
     <link rel="preload" href="~/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>

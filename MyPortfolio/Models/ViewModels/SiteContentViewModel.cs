@@ -27,4 +27,9 @@ public class SiteContentViewModel
     [Display(Name = "About description")]
     public string AboutDescription { get; set; } = "";
 
+    [Display(Name = "Favicon")]
+    public IFormFile? FaviconFile { get; set; }
+
+    public string? FaviconPath { get; set; }
+
 }
