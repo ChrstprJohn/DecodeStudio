@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-$settings = Get-Content (Join-Path $env:APPDATA 'Microsoft/UserSecrets/decode-studio-portfolio-local/secrets.json') -Raw | ConvertFrom-Json
+$settings = Get-Content (Join-Path $env:APPDATA 'Microsoft/UserSecrets/decode-studio-portfolio-school/secrets.json') -Raw | ConvertFrom-Json
 $connection = [System.Data.SqlClient.SqlConnection]::new($settings.'ConnectionStrings:Portfolio')
 try {
     $connection.Open()

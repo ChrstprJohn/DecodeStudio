@@ -10,7 +10,7 @@ if (-not [System.Net.Mail.MailAddress]::TryCreate($emailAddress, [ref]$parsedAdd
     throw 'Enter a valid email address.'
 }
 
-$secretPath = Join-Path $env:APPDATA 'Microsoft/UserSecrets/decode-studio-portfolio-local/secrets.json'
+$secretPath = Join-Path $env:APPDATA 'Microsoft/UserSecrets/decode-studio-portfolio-school/secrets.json'
 $settings = Get-Content -LiteralPath $secretPath -Raw | ConvertFrom-Json
 $connection = [System.Data.SqlClient.SqlConnection]::new($settings.'ConnectionStrings:Portfolio')
 

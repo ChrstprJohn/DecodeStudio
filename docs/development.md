@@ -98,7 +98,7 @@ ConnectionStrings:Portfolio. Passwords are not in source files or documentation.
 On another machine, configure that secret before running from MyPortfolio:
 
 ```powershell
-dotnet user-secrets set "ConnectionStrings:Portfolio" "Server=127.0.0.1,1433;Database=portfolio;User Id=sa;Password=YOUR_LOCAL_PASSWORD;Encrypt=True;TrustServerCertificate=True;"
+dotnet user-secrets set "ConnectionStrings:Portfolio" "Server=127.0.0.1,1433;Database=portfolio_school;User Id=sa;Password=YOUR_LOCAL_PASSWORD;Encrypt=True;TrustServerCertificate=True;"
 ```
 
 The certificate-trust option is for the local SQL container. For deployment,

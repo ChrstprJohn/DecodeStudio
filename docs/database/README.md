@@ -6,7 +6,7 @@ Status: prepared for your manual execution, not run against your server.
 ## Run
 
 Execute the whole script in a SQL Server editor supporting GO batches, such as
-SSMS. It creates the database `portfolio` if missing, selects it, and creates six
+SSMS. It creates the database `portfolio_school` if missing, selects it, and creates six
 tables in dbo. Your SQL login needs database-creation permission if it is missing.
 It does not change/drop existing tables, insert content, or create accounts. Existing tables
 with these names will cause errors; this is not a rerunnable migration script.

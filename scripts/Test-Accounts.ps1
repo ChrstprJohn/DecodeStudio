@@ -4,7 +4,7 @@ param(
 
 # Creates one uniquely named test account and removes only that account afterward.
 $ErrorActionPreference = 'Stop'
-$secretPath = Join-Path $env:APPDATA 'Microsoft/UserSecrets/decode-studio-portfolio-local/secrets.json'
+$secretPath = Join-Path $env:APPDATA 'Microsoft/UserSecrets/decode-studio-portfolio-school/secrets.json'
 $settings = Get-Content $secretPath -Raw | ConvertFrom-Json
 $connection = [System.Data.SqlClient.SqlConnection]::new($settings.'ConnectionStrings:Portfolio')
 $handler = [System.Net.Http.HttpClientHandler]::new()

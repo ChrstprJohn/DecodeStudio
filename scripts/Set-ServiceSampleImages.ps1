@@ -2,7 +2,7 @@
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path $PSScriptRoot
 $samples = Get-Content (Join-Path $PSScriptRoot 'seed/sample-data.json') -Raw | ConvertFrom-Json
-$settings = Get-Content (Join-Path $env:APPDATA 'Microsoft/UserSecrets/decode-studio-portfolio-local/secrets.json') -Raw | ConvertFrom-Json
+$settings = Get-Content (Join-Path $env:APPDATA 'Microsoft/UserSecrets/decode-studio-portfolio-school/secrets.json') -Raw | ConvertFrom-Json
 $connection = [System.Data.SqlClient.SqlConnection]::new($settings.'ConnectionStrings:Portfolio')
 $transaction = $null
 try {

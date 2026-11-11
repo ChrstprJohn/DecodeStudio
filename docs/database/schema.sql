@@ -6,11 +6,11 @@
 USE master;
 GO
 
-IF DB_ID(N'portfolio') IS NULL
-    EXEC(N'CREATE DATABASE [portfolio]');
+IF DB_ID(N'portfolio_school') IS NULL
+    EXEC(N'CREATE DATABASE [portfolio_school]');
 GO
 
-USE [portfolio];
+USE [portfolio_school];
 GO
 
 CREATE TABLE dbo.Users (
