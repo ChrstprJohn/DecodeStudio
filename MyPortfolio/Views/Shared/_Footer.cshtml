@@ -21,19 +21,19 @@
                 <li><a asp-controller="Home" asp-action="Index" asp-fragment="team">Our people</a></li>
             </ul>
         </div>
-        <div class="footer-social">
-            <h2>Social links</h2>
-            <h2>Follow us</h2>
-            @if (socialLinks is { Count: > 0 })
-            {
+        @if (socialLinks.Count > 0)
+        {
+            <div class="footer-social">
+                <h2>Social links</h2>
+                <h2>Follow us</h2>
                 <ul>
                     @foreach (var link in socialLinks)
                     {
                         <li><a href="@link.Url">@link.Label</a></li>
                     }
                 </ul>
-            }
-        </div>
+            </div>
+        }
     </div>
     <div class="footer-display" aria-hidden="true">
         <span class="footer-display-word"><span>D</span><span>E</span><span>C</span><span>O</span><span>D</span><span>E</span></span>

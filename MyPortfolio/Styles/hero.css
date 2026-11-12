@@ -8,27 +8,22 @@
 .home-header nav[aria-label="Main navigation"] { gap: 28px; padding: 8px 0 8px 60px; font-size: 16px; font-weight: 500; }
 .home-header .action-primary { border-radius: 3px; min-height: 46px; padding-inline: 24px; font-size: 16px; gap: 16px; }
 .home-header.is-over-dark { background: #eeeeeeaa; }
-.studio-hero { position: relative; isolation: isolate; overflow: hidden; height: 100svh; min-height: 680px; background: #eee; }
-.gallery-window { --tile: calc(100svh / 4.1); --preview-ratio: 2; position: absolute; inset: 0; overflow: hidden; }
+.studio-hero { position: relative; isolation: isolate; overflow: hidden; min-height: max(560px, 100svh); display: flex; flex-direction: column; background: #eee; }
+.gallery-window { --tile: calc(100svh / 4.7); --preview-ratio: 2; position: absolute; inset: 0; overflow: hidden; }
 .gallery-track { position: absolute; left: calc(50% + var(--tile) * .05); top: calc(var(--tile) * -.05); will-change: transform; }
 .gallery-step { position: absolute; left: calc(var(--step) * var(--tile) * -1); top: calc(var(--step) * var(--tile)); display: grid; grid-template-columns: minmax(0, 1fr) var(--tile); grid-template-rows: minmax(0, 1fr); width: calc(var(--tile) * (1 + var(--preview-ratio))); height: var(--tile); }
 .gallery-image { display: block; width: 100%; max-width: none; height: 100%; object-fit: contain; object-position: right center; background: #eee; }
 .gallery-palette { --project-color: #3b4640; --project-accent: #dddace; position: relative; width: 100%; height: 100%; overflow: hidden; color: var(--project-accent); background: var(--project-color); }
 .gallery-palette::after { content: ''; position: absolute; inset: 0; background: var(--project-accent); clip-path: polygon(0 85%, 85% 0, 100% 15%, 15% 100%); }
 .gallery-palette span { position: relative; z-index: 1; display: block; padding: 10px; max-width: 75%; font-size: clamp(10px, 1.5svh, 18px); line-height: 1.05; letter-spacing: -.04em; }
-.hero-copy { position: relative; display: flex; flex-direction: column; height: 100%; padding-block: 140px 30px; }
-.hero-heading { width: 570px; margin: 0; font-size: 80px; line-height: 1; font-weight: 600; letter-spacing: -.04em; }
-.hero-introduction { align-self: flex-end; width: 365px; margin-top: auto; }
-.hero-introduction p { font-size: 20px; font-weight: 500; line-height: 1.4; letter-spacing: -.025em; white-space: pre-line; }
+.hero-copy { position: relative; display: flex; flex: 1; flex-direction: column; width: 100%; max-width: none; padding: 140px 30px 24px; }
+.hero-heading { width: min(100%, 570px); margin: 0; font-size: clamp(64px, 5.25vw, 80px); line-height: 1; font-weight: 600; letter-spacing: -.04em; text-wrap: balance; overflow-wrap: anywhere; }
+.hero-introduction { align-self: flex-end; width: 25%; margin-top: auto; padding-top: 32px; }
+.hero-introduction p { font-size: 20px; font-weight: 500; line-height: 1.4; letter-spacing: -.025em; white-space: pre-line; overflow-wrap: anywhere; }
 .hero-action { margin-top: 30px; min-height: 44px; border-radius: 3px; font-size: 16px; }
-@media (min-width: 1200px) and (max-width: 1399px) {
-  .hero-heading { width: 530px; font-size: 72px; }
-  .hero-introduction { width: 330px; }
-}
-@media (min-width: 1024px) and (max-width: 1199px) {
-  .hero-heading { width: 450px; font-size: 64px; }
-  .hero-introduction { width: 300px; }
-  .hero-introduction p { font-size: 18px; }
+@media (min-width: 1200px) {
+  .gallery-image { object-fit: cover; }
+  .hero-action { margin-top: 28px; min-height: 42px; padding-inline: 28px; line-height: 1; }
 }
 @media (max-width: 1199px) {
   .home-header nav[aria-label="Main navigation"] { display: none; }
@@ -37,22 +32,22 @@
 @media (max-width: 1199px) {
   .home-header .studio-slash { width: 14px; height: 14px; margin-inline-end: -1px; }
   .home-header .mobile-menu-toggle { border-radius: 50%; width: 48px; height: 48px; padding: 0; display: grid; place-items: center; font-size: 11px; background: white; color: #222; }
-  .studio-hero { height: auto; min-height: 100svh; padding-block: 104px clamp(40px, 6vw, 72px); }
+  .studio-hero { min-height: 100svh; padding-block: 104px clamp(40px, 6vw, 72px); }
   .gallery-window { --tile: clamp(64px, min(19vw, 15svh), 144px); --preview-ratio: 1.5; position: relative; height: calc(3 * var(--tile)); margin-bottom: clamp(24px, 4vw, 40px); }
   .gallery-image { object-position: center; }
   .gallery-track { left: calc(50% + var(--tile) * .65); top: 0; }
-  .hero-copy { height: auto; padding-block: 0; }
+  .hero-copy { padding: 0 24px; }
   .hero-heading { width: auto; max-width: 600px; font-size: 48px; }
-  .hero-introduction { align-self: flex-start; width: auto; max-width: 440px; margin-top: 24px; }
+  .hero-introduction { align-self: flex-start; width: auto; max-width: 440px; margin-top: 24px; padding-top: 0; }
   .hero-introduction p { font-size: 18px; }
   .hero-action { margin-top: 24px; }
 }
 @media (min-width: 768px) and (max-width: 1199px) {
-  .studio-hero { display: flex; flex-direction: column; padding-block: 118px 32px; }
-  .hero-copy { flex: 1; }
+  .studio-hero { padding-block: 118px 32px; }
+  .hero-copy { padding-inline: 40px; }
   .gallery-window { --tile: clamp(100px, 18svh, 205px); position: absolute; height: auto; margin: 0; }
   .gallery-track { left: 76%; top: calc(var(--tile) * -.12); }
-  .hero-heading { width: 48%; font-size: clamp(2.75rem, 6vw, 4.25rem); text-wrap: balance; }
+  .hero-heading { width: 48%; font-size: clamp(2.75rem, 6vw, 4.25rem); }
   .hero-introduction { align-self: flex-end; max-width: min(47%, 450px); margin-top: auto; padding-top: 48px; }
   .hero-introduction p { font-size: clamp(1.25rem, 2.5vw, 1.375rem); white-space: normal; }
 }
