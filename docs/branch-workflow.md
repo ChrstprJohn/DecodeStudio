@@ -5,13 +5,18 @@
 | `feature/school-login` | Login required by default. Visitors can register, sign in, and manage their own profile. | Existing admin sign-in, portfolio editing, and account management. |
 | `feature/public-portfolio` | Anyone can open the portfolio. No visitor sign-in or registration. | Open `/admin` directly to sign in. Admins can edit the portfolio and their own profile. |
 
-Both versions use the existing `ConnectionStrings:Portfolio` setting and the same
-SQL schema. Point both deployments at the same database to share content and the
-existing admin account. Portfolio edits, password changes, and account status
-changes in that database affect both versions. Use a separate database for
-classroom experiments that should not affect the live portfolio. Uploaded files
-are stored outside SQL; use shared persistent upload storage or sync the files
-if both deployments need to display new uploads.
+Both versions use `ConnectionStrings:Portfolio` with dedicated SQL databases.
+The public branch uses `portfolio` and reads its deployed connection from
+`ConnectionStrings__Portfolio`. The school branch uses `portfolio_school` and
+stores its local connection under the `decode-studio-portfolio-school` .NET user
+secrets ID. Each branch checks the database name at startup.
+
+To initialize the school database from an existing local `portfolio` database,
+run `scripts/database/clone-school-portfolio.sql` from the school branch as a SQL
+Server administrator. It restores a backup into `portfolio_school` and stops if
+the destination already exists. The copy includes accounts and portfolio content
+as of the backup. Uploaded files live outside SQL and need separate storage for
+each running environment.
 
 ## Moving shared changes between branches
 
