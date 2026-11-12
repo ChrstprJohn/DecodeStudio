@@ -19,15 +19,17 @@
             }
         </div>
     </div>
-    <h1 id="hero-heading" class="hero-heading">@Model.HeroTitle</h1>
-    <div class="hero-introduction">
-        <p>@Model.HeroDescription</p>
-        @if (Model.Projects.Count > 0)
-        {
-            <a href="#projects" class="action-primary hero-action">
-                Explore our work
-                <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4 fill-none stroke-current"><path d="M4 16 16 4M4 4h12v12" stroke-width="1.5" /></svg>
-            </a>
-        }
+    <div class="public-width hero-copy">
+        <h1 id="hero-heading" class="hero-heading">@Model.HeroTitle</h1>
+        <div class="hero-introduction">
+            <p>@Model.HeroDescription</p>
+            @if (Model.Projects.Count > 0)
+            {
+                <a href="#projects" class="action-primary hero-action">
+                    Explore our work
+                    <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4 fill-none stroke-current"><path d="M4 16 16 4M4 4h12v12" stroke-width="1.5" /></svg>
+                </a>
+            }
+        </div>
     </div>
 </section>

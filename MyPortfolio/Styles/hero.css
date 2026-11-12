@@ -16,8 +16,9 @@
 .gallery-palette { --project-color: #3b4640; --project-accent: #dddace; position: relative; width: 100%; height: 100%; overflow: hidden; color: var(--project-accent); background: var(--project-color); }
 .gallery-palette::after { content: ''; position: absolute; inset: 0; background: var(--project-accent); clip-path: polygon(0 85%, 85% 0, 100% 15%, 15% 100%); }
 .gallery-palette span { position: relative; z-index: 1; display: block; padding: 10px; max-width: 75%; font-size: clamp(10px, 1.5svh, 18px); line-height: 1.05; letter-spacing: -.04em; }
-.hero-heading { position: absolute; top: 140px; left: 30px; width: 570px; margin: 0; font-size: 80px; line-height: 1; font-weight: 600; letter-spacing: -.04em; }
-.hero-introduction { position: absolute; right: 30px; bottom: 30px; width: 365px; }
+.hero-copy { position: relative; display: flex; flex-direction: column; height: 100%; padding-block: 140px 30px; }
+.hero-heading { width: 570px; margin: 0; font-size: 80px; line-height: 1; font-weight: 600; letter-spacing: -.04em; }
+.hero-introduction { align-self: flex-end; width: 365px; margin-top: auto; }
 .hero-introduction p { font-size: 20px; font-weight: 500; line-height: 1.4; letter-spacing: -.025em; white-space: pre-line; }
 .hero-action { margin-top: 30px; min-height: 44px; border-radius: 3px; font-size: 16px; }
 @media (min-width: 1200px) and (max-width: 1399px) {
@@ -36,17 +37,19 @@
 @media (max-width: 1199px) {
   .home-header .studio-slash { width: 14px; height: 14px; margin-inline-end: -1px; }
   .home-header .mobile-menu-toggle { border-radius: 50%; width: 48px; height: 48px; padding: 0; display: grid; place-items: center; font-size: 11px; background: white; color: #222; }
-  .studio-hero { height: auto; min-height: 100svh; padding: 104px 20px clamp(40px, 6vw, 72px); }
-  .gallery-window { --tile: clamp(64px, min(19vw, 15svh), 144px); --preview-ratio: 1.5; position: relative; height: calc(3 * var(--tile)); margin: 0 -20px clamp(24px, 4vw, 40px); }
+  .studio-hero { height: auto; min-height: 100svh; padding-block: 104px clamp(40px, 6vw, 72px); }
+  .gallery-window { --tile: clamp(64px, min(19vw, 15svh), 144px); --preview-ratio: 1.5; position: relative; height: calc(3 * var(--tile)); margin-bottom: clamp(24px, 4vw, 40px); }
   .gallery-image { object-position: center; }
   .gallery-track { left: calc(50% + var(--tile) * .65); top: 0; }
-  .hero-heading { position: relative; top: auto; left: auto; width: auto; max-width: 600px; font-size: 48px; }
-  .hero-introduction { position: relative; right: auto; bottom: auto; width: auto; max-width: 440px; margin-top: 24px; }
+  .hero-copy { height: auto; padding-block: 0; }
+  .hero-heading { width: auto; max-width: 600px; font-size: 48px; }
+  .hero-introduction { align-self: flex-start; width: auto; max-width: 440px; margin-top: 24px; }
   .hero-introduction p { font-size: 18px; }
   .hero-action { margin-top: 24px; }
 }
 @media (min-width: 768px) and (max-width: 1199px) {
-  .studio-hero { display: flex; flex-direction: column; padding: 118px 24px 32px; }
+  .studio-hero { display: flex; flex-direction: column; padding-block: 118px 32px; }
+  .hero-copy { flex: 1; }
   .gallery-window { --tile: clamp(100px, 18svh, 205px); position: absolute; height: auto; margin: 0; }
   .gallery-track { left: 76%; top: calc(var(--tile) * -.12); }
   .hero-heading { width: 48%; font-size: clamp(2.75rem, 6vw, 4.25rem); text-wrap: balance; }
