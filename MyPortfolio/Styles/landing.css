@@ -1,7 +1,7 @@
 .studio-section-width { width: min(1200px, calc(100% - 60px)); margin-inline: auto; }
 .studio-section-heading { font-size: 48px; font-weight: 600; letter-spacing: -.045em; line-height: 1.05; }
 .studio-services { padding: 80px 0 100px; background: linear-gradient(#080808 0%, #3b3b3b 18%, #a8a8a8 68%, #eee 100%); }
-.studio-services > .studio-section-width { width: 90%; max-width: none; }
+.studio-services > .studio-section-width, .studio-contact.studio-section-width { width: 90%; max-width: none; }
 .studio-services > div > h2 { color: white; font-size: clamp(2.375rem, 1.375rem + 4.5vw, 4.5rem); line-height: 1; margin-bottom: clamp(36px, 4vw, 56px); }
 .service-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
 .service-card { position: relative; overflow: hidden; background: white; border-radius: 6px; min-height: 640px; padding: 60px 60px 0; }
@@ -180,7 +180,7 @@
 }
 
 @media (min-width: 1200px) and (max-width: 1439px) {
-  .studio-services > .studio-section-width { width: 95%; }
+  .studio-services > .studio-section-width, .studio-contact.studio-section-width { width: 95%; }
 }
 
 @media (min-width: 1024px) and (max-width: 1439px) {
