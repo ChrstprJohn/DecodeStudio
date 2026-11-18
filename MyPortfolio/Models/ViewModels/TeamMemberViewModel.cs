@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
 using MyPortfolio.Validation;
+using MyPortfolio.Models.Entities;
 
 namespace MyPortfolio.Models.ViewModels;
 
@@ -43,4 +44,15 @@ public class TeamMemberViewModel
 
     [Display(Name = "Published")]
     public bool IsPublished { get; set; }
+
+    public void ApplyTo(TeamMember item)
+    {
+        item.FirstName = FirstName.Trim();
+        item.MiddleName = MiddleName?.Trim();
+        item.LastName = LastName.Trim();
+        item.RoleTitle = RoleTitle.Trim();
+        item.Bio = Bio.Trim();
+        item.SortOrder = SortOrder;
+        item.IsPublished = IsPublished;
+    }
 }

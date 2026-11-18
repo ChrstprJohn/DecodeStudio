@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
 using MyPortfolio.Validation;
+using MyPortfolio.Models.Entities;
 
 namespace MyPortfolio.Models.ViewModels;
 
@@ -26,5 +27,12 @@ public class ServiceOfferingViewModel
 
     [Display(Name = "Published")]
     public bool IsPublished { get; set; }
-}
 
+    public void ApplyTo(ServiceOffering item)
+    {
+        item.Title = Title.Trim();
+        item.Description = Description.Trim();
+        item.SortOrder = SortOrder;
+        item.IsPublished = IsPublished;
+    }
+}

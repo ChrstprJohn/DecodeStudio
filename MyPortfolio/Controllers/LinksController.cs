@@ -25,25 +25,24 @@ public class LinksController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        return View("Edit", new SocialLinkViewModel());
+        return View("Create", new SocialLinkViewModel());
     }
 
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(SocialLinkViewModel model)
     {
-        model.Id = 0;
         if (!ModelState.IsValid)
         {
-            return View("Edit", model);
+            return View("Create", model);
         }
         try
         {
-            await _service.SaveAsync(model);
+            await _service.CreateAsync(model);
         }
         catch (ArgumentException exception)
         {
             ModelState.AddModelError(nameof(model.CustomIconFile), exception.Message);
-            return View("Edit", model);
+            return View("Create", model);
         }
         TempData["SuccessMessage"] = "Social link created.";
         return RedirectToAction(nameof(Index));
@@ -57,7 +56,7 @@ public class LinksController : Controller
         {
             return NotFound();
         }
-        return View(new SocialLinkViewModel
+        return View("Edit", new SocialLinkViewModel
         {
             Id = item.Id,
             Label = item.Label,
@@ -77,17 +76,17 @@ public class LinksController : Controller
         model.CurrentIconSource = SocialIcon.Source((await _service.GetAsync(model.Id))?.CustomIconSvg);
         if (!ModelState.IsValid)
         {
-            return View(model);
+            return View("Edit", model);
         }
         try
         {
-            if (!await _service.SaveAsync(model))
+            if (!await _service.UpdateAsync(model))
                 return NotFound();
         }
         catch (ArgumentException exception)
         {
             ModelState.AddModelError(nameof(model.CustomIconFile), exception.Message);
-            return View(model);
+            return View("Edit", model);
         }
         TempData["SuccessMessage"] = "Social link updated.";
         return RedirectToAction(nameof(Index));

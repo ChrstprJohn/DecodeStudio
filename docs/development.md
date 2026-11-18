@@ -90,8 +90,9 @@ are the source of truth if dependencies change.
 ## Local database connection
 
 The app reads the portfolio database on 127.0.0.1,1433. Existing tables are
-created separately with docs/database/schema.sql. This app does not create or
-migrate them automatically. Full Identity EF stores have been removed.
+created separately with `docs/database/schema.sql`. Install the school stored
+procedures before starting the app using the [database setup instructions](database/README.md).
+EF Core calls the procedures for reads and for tracked inserts, updates, and deletes.
 
 This machine's connection is saved in .NET User Secrets under
 ConnectionStrings:Portfolio. Passwords are not in source files or documentation.

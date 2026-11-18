@@ -11,3 +11,4 @@ MyPortfolio/wwwroot/uploads/*
 !MyPortfolio/wwwroot/uploads/images/
 MyPortfolio/wwwroot/uploads/images/*
 !MyPortfolio/wwwroot/uploads/images/.gitkeep
+MyPortfolio/wwwroot/lib/chart.js/

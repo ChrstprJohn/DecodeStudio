@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using MyPortfolio.Data;
 using MyPortfolio.Models.ViewModels;
 
@@ -17,9 +16,7 @@ public class HomeService
 
     public async Task<HomeViewModel> GetHomeAsync()
     {
-        var content = await _database.SiteContent
-            .AsNoTracking()
-            .SingleOrDefaultAsync(content => content.Id == 1);
+        var content = await _database.ReadSiteContentAsync();
 
         var model = new HomeViewModel();
         if (content is not null)
@@ -31,19 +28,15 @@ public class HomeService
         }
 
         (model.Projects, model.HeroPreviews) = await GetProjectGalleryAsync();
-        model.Services = await _database.Services.AsNoTracking().Where(item => item.IsPublished)
-            .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
-        model.TeamMembers = await _database.TeamMembers.AsNoTracking().Where(item => item.IsPublished)
-            .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
-        model.SocialLinks = await _database.SocialLinks.AsNoTracking()
-            .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
+        model.Services = await _database.ReadServicesAsync(publishedOnly: true);
+        model.TeamMembers = await _database.ReadTeamMembersAsync(publishedOnly: true);
+        model.SocialLinks = await _database.ReadSocialLinksAsync();
         return model;
     }
 
     public async Task<(List<Models.Entities.Project> Projects, List<(string ImagePath, string Title)> Previews)> GetProjectGalleryAsync()
     {
-        var projects = await _database.Projects.AsNoTracking()
-            .OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
+        var projects = await _database.ReadProjectsAsync();
         var publishedProjects = projects.Where(project => project.IsPublished).ToList();
         var previews = publishedProjects
             .Where(project => !string.IsNullOrWhiteSpace(project.ImagePath))

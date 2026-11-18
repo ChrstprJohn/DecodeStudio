@@ -1,0 +1,34 @@
+@model ServiceOfferingViewModel
+@{
+    var currentImage = DemoImagePaths.Service(Model.Title, Model.ImagePath);
+}
+<div asp-validation-summary="ModelOnly" role="alert" class="text-red-700"></div>
+<div>
+    <label asp-for="Title" class="block"></label>
+    <input asp-for="Title" placeholder="e.g. Web design" class="mt-2 w-full" />
+    <span asp-validation-for="Title" class="field-error"></span>
+</div>
+<div>
+    <label asp-for="Description" class="block"></label>
+    <textarea asp-for="Description" placeholder="Describe what the service includes." rows="4" class="mt-2 w-full"></textarea>
+    <span asp-validation-for="Description" class="field-error"></span>
+</div>
+<div>
+    <label asp-for="ImageFile" class="block"></label>
+    <input asp-for="ImageFile" type="file" accept="image/png,image/jpeg,image/webp" class="sr-only" data-upload-preview />
+    <partial name="_UploadPreview" model='("ImageFile", currentImage)' />
+    <span asp-validation-for="ImageFile" class="field-error"></span>
+</div>
+<div>
+    <label asp-for="SortOrder" class="block"></label>
+    <input asp-for="SortOrder" class="mt-2 w-full" />
+    <span asp-validation-for="SortOrder" class="field-error"></span>
+</div>
+<div>
+    <label><input asp-for="IsPublished" /> Published</label>
+    <span asp-validation-for="IsPublished" class="field-error"></span>
+</div>
+<div class="edit-form-actions">
+    <button type="submit" class="admin-primary">Save</button>
+    <a asp-action="Index" class="admin-secondary">Cancel</a>
+</div>

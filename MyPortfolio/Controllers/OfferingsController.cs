@@ -25,25 +25,24 @@ public class OfferingsController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        return View("Edit", new ServiceOfferingViewModel());
+        return View("Create", new ServiceOfferingViewModel());
     }
 
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(ServiceOfferingViewModel model)
     {
-        model.Id = 0;
         if (!ModelState.IsValid)
         {
-            return View("Edit", model);
+            return View("Create", model);
         }
         try
         {
-            await _service.SaveAsync(model);
+            await _service.CreateAsync(model);
         }
         catch (ArgumentException exception)
         {
             ModelState.AddModelError(nameof(model.ImageFile), exception.Message);
-            return View("Edit", model);
+            return View("Create", model);
         }
         TempData["SuccessMessage"] = "Service created.";
         return RedirectToAction(nameof(Index));
@@ -57,7 +56,7 @@ public class OfferingsController : Controller
         {
             return NotFound();
         }
-        return View(new ServiceOfferingViewModel
+        return View("Edit", new ServiceOfferingViewModel
         {
             Id = item.Id,
             Title = item.Title,
@@ -80,16 +79,16 @@ public class OfferingsController : Controller
         model.ImagePath = current.ImagePath;
         if (!ModelState.IsValid)
         {
-            return View(model);
+            return View("Edit", model);
         }
         try
         {
-            if (!await _service.SaveAsync(model)) return NotFound();
+            if (!await _service.UpdateAsync(model)) return NotFound();
         }
         catch (ArgumentException exception)
         {
             ModelState.AddModelError(nameof(model.ImageFile), exception.Message);
-            return View(model);
+            return View("Edit", model);
         }
         TempData["SuccessMessage"] = "Service updated.";
         return RedirectToAction(nameof(Index));

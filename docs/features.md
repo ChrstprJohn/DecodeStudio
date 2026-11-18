@@ -5,7 +5,9 @@ working MVC forms, database operations, authorization, and navigation.
 
 ## Entry points
 
-- Admin login redirects to /Admin, the blank analytics page with a sidebar.
+- Admin login redirects to /Admin, which shows daily registrations, account
+  status, and current publication counts. Registration CSV exports support today
+  or an inclusive date range in Manila time.
 - User login redirects to /. Shared navigation offers My portal and logout.
 - /Profile lets a signed-in user edit their own account, including admins.
 - School mode requires portfolio login; public mode permits anonymous browsing.
@@ -125,5 +127,5 @@ Test-Accounts.ps1 covers authentication regression. Test-Home.ps1 checks the
 landing section order/anchors or school-mode login form, plus CSS. Sample data
 is added only by the explicit [seed script](sample-data.md).
 
-Analytics calculations, password recovery, email verification, login throttling,
+Password recovery, email verification, login throttling,
 and disabling public registration for deployment remain separate work.

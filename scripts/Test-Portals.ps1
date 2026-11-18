@@ -93,6 +93,23 @@ try {
     Assert ((Login $admin $adminEmail $password).Location -eq '/Admin') 'Admin login must land on analytics'
     Assert ((Login $user $userEmail $password).Location -eq '/') 'User login must land on home'
     Assert ((Login $otherSession $userEmail $password).Status -eq 302) 'Second user session failed'
+    $analytics = Page $admin '/Admin'
+    Assert ($analytics.Status -eq 200) 'Admin analytics failed to render'
+    foreach ($chart in @('registration-chart', 'account-chart', 'content-chart')) {
+        Assert ($analytics.Html.Contains('id="' + $chart + '"')) "Missing $chart"
+    }
+    Assert ((Page $admin '/lib/chart.js/chart.umd.min.js').Status -eq 200) 'Chart.js was not served'
+    $today = [DateTimeOffset]::UtcNow.ToOffset([TimeSpan]::FromHours(8)).ToString('yyyy-MM-dd')
+    $yesterday = [DateTimeOffset]::Parse($today).AddDays(-1).ToString('yyyy-MM-dd')
+    $todayExport = Page $admin '/Admin/ExportToday'
+    $rangeExport = Page $admin "/Admin/ExportRange?from=$yesterday&to=$today"
+    $todayRow = ($todayExport.Html.Trim() -split '\r?\n')[-1]
+    Assert ($todayExport.Status -eq 200 -and $todayRow -match ('^' + $today + ',\d+$')) 'Today export missing its daily count'
+    Assert ([int]($todayRow.Split(',')[1]) -ge 2) 'Today export did not count the two new accounts'
+    Assert ($rangeExport.Status -eq 200 -and ($rangeExport.Html.Trim() -split '\r?\n').Count -eq 3 -and
+        $rangeExport.Html.Contains("$yesterday,") -and $rangeExport.Html.Trim().EndsWith($todayRow)) 'Date range export must include both endpoints'
+    Assert ((Page $admin "/Admin/ExportRange?from=$today&to=$yesterday").Status -eq 302) 'Reversed export dates must be rejected'
+    Assert ((Page $user '/Admin/ExportToday').Location.Contains('/Account/AccessDenied')) 'User can export admin analytics'
     foreach ($path in @('/Admin','/Studio','/Projects','/Offerings','/Team','/Contact','/Links','/Accounts')) {
         Assert ((Page $admin $path).Status -eq 200) "Admin cannot read $path"
         $denied = Page $user $path
@@ -111,11 +128,16 @@ try {
     )
     foreach ($case in $cases) {
         $controller=$case.Controller; $table=$case.Table; $key=$case.Key; $fields=$case.Fields
+        $createPage = Page $admin "/$controller/Create"
+        Assert ($createPage.Html -match ('action="/' + $controller + '/Create"') -and
+            $createPage.Html -notmatch 'name="Id"') "$controller create form should post without an ID"
+        $fields.Id = [int]::MaxValue
         $response = Post $admin "/$controller/Create" $fields "/$controller/Create"
         Assert ($response.Status -eq 302) "$controller create failed: $($response.Status)"
         $row = (Sql "SELECT Id FROM dbo.$table WHERE $key = @Value" @{Value=$fields[$key]}).Rows[0]
         Assert ($null -ne $row) "$controller row not saved"
         $id=[int]$row.Id; $created.Add(@{Table=$table;Id=$id})
+        Assert ($id -ne [int]::MaxValue) "$controller create should use a database-generated ID"
         $contentImage = $null
         if ($case.ContainsKey('ImageColumn')) {
             $column=$case.ImageColumn
@@ -228,6 +250,7 @@ try {
     Capture $admin '/Admin' 'analytics'
     Capture $admin '/Accounts' 'accounts'
     Capture $admin '/Projects/Create' 'project-form'
+    Capture $admin '/Admin' 'analytics'
     Capture $user '/Profile' 'profile'
     $change=@{CurrentPassword='incorrect';NewPassword=$newPassword;ConfirmPassword=$newPassword}
     Assert ((Post $user '/Profile/ChangePassword' $change '/Profile/ChangePassword').Status -eq 200) 'Incorrect current password should fail'

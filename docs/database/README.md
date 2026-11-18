@@ -11,6 +11,17 @@ tables in dbo. Your SQL login needs database-creation permission if it is missin
 It does not change/drop existing tables, insert content, or create accounts. Existing tables
 with these names will cause errors; this is not a rerunnable migration script.
 
+Before starting the school app, run
+[install-school-procedures.sql](../../scripts/database/install-school-procedures.sql)
+against `portfolio_school`. For an existing database, apply any missing column
+upgrades first. The procedure script can be rerun and leaves tables and rows
+intact. Run it from a connection already targeting `portfolio_school`, and use
+the `-b` option when running it with `sqlcmd` so script errors stop execution.
+If the app uses a separate database user, grant it `EXECUTE` on these procedures.
+Install the two dashboard procedures with
+[install-school-analytics.sql](../../scripts/database/install-school-analytics.sql)
+in the same database. They read existing account and content tables.
+
 For an existing database, run [add-favicon.sql](../../scripts/database/add-favicon.sql)
 against the portfolio database before starting either updated branch. A null
 FaviconPath uses the bundled favicon. The Studio editor stores an uploaded icon

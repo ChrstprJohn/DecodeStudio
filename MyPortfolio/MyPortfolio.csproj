@@ -20,6 +20,7 @@
   <Target Name="BuildTailwind" BeforeTargets="PrepareForBuild" Condition="'$(DesignTimeBuild)' != 'true'">
     <Copy SourceFiles="node_modules/gsap/dist/gsap.min.js" DestinationFolder="wwwroot/lib/gsap" SkipUnchangedFiles="true" />
     <Copy SourceFiles="node_modules/gsap/dist/CustomEase.min.js" DestinationFolder="wwwroot/lib/gsap" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="node_modules/chart.js/dist/chart.umd.min.js" DestinationFolder="wwwroot/lib/chart.js" SkipUnchangedFiles="true" />
     <Exec Command="npm run css:build" WorkingDirectory="$(MSBuildProjectDirectory)" />
   </Target>
 
@@ -27,6 +28,8 @@
     <!-- Include generated CSS even when it does not exist at project evaluation. -->
     <Content Remove="wwwroot/css/site.css" />
     <Content Include="wwwroot/css/site.css" CopyToPublishDirectory="PreserveNewest" />
+    <Content Remove="wwwroot/lib/chart.js/chart.umd.min.js" />
+    <Content Include="wwwroot/lib/chart.js/chart.umd.min.js" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

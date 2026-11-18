@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using MyPortfolio.Data;
 using MyPortfolio.Models.Entities;
 using MyPortfolio.Models.ViewModels;
@@ -18,7 +17,7 @@ public class SiteContentService
 
     public async Task<SiteContentViewModel> GetAsync()
     {
-        var item = await _database.SiteContent.AsNoTracking().SingleOrDefaultAsync(item => item.Id == 1);
+        var item = await _database.ReadSiteContentAsync();
         if (item is null)
         {
             return new SiteContentViewModel();
@@ -35,17 +34,12 @@ public class SiteContentService
         };
     }
 
-    public Task<string?> GetFaviconPathAsync()
-    {
-        return _database.SiteContent.AsNoTracking()
-            .Where(item => item.Id == 1)
-            .Select(item => item.FaviconPath)
-            .SingleOrDefaultAsync();
-    }
+    public async Task<string?> GetFaviconPathAsync() =>
+        (await _database.ReadSiteContentAsync())?.FaviconPath;
 
     public async Task SaveAsync(SiteContentViewModel model)
     {
-        var item = await _database.SiteContent.FindAsync(1);
+        var item = await _database.ReadSiteContentAsync();
         if (item is null)
         {
             item = new SiteContent { Id = 1 };
@@ -76,19 +70,18 @@ public class SiteContentService
 
     public async Task<ContactViewModel> GetContactAsync()
     {
-        return await _database.SiteContent.AsNoTracking().Where(item => item.Id == 1)
-            .Select(item => new ContactViewModel
-            {
-                Email = item.ContactEmail,
-                Phone = item.ContactPhone,
-                BackgroundImagePath = item.ContactBackgroundImagePath
-            })
-            .SingleOrDefaultAsync() ?? new ContactViewModel();
+        var item = await _database.ReadSiteContentAsync();
+        return item is null ? new ContactViewModel() : new ContactViewModel
+        {
+            Email = item.ContactEmail,
+            Phone = item.ContactPhone,
+            BackgroundImagePath = item.ContactBackgroundImagePath
+        };
     }
 
     public async Task SaveContactAsync(ContactViewModel model)
     {
-        var item = await _database.SiteContent.FindAsync(1);
+        var item = await _database.ReadSiteContentAsync();
         if (item is null)
         {
             if (string.IsNullOrWhiteSpace(model.Email) && string.IsNullOrWhiteSpace(model.Phone) &&
@@ -117,7 +110,7 @@ public class SiteContentService
 
     public async Task DeleteAsync()
     {
-        var item = await _database.SiteContent.FindAsync(1);
+        var item = await _database.ReadSiteContentAsync();
         if (item is not null)
         {
             _database.SiteContent.Remove(item);

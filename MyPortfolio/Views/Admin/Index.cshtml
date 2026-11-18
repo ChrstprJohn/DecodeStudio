@@ -1,6 +1,118 @@
+@model AnalyticsViewModel
+@using System.Globalization
+@using System.Text.Json
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Analytics";
+    var totals = Model.Totals;
+    var accounts = totals.ActiveAccounts + totals.InactiveAccounts;
+    var today = Model.Today.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+    var cards = new[]
+    {
+        (Label: "Total accounts", Value: accounts, Hint: "Current account records"),
+        (Label: "Registered today", Value: Model.Registrations[^1].Registrations, Hint: "Since midnight in Manila"),
+        (Label: "Published projects", Value: totals.PublishedProjects, Hint: $"{totals.DraftProjects:N0} drafts"),
+        (Label: "Published services", Value: totals.PublishedServices, Hint: $"{totals.DraftServices:N0} drafts")
+    };
+    var content = new[]
+    {
+        (Label: "Projects", Published: totals.PublishedProjects, Draft: totals.DraftProjects),
+        (Label: "Services", Published: totals.PublishedServices, Draft: totals.DraftServices),
+        (Label: "Team members", Published: totals.PublishedTeamMembers, Draft: totals.DraftTeamMembers)
+    };
 }
-<h1 class="page-title">Analytics</h1>
-@* Analytics will be implemented later. *@
+<div class="space-y-5">
+    <h1 class="text-2xl font-semibold tracking-tight">Analytics</h1>
+
+    <dl aria-label="Key metrics" class="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-neutral-200 bg-neutral-200 xl:grid-cols-4">
+        @foreach (var card in cards)
+        {
+            <div class="bg-white p-4 sm:p-5">
+                <dt class="text-sm font-medium text-neutral-700">@card.Label</dt>
+                <dd class="mt-2 text-3xl font-semibold tabular-nums">@card.Value.ToString("N0")</dd>
+                <dd class="mt-1 text-xs text-neutral-600">@card.Hint</dd>
+            </div>
+        }
+    </dl>
+
+    <section class="flex flex-wrap items-end justify-between gap-4 rounded-lg border border-neutral-200 bg-white p-4 sm:p-5" aria-labelledby="export-heading">
+        <div>
+            <h2 id="export-heading" class="text-base font-semibold">Export registrations</h2>
+            <p id="export-help" class="mt-1 text-sm text-neutral-600">Daily counts in Manila time. Both dates are included.</p>
+        </div>
+        <form asp-action="ExportRange" method="get" aria-labelledby="export-heading" aria-describedby="export-help" class="flex flex-wrap items-end gap-3">
+            <div class="grid gap-1">
+                <label for="from" class="text-sm font-medium">From</label>
+                <input id="from" name="from" type="date" value="@today" max="@today" required class="min-h-10 rounded-md border border-neutral-300 px-2 py-1.5 text-sm" />
+            </div>
+            <div class="grid gap-1">
+                <label for="to" class="text-sm font-medium">To</label>
+                <input id="to" name="to" type="date" value="@today" max="@today" required class="min-h-10 rounded-md border border-neutral-300 px-2 py-1.5 text-sm" />
+            </div>
+            <button type="submit" class="admin-primary">Export range</button>
+            <a asp-action="ExportToday" class="admin-secondary">Export today</a>
+        </form>
+    </section>
+
+    <div class="grid items-start gap-5 xl:grid-cols-3">
+        <section class="min-w-0 rounded-lg border border-neutral-200 bg-white p-4 sm:p-5 xl:col-span-2" aria-labelledby="registration-heading">
+            <h2 id="registration-heading" class="text-base font-semibold">Daily registrations</h2>
+            <p class="mt-1 text-sm text-neutral-600">Last 14 days · Manila time</p>
+            <div class="relative mt-4 h-52">
+                <canvas id="registration-chart" role="img" aria-label="Line chart of daily registrations. Values are in the table below."
+                        data-labels="@JsonSerializer.Serialize(Model.Registrations.Select(day => day.Date.ToString("MMM d", CultureInfo.InvariantCulture)))"
+                        data-values="@JsonSerializer.Serialize(Model.Registrations.Select(day => day.Registrations))"></canvas>
+            </div>
+            <details class="mt-3 text-sm">
+                <summary class="cursor-pointer font-medium">Daily counts</summary>
+                <table class="mt-2 w-full text-left tabular-nums">
+                    <thead><tr><th scope="col">Date</th><th scope="col" class="text-right">Registrations</th></tr></thead>
+                    <tbody>
+                        @foreach (var day in Model.Registrations)
+                        {
+                            <tr class="border-t border-neutral-200"><td class="py-1">@day.Date.ToString("MMM d, yyyy")</td><td class="text-right">@day.Registrations</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </details>
+        </section>
+
+        <section class="min-w-0 rounded-lg border border-neutral-200 bg-white p-4 sm:p-5" aria-labelledby="status-heading">
+            <h2 id="status-heading" class="text-base font-semibold">Account status</h2>
+            <div class="relative mx-auto my-4 h-40 max-w-48">
+                <canvas id="account-chart" role="img" aria-label="Doughnut chart of active and inactive accounts. Counts are shown below."
+                        data-active="@totals.ActiveAccounts" data-inactive="@totals.InactiveAccounts"></canvas>
+            </div>
+            <dl class="space-y-2 text-sm tabular-nums">
+                <div class="flex items-center justify-between gap-3"><dt><span aria-hidden="true" class="mr-2 inline-block size-2.5 rounded-sm bg-neutral-800"></span>Active</dt><dd>@totals.ActiveAccounts.ToString("N0")</dd></div>
+                <div class="flex items-center justify-between gap-3"><dt><span aria-hidden="true" class="mr-2 inline-block size-2.5 rounded-sm bg-neutral-300"></span>Inactive</dt><dd>@totals.InactiveAccounts.ToString("N0")</dd></div>
+            </dl>
+        </section>
+
+        <section class="min-w-0 rounded-lg border border-neutral-200 bg-white p-4 sm:p-5 xl:col-span-3" aria-labelledby="content-heading">
+            <h2 id="content-heading" class="text-base font-semibold">Content publication</h2>
+            <div class="relative mt-4 h-44">
+                <canvas id="content-chart" role="img" aria-label="Stacked bar chart of published and draft content. Counts are in the table below."
+                        data-labels="@JsonSerializer.Serialize(content.Select(row => row.Label))"
+                        data-published="@JsonSerializer.Serialize(content.Select(row => row.Published))"
+                        data-draft="@JsonSerializer.Serialize(content.Select(row => row.Draft))"></canvas>
+            </div>
+            <table class="mt-2 w-full text-left text-sm tabular-nums">
+                <thead>
+                    <tr><th scope="col">Content</th><th scope="col" class="text-right">Published</th><th scope="col" class="text-right">Draft</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var row in content)
+                    {
+                        <tr class="border-t border-neutral-200"><th scope="row" class="py-1.5 font-normal">@row.Label</th><td class="text-right">@row.Published</td><td class="text-right">@row.Draft</td></tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/chart.js/chart.umd.min.js" asp-append-version="true" defer></script>
+    <script src="~/js/analytics.js" asp-append-version="true" defer></script>
+}

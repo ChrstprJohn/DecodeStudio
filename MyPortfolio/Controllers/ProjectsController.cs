@@ -25,26 +25,25 @@ public class ProjectsController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        return View("Edit", new ProjectViewModel());
+        return View("Create", new ProjectViewModel());
     }
 
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(ProjectViewModel model)
     {
-        model.Id = 0;
         if (model.ImageFile is null) ModelState.AddModelError(nameof(model.ImageFile), "Choose a project image.");
         if (!ModelState.IsValid)
         {
-            return View("Edit", model);
+            return View("Create", model);
         }
         try
         {
-            await _service.SaveAsync(model);
+            await _service.CreateAsync(model);
         }
         catch (ArgumentException exception)
         {
             ModelState.AddModelError(nameof(model.ImageFile), exception.Message);
-            return View("Edit", model);
+            return View("Create", model);
         }
         TempData["SuccessMessage"] = "Product created.";
         return RedirectToAction(nameof(Index));
@@ -58,7 +57,7 @@ public class ProjectsController : Controller
         {
             return NotFound();
         }
-        return View(new ProjectViewModel
+        return View("Edit", new ProjectViewModel
         {
             Id = item.Id,
             Title = item.Title,
@@ -82,16 +81,16 @@ public class ProjectsController : Controller
         model.ImagePath = current.ImagePath;
         if (!ModelState.IsValid)
         {
-            return View(model);
+            return View("Edit", model);
         }
         try
         {
-            if (!await _service.SaveAsync(model)) return NotFound();
+            if (!await _service.UpdateAsync(model)) return NotFound();
         }
         catch (ArgumentException exception)
         {
             ModelState.AddModelError(nameof(model.ImageFile), exception.Message);
-            return View(model);
+            return View("Edit", model);
         }
         TempData["SuccessMessage"] = "Product updated.";
         return RedirectToAction(nameof(Index));

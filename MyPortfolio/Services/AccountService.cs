@@ -28,7 +28,7 @@ public class AccountService
     {
         var email = model.Email.Trim().ToLowerInvariant();
 
-        if (await _database.Users.AnyAsync(user => user.Email == email))
+        if (await _database.EmailExistsAsync(email))
         {
             return false;
         }
@@ -64,7 +64,7 @@ public class AccountService
     public async Task<User?> LoginAsync(LoginViewModel model)
     {
         var email = model.Email.Trim().ToLowerInvariant();
-        var user = await _database.Users.SingleOrDefaultAsync(user => user.Email == email);
+        var user = await _database.ReadUserByEmailAsync(email);
 
         if (user is null || !user.IsActive || (user.Role != "User" && user.Role != "Admin"))
         {
@@ -89,7 +89,6 @@ public class AccountService
 
     public async Task<User?> GetActiveUserAsync(int id)
     {
-        return await _database.Users.AsNoTracking()
-            .SingleOrDefaultAsync(user => user.Id == id && user.IsActive);
+        return await _database.ReadUserAsync(id, activeOnly: true);
     }
 }

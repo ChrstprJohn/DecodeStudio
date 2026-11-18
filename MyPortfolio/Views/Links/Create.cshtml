@@ -1,0 +1,10 @@
+@model SocialLinkViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Create social link";
+}
+<partial name="_EditBackLink" model='("Back to social links")' />
+<h1 class="page-title">@ViewData["Title"]</h1>
+<form asp-controller="Links" asp-action="Create" method="post" enctype="multipart/form-data" class="edit-form mt-6 max-w-3xl rounded-xl border border-neutral-200 bg-white p-5 sm:p-7">
+    <partial name="_FormFields" model="Model" />
+</form>

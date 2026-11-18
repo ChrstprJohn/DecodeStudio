@@ -1,5 +1,6 @@
 @{
     var heroHeader = ViewData["HeroHeader"] is true;
+    var signedIn = User.Identity?.IsAuthenticated == true;
     var adminShell = ViewData["AdminShell"] is true;
     var profilePage = string.Equals(ViewContext.RouteData.Values["controller"]?.ToString(), "Profile", StringComparison.OrdinalIgnoreCase);
     var studioName = ViewData["StudioName"] as string ?? "Decode Studio";
@@ -38,13 +39,13 @@
         <div class="public-width flex min-h-24 items-center justify-between gap-8">
             <a asp-controller="Home" asp-action="Index" aria-label="@studioName home" class="shrink-0 text-2xl font-semibold tracking-[-0.07em]"><partial name="_StudioWordmark" /></a>
             <nav aria-label="Main navigation" class="hidden items-center gap-6 text-sm font-medium lg:flex">
-                <a asp-controller="Home" asp-action="Index" asp-fragment="about" class="hover:underline">About</a>
-                <a asp-controller="Home" asp-action="Index" asp-fragment="services" class="hover:underline">Services</a>
-                <a asp-controller="Home" asp-action="Index" asp-fragment="projects" class="hover:underline">Work</a>
-                <a asp-controller="Home" asp-action="Index" asp-fragment="team" class="hover:underline">Team</a>
-                <a asp-controller="Home" asp-action="Index" asp-fragment="contact" class="hover:underline">Contact</a>
-                @if (User.Identity?.IsAuthenticated == true)
+                @if (signedIn)
                 {
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="about" class="hover:underline">About</a>
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="services" class="hover:underline">Services</a>
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="projects" class="hover:underline">Work</a>
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="team" class="hover:underline">Team</a>
+                    <a asp-controller="Home" asp-action="Index" asp-fragment="contact" class="hover:underline">Contact</a>
                     <partial name="_ProfileMenu" />
                 }
                 else
@@ -55,14 +56,14 @@
             <details class="mobile-menu group lg:hidden">
                 <summary class="mobile-menu-toggle" aria-label="Menu"><span aria-hidden="true"></span><span aria-hidden="true"></span></summary>
                 <nav aria-label="Mobile navigation" class="absolute inset-x-0 top-full flex flex-col gap-5 border-t border-[#dddddd] bg-canvas px-6 py-7 text-base">
-                    <a asp-controller="Home" asp-action="Index" asp-fragment="hero">Home</a>
-                    <a asp-controller="Home" asp-action="Index" asp-fragment="about">About</a>
-                    <a asp-controller="Home" asp-action="Index" asp-fragment="services">Services</a>
-                    <a asp-controller="Home" asp-action="Index" asp-fragment="projects">Work</a>
-                    <a asp-controller="Home" asp-action="Index" asp-fragment="team">Team</a>
-                    <a asp-controller="Home" asp-action="Index" asp-fragment="contact">Contact</a>
-                    @if (User.Identity?.IsAuthenticated == true)
+                    @if (signedIn)
                     {
+                        <a asp-controller="Home" asp-action="Index" asp-fragment="hero">Home</a>
+                        <a asp-controller="Home" asp-action="Index" asp-fragment="about">About</a>
+                        <a asp-controller="Home" asp-action="Index" asp-fragment="services">Services</a>
+                        <a asp-controller="Home" asp-action="Index" asp-fragment="projects">Work</a>
+                        <a asp-controller="Home" asp-action="Index" asp-fragment="team">Team</a>
+                        <a asp-controller="Home" asp-action="Index" asp-fragment="contact">Contact</a>
                         <partial name="_ProfileMenu" />
                     }
                     else
@@ -89,7 +90,7 @@
             <p class="mt-1 break-words text-sm">@success</p>
         </div>
     }
-    @if (!adminShell && !profilePage)
+    @if (signedIn && !adminShell && !profilePage)
     {
         <partial name="_Footer" />
     }

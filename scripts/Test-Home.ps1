@@ -9,8 +9,9 @@ if ($response.StatusCode -ne 200) {
     throw 'The home page did not respond successfully.'
 }
 
-$markers = @('aria-label="Main navigation"', 'id="footer"')
+$markers = @('aria-label="Main navigation"')
 if ($response.Content.Contains('id="hero"')) {
+    $markers += 'id="footer"'
     $sectionIds = @('hero', 'about', 'services', 'projects', 'team', 'contact')
     $previousPosition = -1
     foreach ($sectionId in $sectionIds) {
@@ -25,6 +26,9 @@ if ($response.Content.Contains('id="hero"')) {
     }
 }
 else {
+    if ($response.Content -match 'id="footer"|href="/?#(hero|about|services|projects|team|contact)"') {
+        throw 'Signed-out markup contains portfolio links or the footer.'
+    }
     $markers += @('action="/Account/Login"', 'name="Email"', 'name="Password"')
 }
 

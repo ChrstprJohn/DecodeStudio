@@ -1,6 +1,4 @@
-using Microsoft.EntityFrameworkCore;
 using MyPortfolio.Data;
-using MyPortfolio.Models;
 using MyPortfolio.Models.Entities;
 using MyPortfolio.Models.ViewModels;
 
@@ -17,39 +15,38 @@ public class SocialLinkService
 
     public async Task<List<SocialLink>> GetAllAsync()
     {
-        return await _database.SocialLinks.AsNoTracking().OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
+        return await _database.ReadSocialLinksAsync();
     }
 
     public async Task<SocialLink?> GetAsync(int id)
     {
-        return await _database.SocialLinks.AsNoTracking().SingleOrDefaultAsync(item => item.Id == id);
+        return await _database.ReadSocialLinkAsync(id);
     }
 
-    public async Task<bool> SaveAsync(SocialLinkViewModel model)
+    public async Task CreateAsync(SocialLinkViewModel model)
     {
-        var item = model.Id == 0 ? new SocialLink() : await _database.SocialLinks.FindAsync(model.Id);
+        var item = new SocialLink();
+        model.ApplyTo(item);
+        _database.SocialLinks.Add(item);
+        await _database.SaveChangesAsync();
+    }
+
+    public async Task<bool> UpdateAsync(SocialLinkViewModel model)
+    {
+        var item = await _database.ReadSocialLinkAsync(model.Id);
         if (item is null)
         {
             return false;
         }
 
-        item.Label = model.Label.Trim();
-        item.Url = model.Url.Trim();
-        item.SortOrder = model.SortOrder;
-        item.CustomIconSvg = model.CustomIconFile is { } file ? SocialIcon.Read(file)
-            : model.RemoveCustomIcon ? null : item.CustomIconSvg;
-
-        if (model.Id == 0)
-        {
-            _database.SocialLinks.Add(item);
-        }
+        model.ApplyTo(item);
         await _database.SaveChangesAsync();
         return true;
     }
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var item = await _database.SocialLinks.FindAsync(id);
+        var item = await _database.ReadSocialLinkAsync(id);
         if (item is null)
         {
             return false;

@@ -25,25 +25,24 @@ public class TeamController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        return View("Edit", new TeamMemberViewModel());
+        return View("Create", new TeamMemberViewModel());
     }
 
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(TeamMemberViewModel model)
     {
-        model.Id = 0;
         if (!ModelState.IsValid)
         {
-            return View("Edit", model);
+            return View("Create", model);
         }
         try
         {
-            await _service.SaveAsync(model);
+            await _service.CreateAsync(model);
         }
         catch (ArgumentException exception)
         {
             ModelState.AddModelError(nameof(model.ImageFile), exception.Message);
-            return View("Edit", model);
+            return View("Create", model);
         }
         TempData["SuccessMessage"] = "Team member created.";
         return RedirectToAction(nameof(Index));
@@ -57,7 +56,7 @@ public class TeamController : Controller
         {
             return NotFound();
         }
-        return View(new TeamMemberViewModel
+        return View("Edit", new TeamMemberViewModel
         {
             Id = item.Id,
             FirstName = item.FirstName,
@@ -83,16 +82,16 @@ public class TeamController : Controller
         model.PhotoPath = current.PhotoPath;
         if (!ModelState.IsValid)
         {
-            return View(model);
+            return View("Edit", model);
         }
         try
         {
-            if (!await _service.SaveAsync(model)) return NotFound();
+            if (!await _service.UpdateAsync(model)) return NotFound();
         }
         catch (ArgumentException exception)
         {
             ModelState.AddModelError(nameof(model.ImageFile), exception.Message);
-            return View(model);
+            return View("Edit", model);
         }
         TempData["SuccessMessage"] = "Team member updated.";
         return RedirectToAction(nameof(Index));

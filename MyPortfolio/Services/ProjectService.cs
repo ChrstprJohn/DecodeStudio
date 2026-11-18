@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using MyPortfolio.Data;
 using MyPortfolio.Models.Entities;
 using MyPortfolio.Models.ViewModels;
@@ -18,38 +17,49 @@ public class ProjectService
 
     public async Task<List<Project>> GetAllAsync()
     {
-        return await _database.Projects.AsNoTracking().OrderBy(item => item.SortOrder).ThenBy(item => item.Id).ToListAsync();
+        return await _database.ReadProjectsAsync();
     }
 
     public async Task<Project?> GetAsync(int id)
     {
-        return await _database.Projects.AsNoTracking().SingleOrDefaultAsync(item => item.Id == id);
+        return await _database.ReadProjectAsync(id);
     }
 
-    public async Task<bool> SaveAsync(ProjectViewModel model)
+    public async Task CreateAsync(ProjectViewModel model)
     {
-        var item = model.Id == 0 ? new Project() : await _database.Projects.FindAsync(model.Id);
+        var item = new Project();
+        var uploaded = await ApplyFormAndUploadImageAsync(item, model);
+        _database.Projects.Add(item);
+        await SaveImageChangesAsync(null, item.ImagePath, uploaded);
+    }
+
+    public async Task<bool> UpdateAsync(ProjectViewModel model)
+    {
+        var item = await _database.ReadProjectAsync(model.Id);
         if (item is null)
         {
             return false;
         }
 
         var previousImage = item.ImagePath;
-        if (model.ImageFile is null && string.IsNullOrEmpty(previousImage))
+        var uploaded = await ApplyFormAndUploadImageAsync(item, model);
+        await SaveImageChangesAsync(previousImage, item.ImagePath, uploaded);
+        return true;
+    }
+
+    private async Task<string?> ApplyFormAndUploadImageAsync(Project item, ProjectViewModel model)
+    {
+        if (model.ImageFile is null && string.IsNullOrEmpty(item.ImagePath))
             throw new ArgumentException("Choose a project image.");
         var uploaded = model.ImageFile is null ? null : await _images.SaveAsync(model.ImageFile);
         item.ImagePath = uploaded ?? item.ImagePath;
 
-        item.Title = model.Title.Trim();
-        item.Description = model.Description.Trim();
-        item.WebsiteUrl = model.WebsiteUrl.Trim();
-        item.SortOrder = model.SortOrder;
-        item.IsPublished = model.IsPublished;
+        model.ApplyTo(item);
+        return uploaded;
+    }
 
-        if (model.Id == 0)
-        {
-            _database.Projects.Add(item);
-        }
+    private async Task SaveImageChangesAsync(string? previousImage, string? currentImage, string? uploaded)
+    {
         try
         {
             await _database.SaveChangesAsync();
@@ -59,14 +69,13 @@ public class ProjectService
             if (uploaded is not null) _images.DeleteGenerated(uploaded);
             throw;
         }
-        if (previousImage is not null && previousImage != item.ImagePath)
+        if (previousImage is not null && previousImage != currentImage)
             _images.DeleteGenerated(previousImage);
-        return true;
     }
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var item = await _database.Projects.FindAsync(id);
+        var item = await _database.ReadProjectAsync(id);
         if (item is null)
         {
             return false;
